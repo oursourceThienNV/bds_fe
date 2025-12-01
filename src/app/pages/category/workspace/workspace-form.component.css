@@ -1,0 +1,74 @@
+.container.workspace-form {
+  max-width: 90%;
+  background: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+}
+
+h2 {
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+label {
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.table > thead th {
+  background-color: #f8f9fa;
+  text-align: left;
+}
+
+.table td,
+.table th {
+  vertical-align: middle;
+}
+
+.ng-select {
+  width: 100%;
+}
+
+button.btn {
+  min-width: 100px;
+}
+
+/* Make ng-select look like Bootstrap .form-control for consistent alignment */
+.ng-select .ng-select-container {
+  height: calc(2.25rem + 2px);
+  min-height: calc(2.25rem + 2px);
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.ng-select .ng-select-container .ng-value-container {
+  padding: .375rem .75rem;
+  line-height: 1.5;
+}
+
+.ng-select .ng-select-container .ng-placeholder {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Normalize arrow wrapper to center arrow like form-control suffix */
+.ng-select .ng-arrow-wrapper {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+/* Remove unexpected inner input extra spacing */
+.ng-select.ng-select-single .ng-select-container .ng-value-container .ng-input>input {
+  padding: 0;
+  margin: 0;
+  height: 1.5rem;
+}
+
+::ng-deep .ng-dropdown-panel {
+    z-index: 9999 !important; /* Đặt số thật cao để chắc chắn nổi lên trên cùng */
+}

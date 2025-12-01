@@ -1,0 +1,129 @@
+::ng-deep .modal-dialog {
+  max-width: 1250px !important;
+  width: 1250px !important;
+}
+::ng-deep .modal-content {
+  padding: 20px 50px !important;
+}
+
+
+/* Định dạng các phần tử trong modal */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-title {
+  font-size: 18px;
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px 20px;
+}
+
+.form-control {
+  margin-bottom: 15px;
+}
+
+button {
+  margin-left: 10px;
+}
+
+/* Thêm một số kiểu dáng cho các phần tử trong form */
+//input[type="text"], select, textarea {
+//  border-radius: 4px;
+//  border: 1px solid #ccc;
+//}
+
+textarea {
+  resize: vertical;
+  height: 100px;
+}
+/* làm timepicker phẳng như 1 input, cao 38px giống .form-control của Bootstrap */
+.timepicker-as-input {
+  display: flex;
+  align-items: center;
+  height: 38px; /* = form-control default */
+}
+
+/* bố cục ngang, khoảng cách nhỏ giữa HH và MM */
+.timepicker-as-input .bs-timepicker {
+  display: flex;
+  align-items: center;
+  gap: .25rem;
+  padding: 0 .5rem;
+  border: 0; /* bỏ viền trong */
+}
+
+/* 2 ô HH/MM cao bằng, bỏ viền để nhìn liền khối */
+.timepicker-as-input .bs-timepicker .bs-timepicker-field {
+  height: 38px;
+  border: 0;
+  text-align: center;
+  width: 2.8rem;  /* vừa 2 chữ số */
+  padding: 0;
+}
+
+/* dấu : giữa HH và MM */
+.timepicker-as-input .bs-timepicker .separator {
+  padding: 0 .25rem;
+}
+
+/* ẩn spinner nếu có */
+.timepicker-as-input .bs-chevron {
+  display: none !important;
+}
+
+.upload-box {
+  border: 2px dashed #aaa;
+  border-radius: 8px;
+  padding: 30px;
+  text-align: center;
+  background-color: #F8F9FF;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.upload-box.dragover {
+  background-color: #e2f0ff;
+}
+
+.upload-btn {
+  background-color: #007bff;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+.upload-btn:hover {
+  background-color: #0056b3;
+}
+
+.file-list {
+  margin-top: 15px;
+  list-style: none;
+  padding-left: 0;
+}
+
+.file-list li {
+  padding: 6px 0;
+  font-weight: 500;
+  color: #333;
+}
+::ng-deep .ng-select-recipients .ng-value-container .ng-value {
+  display: none !important;
+}
+::ng-deep .ng-select-recipients .ng-select-container {
+  min-height: 38px; /* gọn gàng */
+}

@@ -1,0 +1,26 @@
+<div class="dropdown" ngxDropdown>
+  <input id="unitRequest" type="text" [title]="control ? treeInput.value: null" class="form-control" #treeInput readonly="true" [formControl]="control"
+         ngxDropdownToggle>
+  <img (click)="clearTreeValue()" src="assets/images/xmark-solid.svg" style="position: absolute;right: 5px; top: 6px; width: 16px; cursor: pointer" alt="" class="clear-tree-picker">
+  <div ngxDropdownMenu aria-labelledby="dropdownMenu" (click)="$event.stopPropagation()">
+    <div class="dropdown-container">
+      <tree-root
+        #tree
+        [nodes]="nodes"
+        [options]="options"
+      >
+        <ng-template #treeNodeTemplate let-node="node" let-index="index">
+          <input
+            (change)="check(node.data)"
+            type="radio"
+            [indeterminate]="node.data.indeterminate"
+            [checked]="node.data.checked"
+            [name]="node"
+            >
+          {{ node.data.name }}
+        </ng-template>
+      </tree-root>
+
+    </div>
+  </div>
+</div>

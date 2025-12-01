@@ -1,0 +1,8 @@
+<div class="dropzone" (click)="cvFileInput.click()">
+  <div>
+    {{'language.messageUpload' | translate}}
+  </div>
+
+</div>
+
+<input #cvFileInput (change)="openUploadCVFile($event)" accept="image/png, image/jpeg, application/pdf" style="display: none;" type="file" multiple>

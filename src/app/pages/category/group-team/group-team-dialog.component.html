@@ -1,0 +1,161 @@
+<form [formGroup]="dataForm" (ngSubmit)="save()">
+  <div class="modal-header">
+    <h3 class="modal-title"><b>{{ title }}</b></h3>
+    <button type="button" class="btn-close" (click)="modal.dismiss('cancel')"></button>
+  </div>
+
+  <div class="modal-body row">
+    <div class="col-md-6 mb-2">
+        <label>Mã nhóm</label> <input class="form-control" 
+              formControlName="code" 
+              type="text" 
+              [readonly]="true" 
+              [placeholder]="!inputData ? '  ' : ''"
+              style="background-color: #e9ecef;" />
+    </div>
+    <div class="col-md-6 mb-2">
+      <label>Tên nhóm<span class="text-danger">*</span></label>
+      <input class="form-control" formControlName="name" type="text" />
+    </div>
+    <div class="col-md-6" *ngIf="accountType!==ACCOUNT_TYPE.GROUP">
+      <div class="mb-2">
+        <label>Công ty<span class="text-danger">*</span></label>
+        <ng-select [items]="listCompany" bindLabel="name" bindValue="id" (change)="changeCompany()" formControlName="companyId"
+          placeholder="Chọn công ty">
+
+          <!-- Template hiển thị item đã chọn -->
+          <ng-template ng-label-tmp let-item="item">
+          {{ item.name }}
+          </ng-template>
+
+          <!-- Template hiển thị từng dòng trong dropdown -->
+          <ng-template ng-option-tmp let-item="item">
+           {{ item.name }}
+          </ng-template>
+        </ng-select>
+
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="mb-2">
+        <label>Nhóm trên</label>
+        <ng-select [items]="listGroup" bindLabel="name" bindValue="id"  formControlName="rootId"
+          placeholder="Chọn nhóm quản lý trực tiếp nhóm này">
+
+          <!-- Template hiển thị item đã chọn -->
+          <ng-template ng-label-tmp let-item="item">
+            {{ item.code }} - {{ item.name }}
+          </ng-template>
+
+          <!-- Template hiển thị từng dòng trong dropdown -->
+          <ng-template ng-option-tmp let-item="item">
+            {{ item.code }} - {{ item.name }}
+          </ng-template>
+        </ng-select>
+
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="mb-2">
+        <label>Người đại diện<span class="text-danger">*</span></label>
+        <ng-select [items]="listUser" bindLabel="name" bindValue="id" formControlName="headUser"
+          placeholder="Chọn người đại diện">
+
+          <!-- Template hiển thị item đã chọn -->
+          <ng-template ng-label-tmp let-item="item">
+            {{ item.username }} - {{ item.fullname }}
+          </ng-template>
+
+          <!-- Template hiển thị từng dòng trong dropdown -->
+          <ng-template ng-option-tmp let-item="item">
+            {{ item.username }} - {{ item.fullname }}
+          </ng-template>
+        </ng-select>
+
+      </div>
+    </div>
+    <div class="col-md-6 mb-2">
+      <label>Trạng thái</label>
+      <select class="form-control" formControlName="status">
+        <option [value]="COMMON_STATUS.ACTIVE">Hoạt động</option>
+        <option [value]="COMMON_STATUS.INACTIVE">Tạm dừng</option>
+      </select>
+    </div>
+    <div class="col-md-12 mb-2">
+      <label>Mô tả</label>
+      <textarea class="form-control" formControlName="description"></textarea>
+    </div>
+<div class="col-md-12">
+  <div class="mb-2 row align-items-end">
+    <div class="col-md-6">
+      <label>Chọn người dùng để thêm</label>
+      <ng-select
+        [items]="listUser"
+        bindLabel="fullname"
+        bindValue="id"
+        [(ngModel)]="selectedUserToAdd"
+        [ngModelOptions]="{ standalone: true }"
+        placeholder="Chọn người dùng">
+        <ng-template ng-option-tmp let-item="item">
+          {{ item.username }} - {{ item.fullname }}
+        </ng-template>
+      </ng-select>
+    </div>
+    <div class="col-md-3">
+      <button type="button" class="btn btn-success mt-4" (click)="addUser()">Thêm</button>
+    </div>
+  </div>
+
+  <div class="table-responsive mt-3" *ngIf="addedUsers.length > 0">
+    <label>Danh sách user trực tiếp trong nhóm:</label>
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th>Username</th>
+          <th>Họ tên</th>
+          <th class="text-center">Thao tác</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of addedUsers; let i = index">
+          <td>{{ user.username }}</td>
+          <td>{{ user.fullname }}</td>
+          <td class="text-center">
+            <button type="button" class="btn btn-sm btn-danger" (click)="removeUser(i)">Xóa</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+<!--  <div class="table-responsive mt-3" *ngIf="addedUsers.length > 0">-->
+<!--    <label>Tất cả user nằm trong hệ thống của nhóm</label>-->
+<!--    <table class="table table-bordered table-hover">-->
+<!--      <thead>-->
+<!--      <tr>-->
+<!--        <th>Username</th>-->
+<!--        <th>Họ tên</th>-->
+<!--        <th class="text-center">Thao tác</th>-->
+<!--      </tr>-->
+<!--      </thead>-->
+<!--      <tbody>-->
+<!--      <tr *ngFor="let user of addedUsers; let i = index">-->
+<!--        <td>{{ user.username }}</td>-->
+<!--        <td>{{ user.fullname }}</td>-->
+<!--        <td class="text-center">-->
+<!--          <button type="button" class="btn btn-sm btn-danger" (click)="removeUser(i)">Xóa</button>-->
+<!--        </td>-->
+<!--      </tr>-->
+<!--      </tbody>-->
+<!--    </table>-->
+<!--  </div>-->
+</div>
+
+
+  </div>
+
+
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-primary" [disabled]="dataForm.invalid">Lưu</button>
+    <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Hủy</button>
+  </div>
+</form>

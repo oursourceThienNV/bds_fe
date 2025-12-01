@@ -1,0 +1,33 @@
+/* CSS cho card-body trong workspace component */
+.card-body {
+  /* Thêm các style của  bạn ở đây */
+  padding-bottom: 17px;
+}
+.row{
+  
+}
+
+/* Ví dụ: */
+/* .card-body {
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+} */
+.table.table-bordered th,
+.table.table-bordered td {
+  padding-top: 13px;
+  padding-bottom: 12px;
+}
+.table.table-bordered td button {
+  height: 22px !important;
+  line-height: 22px;
+  padding: 0 10px;
+}
+
+/* Buttons in the search form: match input height for even alignment */
+.card-body form .btn {
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+}
+

@@ -1,0 +1,147 @@
+<form [formGroup]="dataForm" (ngSubmit)="save()">
+  <app-full-page-loading [isLoading]="isLoading"></app-full-page-loading>
+  <div class="modal-header">
+    <h3 class="modal-title mt-0"><b>{{title}}</b></h3>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="mb-2">
+          <label for="username">Tên đăng nhập<span class="text-danger">*</span></label>
+          <input id="identifier" [readOnly]="inputData" type="text" class="form-control" id="username" placeholder="Tên đăng nhập tự sinh" disabled formControlName="username"  maxlength="50" trim>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="mb-2">
+          <label for="fullname">Họ tên<span class="text-danger">*</span></label>
+          <input id="fullname" type="text" class="form-control" formControlName="fullname" maxlength="40" trim="blur">
+          <div class="invalid-feedback d-block" *ngIf="dataForm.errors?.fullname && dataForm.get('fullname')?.touched">Vui lòng nhập họ tên</div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-2">
+          <label for="fullname">CCCD<span class="text-danger">*</span></label>
+          <input id="fullname" type="text" class="form-control" formControlName="idCardNo" maxlength="40" trim="blur">
+          <div class="invalid-feedback d-block" *ngIf="dataForm.errors?.idCardNo && dataForm.get('idCardNo')?.touched">Vui lòng nhập CCCD</div>
+        </div>
+      </div>
+      <div class="col-md-6" *ngIf="role===ROLE.ADMIN">
+        <div class="mb-2">
+          <label>Loại tài khoản<span class="text-danger">*</span></label>
+          <select class="form-control" formControlName="accountType" [disabled]="true" (change)="selectAccountType()">
+            <option [value]="ACCOUNT_TYPE.COMPANY">Công ty</option>
+            <option [value]="ACCOUNT_TYPE.GROUP"> Đội nhóm</option>
+            <option [value]="ACCOUNT_TYPE.PERSON">Cá nhân</option>
+          </select>
+          <div class="invalid-feedback d-block" *ngIf="dataForm.errors?.accountType && dataForm.get('accountType')?.touched">Vui lòng chọn loại tài khoản</div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-2">
+          <label>Vai trò<span class="text-danger">*</span></label>
+          <select class="form-control" formControlName="role">
+            <option [value]="ROLE.ADMIN_COMPANY">Owner</option>
+            <option [value]="ROLE.NHAN_VIEN" *ngIf="accountType!==ACCOUNT_TYPE.PERSON">Nhân viên</option>
+          </select>
+          <div class="invalid-feedback d-block" *ngIf="dataForm.errors?.role && dataForm.get('role')?.touched">Vui lòng chọn vai trò</div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-2">
+          <label for="phone">SĐT<span class="text-danger">*</span></label>
+          <input id="phone"  type="text" class="form-control" formControlName="phone" maxlength="40" trim="blur">
+          <div class="invalid-feedback d-block" *ngIf="dataForm.errors?.phone && dataForm.get('phone')?.touched">Vui lòng nhập SĐT</div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-2">
+          <label for="emailId">Email<span class="text-danger">*</span></label>
+          <input id="emailId"  type="text" class="form-control" formControlName="email" maxlength="254" trim="blur">
+          <div class="invalid-feedback d-block" *ngIf="dataForm.errors?.email && dataForm.get('email')?.touched">Vui lòng nhập Email</div>
+        </div>
+      </div>
+      <div class="col-md-12 mb-2">
+        <label>Tổng data đăng ký(GB)</label>
+        <input class="form-control"
+               formControlName="dataTotal"
+               type="number"
+               [readOnly]="role !== ROLE.ADMIN&&role!==ROLE.ADMIN_COMPANY" />
+      </div>
+      <div class="col-md-6" *ngIf="accountType===ACCOUNT_TYPE.COMPANY">
+        <div class="mb-2">
+          <label>Công ty<span class="text-danger">*</span></label>
+          <ng-select
+            [items]="listCompany"
+            bindLabel="name"
+            bindValue="id"
+            formControlName="companyId"
+            placeholder="Chọn công ty" (change)="getAllGroup()">
+
+            <!-- Template hiển thị item đã chọn -->
+            <ng-template ng-label-tmp let-item="item">
+            {{ item.name }}
+            </ng-template>
+
+            <!-- Template hiển thị từng dòng trong dropdown -->
+            <ng-template ng-option-tmp let-item="item">
+             {{ item.name }}
+            </ng-template>
+          </ng-select>
+          <div class="invalid-feedback d-block" *ngIf="dataForm.errors?.companyId && dataForm.get('companyId')?.touched">Vui lòng chọn công ty</div>
+
+        </div>
+      </div>
+      <div class="col-md-6" *ngIf="accountType!==ACCOUNT_TYPE.PERSON">
+      <div class="mb-2">
+        <label>Thuộc nhóm<span class="text-danger">*</span></label>
+        <ng-select [items]="listGroup" bindLabel="name" bindValue="id"  formControlName="groupTeamId"
+          placeholder="Chọn nhóm quản lý trực tiếp">
+
+          <!-- Template hiển thị item đã chọn -->
+          <ng-template ng-label-tmp let-item="item">
+            {{ item.code }} - {{ item.name }}
+          </ng-template>
+
+          <!-- Template hiển thị từng dòng trong dropdown -->
+          <ng-template ng-option-tmp let-item="item">
+            {{ item.code }} - {{ item.name }}
+          </ng-template>
+        </ng-select>
+
+      </div>
+    </div>
+      <div class="col-md-12">
+        <div class="mb-2">
+          <label for="address">Địa chỉ<span class="text-danger">*</span></label>
+          <textarea class="form-control"  id ="address" formControlName="address"></textarea>
+          <div class="invalid-feedback d-block" *ngIf="dataForm.errors?.address && dataForm.get('address')?.touched">Vui lòng nhập địa chỉ</div>
+        </div>
+      </div>
+      <div class="col-md-6" *ngIf="checkAction">
+        <div class="mb-2">
+          <label>Trạng thái<span class="text-danger">*</span></label>
+          <select formControlName="status" class="form-control">
+            <!-- <option value="00">Chưa duyệt</option> -->
+            <option [value]="COMMON_STATUS.ACTIVE">Hoạt động</option>
+            <option [value]="COMMON_STATUS.INACTIVE">Vô hiệu hóa </option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="mb-2">
+          <label>Mô tả</label>
+          <textarea class="form-control" formControlName="description"></textarea>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-primary">Lưu</button>
+    <button type="button" class="btn btn-light"
+            (click)="modal.close('Close click')">Hủy</button>
+  </div>
+</form>

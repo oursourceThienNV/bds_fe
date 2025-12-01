@@ -1,0 +1,60 @@
+.header {
+  height: 56px;
+  padding: 18px 20px 18px 20px;
+  border-radius: 6px 6px 0 0;;
+}
+
+:host(.ant-modal-body) {
+  //::ng-deep{
+  .ant-modal-body {
+    padding: unset !important;
+    //}
+  }
+}
+
+.noPadding {
+  padding: unset;
+}
+
+.title {
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  text-transform: uppercase;
+}
+
+.dialog-content {
+  padding: 20px 20px 20px 20px;
+}
+
+.content {
+  flex: 1;
+  margin-left: 25px !important;
+  font-style: normal;
+  font-weight: normal;
+  color: #1E1E1E;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+  display: flex;
+  align-items: center;
+}
+
+.warningColor {
+  background: #f1b44c;
+  color: #FFFFFF;
+}
+
+.infoColor {
+  background: #50a5f1;
+  color: #FFFFFF;
+}
+
+.successColor {
+  background: #34c38f;
+  color: #FFFFFF;
+}
+
+.dangerColor {
+  background: #f46a6a;
+  color: #FFFFFF;
+}

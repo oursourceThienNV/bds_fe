@@ -1,0 +1,35 @@
+<!-- PHẢI có #appRoot -->
+<div #appRoot class="app-container" style="width: 70%">
+  <div class="graph-panel" >
+    <div class="toolbar">
+      <input [(ngModel)]="query" placeholder="Tìm tên / SĐT" />
+<!--      <button>Đăng link</button>-->
+<!--      <button class="primary">Thêm khách</button>-->
+<!--      <button class="icon">🔔</button>-->
+    </div>
+
+    <!-- PHẢI có #graphHost -->
+    <div #graphHost class="graph-viewport">
+      <!-- PHẢI có #svgRef -->
+      <svg #svgRef></svg>
+    </div>
+  </div>
+
+  <!-- PHẢI có #sidePanel -->
+  <aside #sidePanel class="list-panel">
+    <div class="list-title">Danh sách khách hàng</div>
+    <div *ngFor="let u of filteredCustomers"
+         (click)="onPick(u)"
+         class="list-item"
+         [class.active]="selected?.id===u.id">
+      <img [src]="u.avatar" />
+      <div class="info">
+        <div class="name">{{u.name}}</div>
+        <div class="phone">{{u.phone}}</div>
+      </div>
+<!--      <span class="badge" [class.buy]="filteredCustomers[0].status" [class.notbuy]="!filteredCustomers[0].status">-->
+        {{ u.status}}
+<!--      </span>-->
+    </div>
+  </aside>
+</div>

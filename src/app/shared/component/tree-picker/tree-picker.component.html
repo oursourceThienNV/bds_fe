@@ -1,0 +1,25 @@
+<div class="dropdown" ngxDropdown>
+  <input type="text" style="background-color: white;" [title]="control ? treeInput.value: null" class="form-control" #treeInput readonly="true" [formControl]="control"
+         ngxDropdownToggle>
+  <i (click)="clearTreeValue()" style="position: absolute;right: 5px; top: 6px; width: 16px; cursor: pointer" class="clear-tree-picker"><b>×</b></i>
+  <div ngxDropdownMenu aria-labelledby="dropdownMenu" (click)="$event.stopPropagation()">
+    <div class="dropdown-container">
+      <tree-root
+        #tree
+        [nodes]="nodes"
+        [options]="options">
+
+        <ng-template #treeNodeTemplate let-node="node" let-index="index">
+          <input *ngIf="multiple" style="cursor: pointer"
+            (change)="check(node, !node.data.checked)"
+            type="checkbox"
+            [indeterminate]="node.data.indeterminate"
+            [checked]="node.data.checked">
+
+          <label class="tree-value" (click)="click(node, !node.data.checked)">{{ node.data.name }}</label>
+        </ng-template>
+      </tree-root>
+
+    </div>
+  </div>
+</div>

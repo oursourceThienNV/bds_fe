@@ -1,0 +1,4 @@
+<db-angular-tree-grid #angularGrid [data]="data" [configs]="configs2"  *ngIf="type===YC_KT"  (rowselect)="selectData($event)" (rowdeselect)="rowdeselect($event)">
+</db-angular-tree-grid>
+<db-angular-tree-grid #angularGrid [data]="data" [configs]="configs"  *ngIf="type!==YC_KT"  (rowselect)="selectData($event)"  (rowdeselect)="rowdeselect($event)">
+</db-angular-tree-grid>

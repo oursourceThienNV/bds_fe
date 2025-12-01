@@ -1,0 +1,630 @@
+{
+  "validation": {
+    "required": "{{field}} không được bỏ trống.",
+    "maxLength": "{{field}} chỉ được dài tối đa {{value}} ký tự",
+    "max": "{{field}} không lớn hơn {{value}}",
+    "minLength": "{{field}} phải dài tối thiểu {{value}} ký tự",
+    "pattern": "{{field}} sai định dạng",
+    "onlyNaturalNumber": "{{field}} phải là số nguyên dương",
+    "onlyNumber": "{{field}} phải là số",
+    "onlyDoubleNumber": "{{field}} phải là kiểu số",
+    "onlyCharacter": "{{field}} chỉ được nhập ký tự chữ cái, chữ số và dấu _",
+    "mustMatch": "{{field}} không khớp",
+    "passwordMustMatchChange": "Mật khẩu mới và nhập lại mật khẩu mới không khớp",
+    "existCheck": "{{field}} đã tồn tại",
+    "email": "Không đúng định dạng email",
+    "passwordNotMatch": "Mật khẩu và nhập lại mật khẩu không khớp nhau",
+    "mustSameUnit": "{{field}} phải cùng đơn vị"
+  },
+  "HEADER": {
+    "SEARCH": "Search...",
+    "MEGA_MENU": "Mega Menu",
+    "NOTIFICATIONS": {
+      "TITLE": "Notifications",
+      "VIEW_ALL": "View All",
+      "LOAD_MORE": "View More..",
+      "FIRST": {
+        "TITLE": "Your order is placed",
+        "TEXT": "If several languages coalesce the grammar",
+        "TIME": "3 min ago"
+      },
+      "SECOND": {
+        "TITLE": "James Lemire",
+        "TEXT": "It will seem like simplified English.",
+        "TIME": "1 hours ago"
+      },
+      "THIRD": {
+        "TITLE": "Your item is shipped",
+        "TEXT": "If several languages coalesce the grammar",
+        "TIME": "3 min ago"
+      },
+      "FOUR": {
+        "TITLE": "Salena Layfield",
+        "TEXT": "As a skeptical Cambridge friend of mine occidental.",
+        "TIME": "1 hours ago"
+      }
+    },
+    "SETTINGS": "Settings",
+    "UI": {
+      "TITLE": "UI Components",
+      "LIGHTBOX": "LightBox",
+      "RANGE_SLIDER": "Range Slider",
+      "SWEET_ALERT": "Sweet Alert",
+      "RATING": "Rating",
+      "FORMS": "Forms",
+      "TABLES": "Tables",
+      "CHARTS": "Charts"
+    },
+    "APPLICATIONS": {
+      "TITLE": "Applications",
+      "ECOMMERCE": "Ecommerce",
+      "CALENDAR": "Calendar",
+      "EMAIL": "Email",
+      "PROJECTS": "Projects",
+      "TASKS": "Tasks",
+      "CONTACTS": "Contacts"
+    },
+    "EXTRA_PAGES": {
+      "TITLE": "Extra Pages",
+      "LIGHT_SIDEBAR": "Light Sidebar",
+      "COMPACT_SIDEBAR": "Compact Sidebar",
+      "HORIZONTAL_LAYOUT": "Horizontal layout",
+      "MAINTENANCE": "Maintenance",
+      "COMING SOON": "Coming Soon",
+      "TIMELINE": "Timeline",
+      "FAQ": "FAQs"
+    },
+    "LOGIN": {
+      "PROFILE": "Profile",
+      "MY_WALLET": "My Wallet",
+      "SETTINGS": "Settings",
+      "LOCK_SCREEN": "Lock screen",
+      "LOGOUT": "Logout"
+    }
+  },
+  "MENUITEMS": {
+    "MENU": {
+      "TEXT": "Menu"
+    },
+    "DASHBOARDS": {
+      "TEXT": "Dashboards",
+      "BADGE": "04",
+      "LIST": {
+        "DEFAULT": "Default",
+        "SAAS": "Saas",
+        "CRYPTO": "Crypto",
+        "BLOG": "Blog"
+      }
+    },
+    "LAYOUTS": {
+      "TEXT": "Layouts",
+      "LIST": {
+        "HORIZONTAL": "Horizontal",
+        "LIGHTSIDEBAR": "Light Sidebar",
+        "COMPACTSIDEBAR": "Compact Sidebar",
+        "ICONSIDEBAR": "Icons Sidebar",
+        "BOXED": "Boxed Layout",
+        "COLOREDSIDEBAR": "Colored Sidebar",
+        "VERTICAL": "Vertical",
+        "LIGHTTOPBAR": "Light Topbar",
+        "COLOREDHEADER": "Colored Header",
+        "SCROLLABLE": "Scrollable"
+      }
+    },
+    "APPS": {
+      "TEXT": "Apps"
+    },
+    "CALENDAR": {
+      "TEXT": "Calendar"
+    },
+    "CHAT": {
+      "TEXT": "Chat",
+      "BADGE": "New"
+    },
+    "FILEMANAGER": {
+      "TEXT": "File Manager",
+      "BADGE": "New"
+    },
+    "ECOMMERCE": {
+      "TEXT": "Ecommerce",
+      "LIST": {
+        "PRODUCTS": "Products",
+        "PRODUCTDETAIL": "Product Detail",
+        "ORDERS": "Orders",
+        "CUSTOMERS": "Customers",
+        "CART": "Cart",
+        "CHECKOUT": "Checkout",
+        "SHOPS": "Shops",
+        "ADDPRODUCT": "Add Product"
+      }
+    },
+    "CRYPTO": {
+      "TEXT": "Crypto",
+      "LIST": {
+        "WALLET": "Wallet",
+        "BUY/SELL": "Buy/Sell",
+        "EXCHANGE": "Exchange",
+        "LENDING": "Lending",
+        "ORDERS": "Orders",
+        "KYCAPPLICATION": "KYC Application",
+        "ICOLANDING": "ICO Landing"
+      }
+    },
+    "EMAIL": {
+      "TEXT": "Email",
+      "LIST": {
+        "INBOX": "Inbox",
+        "READEMAIL": "Read Email",
+        "TEMPLATE": {
+          "BADGE": "New",
+          "TEXT": "Template",
+          "LIST": {
+            "BASIC": "Basic Action",
+            "ALERT": "Alert Email",
+            "BILLING": "Billing Email"
+          }
+        }
+      }
+    },
+    "INVOICES": {
+      "TEXT": "Invoices",
+      "LIST": {
+        "INVOICELIST": "Invoice List",
+        "INVOICEDETAIL": "Invoice Detail"
+      }
+    },
+    "PROJECTS": {
+      "TEXT": "Projects",
+      "LIST": {
+        "GRID": "Projects Grid",
+        "PROJECTLIST": "Projects List",
+        "OVERVIEW": "Project Overview",
+        "CREATE": "Create New"
+      }
+    },
+    "TASKS": {
+      "TEXT": "Tasks",
+      "LIST": {
+        "TASKLIST": "Task List",
+        "KANBAN": "Kanban Board",
+        "CREATETASK": "Create Task"
+      }
+    },
+    "CONTACTS": {
+      "TEXT": "Contacts",
+      "LIST": {
+        "USERGRID": "User Grid",
+        "USERLIST": "User List",
+        "PROFILE": "Profile"
+      }
+    },
+    "BLOG": {
+      "TEXT": "Blog",
+      "BADGE": "New",
+      "LIST": {
+        "BLOGLIST": "Blog List",
+        "BLOGGRID": "Blog Grid",
+        "DETAIL": "Blog Details"
+      }
+    },
+    "PAGES": {
+      "TEXT": "Pages"
+    },
+    "AUTHENTICATION": {
+      "TEXT": "Authentication",
+      "BADGE": "New",
+      "LIST": {
+        "LOGIN": "Login",
+        "LOGIN2": "Login 2",
+        "REGISTER": "Register",
+        "REGISTER2": "Register 2",
+        "RECOVERPWD": "Recover Password",
+        "RECOVERPWD2": "Recover Password 2",
+        "LOCKSCREEN": "Lock screen",
+        "LOCKSCREEN2": "Lock screen 2",
+        "CONFIRMMAIL": "Confirm Mail",
+        "CONFIRMMAIL2": "Confirm Mail 2",
+        "EMAILVERIFICATION": "Email verification",
+        "EMAILVERIFICATION2": "Email verification 2",
+        "TWOSTEPVERIFICATION": "Two step verification",
+        "TWOSTEPVERIFICATION2": "Two step verification 2"
+      }
+    },
+    "UTILITY": {
+      "TEXT": "Utility",
+      "LIST": {
+        "STARTER": "Starter Page",
+        "MAINTENANCE": "Maintenance",
+        "TIMELINE": "Timeline",
+        "FAQS": "FAQs",
+        "PRICING": "Pricing",
+        "ERROR404": "Error 404",
+        "ERROR500": "Error 500"
+      }
+    },
+    "COMPONENTS": {
+      "TEXT": "Components"
+    },
+    "UIELEMENTS": {
+      "TEXT": "UI Elements",
+      "LIST": {
+        "ALERTS": "Alerts",
+        "BUTTONS": "Buttons",
+        "CARDS": "Cards",
+        "CAROUSEL": "Carousel",
+        "DROPDOWNS": "Dropdowns",
+        "GRID": "Grid",
+        "IMAGES": "Images",
+        "LIGHTBOX": "Lightbox",
+        "MODALS": "Modals",
+        "RANGESLIDER": "Range Slider",
+        "PROGRESSBAR": "Progress Bars",
+        "PLACEHOLDER": "Placeholder",
+        "SWEETALERT": "Sweet Alert",
+        "TABS": "Tabs & Accordions",
+        "TYPOGRAPHY": "Typography",
+        "VIDEO": "Video",
+        "GENERAL": "General",
+        "COLORS": "Colors",
+        "CROPPER": "Image Cropper"
+      }
+    },
+    "FORMS": {
+      "TEXT": "Forms",
+      "BADGE": "09",
+      "LIST": {
+        "ELEMENTS": "Form Elements",
+        "VALIDATION": "Form Validation",
+        "ADVANCED": "Form Advanced",
+        "EDITOR": "Form Editor",
+        "FILEUPLOAD": "Form File Upload",
+        "REPEATER": "Form Repeater",
+        "WIZARD": "Form Wizard",
+        "MASK": "Form Mask",
+        "LAYOUTS": "Form Layouts"
+      }
+    },
+    "TABLES": {
+      "TEXT": "Tables",
+      "LIST": {
+        "BASIC": "Basic Tables",
+        "ADVANCED": "Advanced Table"
+      }
+    },
+    "CHARTS": {
+      "TEXT": "Charts",
+      "LIST": {
+        "APEX": "Apex Chart",
+        "CHARTJS": "Chartjs Chart",
+        "CHARTIST": "Chartist Chart",
+        "ECHART": "E Chart"
+      }
+    },
+    "ICONS": {
+      "TEXT": "Icons",
+      "LIST": {
+        "BOXICONS": "Boxicons",
+        "MATERIALDESIGN": "Material Design",
+        "DRIPICONS": "Dripicons",
+        "FONTAWESOME": "Font Awesome"
+      }
+    },
+    "MAPS": {
+      "TEXT": "Maps",
+      "LIST": {
+        "GOOGLEMAP": "Google Maps"
+      }
+    },
+    "MULTILEVEL": {
+      "TEXT": "Multi Level",
+      "LIST": {
+        "LEVEL1": {
+          "1": "Level 1.1",
+          "2": "Level 1.2",
+          "LEVEL2": {
+            "1": "Level 2.1",
+            "2": "Level 2.2"
+          }
+        }
+      }
+    }
+  },
+  "validation": {
+    "from-date": "Bạn phải chọn giá trị Từ ngày",
+    "to-date": "Bạn phải chọn giá trị Đến ngày",
+    "maxLength255": "Tên chiến dịch chỉ cho phép nhập tối đa 255 ký tự",
+    "change-status": "Chuyển trạng thái",
+    "change_status_sub": "Xác nhận chuyển trạng thái",
+    "number-phone-not-regex": "Số điện thoại gọi đến không đúng định dạng",
+    "phone-not-regex": "Số điện thoại liên hệ không đúng định dạng",
+    "required": "Bạn phải nhập  {{field}}",
+    "requiredCb": "Bạn phải chọn  {{field}}",
+    "maxLength": "{{field}} chỉ được dài tối đa {{value}} ký tự",
+    "minLength": "{{field}} phải dài tối thiểu {{value}} ký tự",
+    "pattern": "{{field}} không đúng định dạng",
+    "onlyNaturalNumber": "{{field}} phải là số nguyên dương",
+    "onlyNumber": "{{field}} phải là số",
+    "onlyDoubleNumber": "{{field}} phải là kiểu số",
+    "onlyCharacter": "{{field}} chỉ được nhập ký tự chữ cái, chữ số, dấu _ và không nhập tiếng Việt có dấu",
+    "mustMatch": "{{field}} không khớp",
+    "passwordMustMatchChange": "Mật khẩu mới và nhập lại mật khẩu mới không khớp",
+    "existCheck": "{{field}} đã tồn tại",
+    "email": "Không đúng định dạng email",
+    "mustSameUnit": "{{field}} phải cùng đơn vị",
+    "maxValue": "{{field}} không vượt quá {{value}}",
+    "customRequired": "Bạn phải nhập {{field}}",
+    "minValue": "{{field}} không nhỏ hơn {{value}}",
+    "invalidBrand": "Tên đăng nhập bắt buộc phải có \"smsbrand_\" ở đầu",
+    "invalidCpCode": "Chỉ cho phép nhập ký tự in hoa, in thường, không dấu, viết liền",
+    "invalidPhoneNumber": "Số điện thoại được nhập phải bắt đầu với 84 và số ký tự nhập vào phải ≥ 11 và ≤ 12!",
+    "invalidPassword": "Mật khẩu website tối thiểu 8 ký tự và phải gồm chữ hoa chữ thường, số và ký tự đặc biệt",
+    "must-input": "Bạn phải nhập {{field}}",
+    "must-select": "Bạn phải chọn {{field}}",
+    "isValidInput": "{{field}} không được chứa ký tự đặc biệt",
+    "number.greater0": "{{field}} phải là số >0!",
+    "dateFull": "Sai định dạng ngày",
+    "error.Date.pattern": "{{field}}  sai định dạng ngày tháng",
+    "requestType": "Bạn phải nhập loại yêu cầu",
+    "businessType": "Bạn phải nhập loại nghiệp vụ",
+    "priority": "Bạn phải chọn độ ưu tiên",
+    "content": "Bạn phải nhập nội dung yêu cầu",
+    "deadline.request": "Bạn phải chọn hạn yêu cầu",
+    "time": "Bạn phải nhập thời gian",
+    "phone": "Bạn phải nhập số điện thoại",
+    "email.require": "Bạn phải nhập email",
+    "typeChannel.require": "Chọn kênh tiếp nhận",
+    "content.require": "Bạn phải nhập nội dung trao đổi",
+    "level.require": "Vui lòng chọn mức độ hài lòng",
+    "malformed": "Không đúng định dạng",
+    "max_length": "{{field}} chỉ được nhập tối đa {{requiredLength}} ký tự",
+    "required2": "{{field}} is required.",
+    "fromOverTo": "{{from}} cannot be greater than or equal {{to}}",
+    "isNotInteger": "{{field}} must be a positive integer"
+  },
+  "menu": {
+    "sysMng": "System Administration"
+  },
+  "common": {
+    "select": "Select",
+    "searchInfo": "Search information",
+    "yes": "Yes",
+    "no": "No",
+    "close": "Close",
+    "save": "Save",
+    "search": "Search",
+    "delete": "Delete",
+    "reset": "Re-enter",
+    "addNew": "Add New",
+    "stt": "Ordinal",
+    "manipulation": "Manipulation",
+    "userUpdate": "Updater",
+    "updateTime": "Update Time",
+    "enterValue": "Enter a value",
+    "info": "General Information",
+    "clear": "Clear",
+    "edit": "Edit",
+    "upload": "Import files",
+    "export": "Export file",
+    "warning": "Warning",
+    "error": "Error message",
+    "success": "Success",
+    "notify": "Notify",
+    "disagree": "Disagree",
+    "agree": "agree",
+    "perform": "Perform",
+    "noFileToUpload": "Please select a file to execute!",
+    "downloadResult": "Download result file!",
+    "downloadResultDetail": "Import successful {{success}} records, failed {{error}} records",
+    "total": "Total",
+    "totalSuccessRecord": "Success record",
+    "totalErrorRecord": "Record failed",
+    "record": "record",
+    "noDataSearch": "No search result!",
+    "noDataSelect": "No data",
+    "searchResults": "Search results ({{number}})",
+    "noRecordToAction": "Please select records to execute!",
+    "typeToSearch": "Type to search",
+    "clone": "Clone",
+    "pagination": {
+      "form": "Show form",
+      "record": "record",
+      "show": "Show",
+      "page": "page",
+      "of": "of"
+    },
+    "confirmCloseModal": "Are you sure close popup?",
+    "province": "Province/city",
+    "district": "District",
+    "village": "Village",
+    "numberSelectedRecord": "Selected {{num}} record."
+  },
+  "kipMonth": {
+    "unit": "Unit",
+    "kipType": "KPI type",
+    "kip": "KPI",
+    "kipList": "KPI list",
+    "month": "Month",
+    "channel": "Channel",
+    "kipLevel": "KIP level",
+    "title": "KPI month targets catalog",
+    "addNewTitle": "Add new KIP month target",
+    "editTitle": "Update KIP month target",
+    "deleteConfirm": "Are you sure to delete this KIP?",
+    "deleteConfirms": "Are you sure to delete these KIPs?",
+    "deleteSuccess": "Delete KIP success.",
+    "hasChannel": "Has channel",
+    "noChannel": "No channel",
+    "kpiCode": "KPI code",
+    "kpiName": "KPI name",
+    "clone": {
+      "title": "Monthly KPI clone",
+      "fromMonth": "Clone from month",
+      "toMonth": "For month",
+      "cloneSuccess": "Clone KPI successfully.",
+      "cloneAgain": "The {{month}} already has the target assignment data. If you perform a copy, the old data will be deleted and the new data will be copied.",
+      "cloneConfirm": "Are you sure you want to copy the KPI by month?",
+      "choseMonthHasData": "Clone from month hasn't data, please choose the month has data to continue."
+    },
+    "confirmCreate": "Are you sure you want to create new KIP month target?",
+    "confirmUpdate": "Are you sure you want to update this KIP month target?",
+    "createSuccess": "Create new  KIP month target success!",
+    "updateSuccess": "Update KIP month target success!"
+  },
+  "kipFlow": {
+    "title": "Configure target delivery flow",
+    "unit": "Market",
+    "levelTargetView": "Display level",
+    "levelTargetBD": "Level of communication in DB",
+    "typeKip": "KIP type",
+    "mainSave": "The main save table of the KIP level",
+    "parentLevelView": "Parent level display",
+    "parentLevelBD": "The level of parentage stored in BD",
+    "isSum": "Sum or not",
+    "operatorCheck": "Check operator",
+    "note": "Describe level of delivery",
+    "checkTotal": "Check total data or not",
+    "checkChannel": " Check channel data or not",
+    "parentKeyTotal": "Check sum key compare with parent assignment",
+    "parentKeyChannel": "Channel check key compare with parent assignment",
+    "keyTotalSave": " Save total table data key",
+    "keyTotalUpdate": "Update total table data key",
+    "keyChannelSave": "Save channel table data key",
+    "keyChannelUpdate": "Update channel table data key",
+    "positionCode": "Group of titles receiving quota",
+    "allowModify": "Is it possible to adjust the target",
+    "userLevelModify": "The level of the user to adjust the target",
+    "userLevel": "User Level",
+    "requiredProvince": "Required to enter Province/Branch on the interface",
+    "requiredDistrict": "Required to enter District/TTKD on the interface",
+    "keyWithChannel": "Has checking of channel quota",
+    "totalObjectImport": "Total number of objects to import",
+    "changeManager": "Change manager is allowed",
+    "keyChanObjectDel": "Deleted by channel assigned object key",
+    "keyChanParentDel": "Delete objects of the same level by channel key",
+    "keyTotalObjectDel": "Delete by object assigned by total key",
+    "keyTotalParentDel": "Delete objects of the same level by sum key",
+    "vtt": "VTT",
+    "province": "province/branch",
+    "district": "District/TTKD",
+    "addNewFlowTitle": "Add new target flow configuration",
+    "updateFlowTitle": "Update target flow configuration",
+    "addNewConfigTitle": "Configure assignment level",
+    "hasChannel": "KPI type",
+    "configType": "Config Type",
+    "orderNo": "Display order",
+    "priority": "Priority",
+    "configRequired": "Config required",
+    "totalMainSave": "Total table",
+    "channelMainSave": "Channel table",
+    "confirmUpdate": "Are you sure you want to update the configuration?",
+    "confirmCreate": "Are you sure you want to add a new configuration?",
+    "updateSuccess": "Update the configuration successfully!",
+    "createSuccess": "Create the configuration successfully!",
+    "deleteSuccess": "Delete the configuration successfully!",
+    "deleteConfirm": "Are you sure you want to delete the configuration?",
+    "deleteConfirms": "Are you sure you want to delete configurations?",
+    "configRequiredModal": {
+      "title": "Required information field in import file",
+      "confirmSave": "Are you sure you want to save the required configuration??",
+      "saveSuccess": "Config saved successfully!"
+    },
+    "configSearch": "1-Search",
+    "configAssign": "2-Assign KPI",
+    "config": {
+      "confirmUpdate": "Are you sure you want to update the delivery level configuration?",
+      "confirmCreate": "Are you sure you want to add new the delivery level configuration?",
+      "updateSuccess": "Update the delivery level configuration successfully!",
+      "createSuccess": "Create the delivery level configuration successfully!",
+      "updateTitle": "Update delivery level configuration",
+      "deleteSuccess": "Delete the delivery level configuration successfully!",
+      "deleteConfirm": "Are you sure you want to delete new the delivery level configuration?",
+      "deleteConfirms": "Are you sure you want to delete the delivery level configurations?"
+    }
+  },
+  "language": {
+    "title": "Language category",
+    "market": "Market",
+    "language": "Language",
+    "majorTable": "Major table",
+    "messageUpload": "Choose file",
+    "noFileToUpload": "Please choose file to continue!",
+    "noTableToUpload": "Please choose Major table to continue!",
+    "noLanguageToUpload": "Please choose Language to continue!"
+
+  },
+  "dataEndMonth": {
+    "title": "Import closing data",
+    "month": "Month",
+    "downloadTemplate": "Download template file",
+    "note": "The system only allows importing data before the end of the month",
+    "importSuccess": "Import the data of the month number successfully!",
+    "importError": "Import of month number latch data failed!",
+    "errorFileFormat": "The file is in the wrong format, only accepting excel file has format xlsx.",
+    "noteUploadFile": "Only allow importing xlsx files, maximum size 2MB"
+  },
+  "care": {
+    "title": "Frequency of care",
+    "market": "Market",
+    "code": "Code",
+    "name": "Name",
+    "value": "Value",
+    "deleteConfirm": "Are you sure delete this configuration?",
+    "deleteSuccess": "Delete configuration successfully!",
+    "addNewTitle": "Add new configuration",
+    "editTitle": "Update configuration",
+    "confirmUpdate": "Are you sure update this configuration?",
+    "confirmCreate": "Are you sure create new configuration?",
+    "updateSuccess": "Update configuration successfully! ",
+    "createSuccess": "Create new configuration successfully!",
+    "deleteConfirms": "Bạn có chắc chắn xóa những cấu hình này không?"
+  },
+
+  "programs": {
+    "title": "Importance program",
+    "name": "Name",
+    "create_title": "Program information",
+    "endDate": "End date",
+    "beginDate": "Begin date",
+    "isCheckTime": "Check time",
+    "statusManagement": "State management",
+    "template": "Template management",
+    "scenario": "Scenario management",
+    "rule": "Rule management",
+    "attribute": "Attribute management",
+    "assign_auto_staff": "Configuration assign to staff automatically",
+    "isCheckTime.all": "All program",
+    "isCheckTime.monthly": "Monthly",
+    "activeStatus": "Program permission",
+    "activeStatus.all": "View all system",
+    "activeStatus.gboc": "View only GBOC",
+    "isassign": "Assign staff",
+    "isassign.yes": "Have permission assigning to staff",
+    "isassign.no": "Haven't permission assigning to staff",
+    "groupProgram": "Group program",
+    "groupCode": "Subscriber type",
+    "channelCode": "Channel code",
+    "isRequired": "Required",
+    "isRequired.no": "No",
+    "isRequired.yes": "Yes",
+    "isCombine": "Combine type",
+    "isCombine.single": "Single program",
+    "isCombine.combine": "Combining program",
+    "isAutoAdhoc": "Get data automatically from Ahoc",
+    "isAutoAdhoc.no": "No",
+    "isAutoAdhoc.yes": "Yes",
+    "provincePermission": "Province permission",
+    "provincePermission.all": "All province",
+    "provincePermission.select": "Select Province",
+    "provinces": "Province",
+    "column": {
+      "delete_btn": "Delete",
+      "edit_btn": "Edit",
+      "action": "Action",
+      "subType": "Subscriber Type",
+      "endDate": "End date",
+      "beginDate": "Begin date",
+      "name": "Name",
+      "id": "Program ID"
+    }
+  }
+}

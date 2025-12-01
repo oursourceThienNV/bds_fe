@@ -1,0 +1,40 @@
+<form [formGroup]="dataForm" (ngSubmit)="save()">
+  <div class="modal-header">
+    <h3 class="modal-title"><b>{{ title }}</b></h3>
+    <button type="button" class="btn-close" (click)="modal.dismiss('cancel')"></button>
+  </div>
+
+  <div class="modal-body row">
+    <div class="col-md-6 mb-2">
+      <label>Mã<span class="text-danger">*</span></label>
+      <input class="form-control" formControlName="code" type="text" disabled="true" [readOnly]="true" />
+    </div>
+
+    <div class="col-md-6 mb-2">
+      <label>Tên</label>
+      <input class="form-control" formControlName="name" type="text" />
+    </div>
+    <div class="col-md-6">
+      <div class="mb-2">
+        <label>Mặc định</label>
+        <input class="form-control"
+               type="text"
+               [value]="typeLabel"
+               readonly />
+
+      </div>
+    </div>
+
+
+    <div class="col-md-12 mb-2">
+      <label>Mô tả</label>
+      <textarea class="form-control" formControlName="description"></textarea>
+    </div>
+  </div>
+
+
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-primary">Lưu</button>
+    <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Hủy</button>
+  </div>
+</form>

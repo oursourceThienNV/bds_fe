@@ -1,0 +1,5 @@
+<div *ngIf="formName.invalid&&formName.touched">
+  <small class="form-text text-danger">
+    {{getMessage(formName?.errors) }}
+  </small>
+</div>

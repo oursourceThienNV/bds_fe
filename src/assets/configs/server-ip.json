@@ -1,0 +1,5 @@
+{
+  "serviceUrl":"http://10.58.71.159:8864",
+  "oauthUrl": "http://10.58.71.159:8101",
+  "GATEWAY_SERVICE": "http://localhost:8301"
+}

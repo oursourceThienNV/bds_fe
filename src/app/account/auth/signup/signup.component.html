@@ -1,0 +1,153 @@
+<div class="account-pages my-5 pt-sm-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-6 col-xl-5">
+        <div class="card overflow-hidden">
+          <div class="bg-soft bg-primary">
+            <div class="row">
+              <div class="col-7">
+                <div class="text-primary p-4">
+                  <h5 class="text-primary">HỆ THỐNG </h5>
+                  <p>QUẢN LÝ QUY TRÌNH SẢN XUẤT</p>
+                </div>
+              </div>
+              <div class="col-5 align-self-end">
+                <img src="assets/images/profile-img.png" alt="" class="img-fluid">
+              </div>
+            </div>
+          </div>
+          <div class="card-body pt-0">
+            <div>
+              <a routerLink="/">
+                <div class="avatar-md profile-user-wid mb-4">
+                  <span class="avatar-title rounded-circle bg-light">
+                    <img src="assets/images/logo.svg" alt="" class="rounded-circle" height="34">
+                  </span>
+                </div>
+              </a>
+            </div>
+            <div class="p-2">
+
+              <form class="needs-validation" name="signupForm" [formGroup]="signupForm" (ngSubmit)="onSubmit()"
+                novalidate>
+
+                <ngb-alert type="success" *ngIf="successmsg" [dismissible]="false">Registeration successfull.
+                </ngb-alert>
+
+                <ngb-alert type="danger" *ngIf="error" [dismissible]="false">{{ error }}</ngb-alert>
+
+                <!-- <div class="mb-3">
+                  <label for="username" class="form-label">Tên đăng nhập</label>
+
+                  <input type="text" formControlName="username" class="form-control"
+                     id="username" disabled
+                    placeholder="Tên đăn" />
+                  <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                    <div *ngIf="f.username.errors.required">Tên đăng nhập không bỏ trống</div>
+                  </div>
+                </div> -->
+                <!--<div class="mb-3">
+                  <label for="identifier" class="form-label">CCCD</label>
+
+                  <input type="text" formControlName="identifier" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.identifier.errors }" id="identifier" placeholder="18754...." />
+
+                  <div *ngIf="submitted && f.identifier.errors" class="invalid-feedback">
+                    <div *ngIf="f.identifier.errors.required">CCCD không bỏ trống</div>
+                  </div>
+                </div>-->
+
+                <div class="mb-3">
+                  <label for="password" class="form-label">Mật khẩu</label>
+
+                  <input type="password" formControlName="password" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.password.errors }" id="password" placeholder="Abc@123***" />
+
+                  <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                    <div *ngIf="f.password.errors.required">Mật khẩu không bỏ trống</div>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label for="email" class="form-label">Email</label>
+
+                  <input type="email" formControlName="email" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.email.errors }" id="email" placeholder="abcde@gmail.com" />
+
+                  <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                    <div *ngIf="f.email.errors.required">Email không bỏ trống</div>
+                    <div *ngIf="f.email.errors.email">Email không đúng định dạng</div>
+                  </div>
+                </div>
+
+
+                <div class="mb-3">
+                  <label for="fullname" class="form-label">Họ và tên</label>
+                  <input type="text" formControlName="fullname" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.fullname.errors }" id="fullname"
+                    placeholder="Nguyễn Văn A" />
+
+                  <div *ngIf="submitted && f.fullname.errors" class="invalid-feedback">
+                    <div *ngIf="f.fullname.errors.required">Họ và tên không bỏ trống</div>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label for="address" class="form-label">Địa chỉ</label>
+
+                  <input type="text" formControlName="address" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.address.errors }" id="address"
+                    placeholder="Số nhà G1509..." />
+
+                  <div *ngIf="submitted && f.address.errors" class="invalid-feedback">
+                    <div *ngIf="f.address.errors.required">Địa chỉ không bỏ trống</div>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label for="phone" class="form-label">SĐT</label>
+
+                  <input type="text" formControlName="phone" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && f.phone.errors }" id="phone"
+                    placeholder="Số nhà G1509..." />
+
+                  <div *ngIf="submitted && f.phone.errors" class="invalid-feedback">
+                    <div *ngIf="f.phone.errors.required">SĐT không bỏ trống</div>
+                  </div>
+                </div>
+
+<!--                <div class="mb-3">-->
+<!--                  <label for="repreFullName" class="form-label">Người đại diện pháp luật</label>-->
+<!--                  <input type="text" formControlName="repreFullName" class="form-control"-->
+<!--                    id="repreFullName"-->
+<!--                    placeholder="Nguyễn Văn A" />-->
+<!--                </div>-->
+<!--                <div class="mb-3">-->
+<!--                  <label for="company" class="form-label">Tên công ty</label>-->
+<!--                  <input type="text" formControlName="company" class="form-control"-->
+<!--                    id="company"-->
+<!--                    placeholder="Công ty TNHH" />-->
+<!--                </div>-->
+<!--                <div class="mb-3">-->
+<!--                  <label for="companyAddress" class="form-label">Địa chỉ công ty</label>-->
+<!--                  <input type="text" formControlName="companyAddress" class="form-control"-->
+<!--                     id="companyAddress"-->
+<!--                    placeholder="36 Phạm Hùng" />-->
+<!--                </div>-->
+
+                <div class="mt-4 d-grid">
+                  <button class="btn btn-primary" type="submit">Đăng ký tài khoản</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!-- end card -->
+
+        <div class="mt-5 text-center">
+          <p>Bạn đã có tài khoản ? <a routerLink="/account/login" class="fw-medium text-primary"> Đăng nhập</a>
+          </p>
+        </div>
+      </div> <!-- end col -->
+    </div>
+    <!-- end row -->
+  </div>
+  <!-- end container -->
+</div>

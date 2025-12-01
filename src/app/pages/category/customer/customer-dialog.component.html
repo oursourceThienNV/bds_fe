@@ -1,0 +1,500 @@
+<form [ngClass]="isCollapse ? 'collapse-mode' : 'expand-mode'" [formGroup]="customerForm" (ngSubmit)="onSubmit()">
+  <app-full-page-loading [isLoading]="isLoading"></app-full-page-loading>
+  <div class="modal-header">
+    <h3 class="modal-title">
+      <b *ngIf="mode === 'add'">Thêm mới khách hàng</b>
+      <b *ngIf="mode === 'edit'">Chỉnh sửa khách hàng</b>
+      <b *ngIf="mode === 'view'">Chi tiết khách hàng</b>
+    </h3>
+    <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
+  </div>
+  <style>
+    .form-group {
+      display: flex;
+      flex-direction: column; /* label trên, input dưới */
+      margin: 20px 30px;
+    }
+
+    .form-label {
+      margin-bottom: 6px; /* tạo khoảng cách nhỏ giữa label và input */
+      font-weight: 600;
+      color: #333;
+    }
+
+    .form-input {
+      border-radius: 6px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      padding: 8px 10px;
+      font-size: 14px;
+    }
+
+    .form-input:focus {
+      border-color: #007bff;
+      outline: none;
+      box-shadow: 0 0 3px rgba(0, 123, 255, 0.4);
+    }
+    .px-30 {
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+    /* Responsive: xuống hàng khi màn hình nhỏ */
+    @media (max-width: 768px) {
+      .col-sm-12 {
+        margin-bottom: 15px;
+      }
+    }
+
+    /* Địa chỉ  */
+.address-input {
+  border: 1px solid #d0d7de;
+  border-radius: 4px;
+  padding: 6px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-size: 14px;
+  background: #fff;
+  height: 34px;
+}
+
+.address-input i {
+  color: #888;
+}
+
+
+.address-dropdown {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-top: 2px;
+  background: #fff;
+  position: relative;
+  z-index: 10;
+}
+
+.address-tabs {
+  display: flex;
+  border-bottom: 1px solid #eee;
+}
+
+.tab {
+  flex: 1;
+  text-align: center;
+  padding: 6px 0;
+  cursor: pointer;
+  font-size: 13px;
+  color: #555;
+  border-bottom: 2px solid transparent;
+}
+
+.tab.active {
+  color: #e74c3c;
+  border-bottom-color: #e74c3c;
+}
+
+.tab.disabled {
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+.tab-content {
+  max-height: 180px;
+  overflow-y: auto;
+  padding: 5px 10px;
+}
+
+.address-item {
+  padding: 5px 0;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.address-item:hover {
+  color: #e74c3c;
+}
+
+.form-group {
+  position: relative;
+}
+/* ghi chú  */
+.form-textarea {
+  width: 100%;
+  min-height: 110px;
+  resize: vertical; /* cho phép kéo cao lên */
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  background-color: #ffffff;
+  font-size: 14px;
+  font-family: inherit;
+  color: #333;
+  transition: all 0.2s ease;
+}
+
+.form-textarea:focus {
+  background-color: #fff;
+  border-color: #4a90e2;
+  outline: none;
+  box-shadow: 0 0 5px rgba(74, 144, 226, 0.3);
+}
+/* nhóm khách hàng */
+.customer-row {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Khoảng cách giữa label và select */
+  margin: 0 30px 15px 30px; /* Căn đều hai bên */
+}
+
+.customer-label {
+  width: 150px; /* Cố định độ rộng label */
+  font-weight: 500;
+  color: #333;
+  font-size: 14px;
+}
+
+.customer-select {
+  height: 34px;
+  border-radius: 20px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  padding: 4px 30px 4px 12px; /* chừa khoảng cho mũi tên bên phải */
+  font-size: 14px;
+  color: #333;
+  outline: none;
+  appearance: none; /* ẩn mũi tên mặc định của trình duyệt */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  position: relative;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center; /* cách phải 8px */
+  background-size: 12px 8px;
+}
+
+.customer-select.compact {
+  width: 150px;
+}
+
+/* Hover + focus nhẹ */
+.customer-select:hover {
+  border-color: #b0c4ff;
+}
+
+.customer-select:focus {
+  border-color: #4a90e2;
+  box-shadow: 0 0 3px rgba(74, 144, 226, 0.3);
+}
+
+
+/* Vùng drag & drop file (giống textarea) */
+.file-dropzone {
+  width: 100%;
+  min-height: 100px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px 14px;
+  color: #666;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.file-dropzone:hover {
+  border-color: #4a90e2;
+  background-color: #f8f9ff;
+}
+
+.file-dropzone.dragover {
+  border-color: #4c7fff;
+  background-color: #eef3ff;
+}
+
+.placeholder-text {
+  color: #999;
+}
+
+/* Danh sách file */
+.file-list {
+  margin-top: 10px;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  background-color: #fff;
+}
+
+.file-item {
+  padding: 8px 12px;
+  border-bottom: 1px solid #f2f2f2;
+}
+
+.file-item:last-child {
+  border-bottom: none;
+}
+
+.file-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #333;
+  font-size: 14px;
+}
+
+.btn-remove {
+  background: none;
+  border: none;
+  color: #dc3545;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.btn-remove:hover {
+  color: #a00;
+}
+
+/* Nút Mở rộng & Lưu */
+.btn-expand,
+.btn-save {
+  border-radius: 6px;
+  height: 32px;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 0 14px;
+}
+
+.btn-expand {
+  background: #fff;
+  border: 1px solid #bfc8e5;
+  color: #333;
+}
+
+.btn-save {
+  background: #0052cc;
+  border: none;
+  color: #fff;
+}
+
+.btn-save:hover {
+  background: #0041a8;
+}
+
+
+</style>
+  <div class="row form-section">
+    <div class="col-md-12">
+        <div class="form-group mb-3"> <label class="form-label">
+    Họ và tên <span class="text-danger">*</span>
+          </label>
+          
+          <input 
+            type="text" 
+            class="form-control" 
+            formControlName="hoTen" 
+            [class.is-invalid]="customerForm.get('hoTen')?.invalid && (customerForm.get('hoTen')?.touched || customerForm.get('hoTen')?.dirty)"
+            placeholder="Nhập họ và tên"
+          >
+
+          <div *ngIf="customerForm.get('hoTen')?.hasError('required') && (customerForm.get('hoTen')?.touched || customerForm.get('hoTen')?.dirty)" class="text-danger mt-1" style="font-size: 0.875rem;">
+            Vui lòng nhập họ tên khách hàng.
+          </div>
+
+        </div>
+        <div class="form-section px-30">
+        <div class="row mb-3">
+          <!-- SĐT -->
+          <div class="col-md-4 col-sm-12 mb-3 mb-md-0">
+            <label class="form-label d-block fw-semibold">SĐT</label>
+            <input
+              type="text"
+              class="form-control form-input"
+              formControlName="sdt"
+              placeholder="Nhập số điện thoại"
+            />
+          </div>
+
+          <!-- Giới tính -->
+          <div class="col-md-4 col-sm-12 mb-3 mb-md-0">
+            <label class="form-label d-block fw-semibold">Giới tính</label>
+            <select class="form-select form-input" formControlName="gioiTinh">
+              <option value="">Chọn</option>
+              <option>Nam</option>
+              <option>Nữ</option>
+              <option>Khác</option>
+            </select>
+          </div>
+
+          <!-- Ngày sinh -->
+          <div class="col-md-4 col-sm-12">
+            <label class="form-label d-block fw-semibold">Ngày sinh</label>
+            <input
+              type="date"
+              class="form-control form-input text-uppercase"
+
+
+              placeholder="Chọn ngày sinh"
+            />
+          </div>
+        </div>
+        </div>
+
+        <!-- Địa chỉ -->
+        <div class="form-group mb-3">
+          <label class="form-label">Địa chỉ</label>
+
+          <!-- Ô hiển thị địa chỉ -->
+          <div class="address-input" (click)="toggleDropdown()">
+            <span *ngIf="!customerForm.value.xa">Tỉnh/ Thành phố, Quận/Huyện, Phường/Xã</span>
+
+            <span *ngIf="customerForm.value.xa">
+              {{ selectedProvince?.name }}, {{ selectedDistrict?.name }}, {{ selectedWard?.name }}
+            </span>
+            <i class="fa fa-chevron-down"></i>
+          </div>
+
+          <!-- Dropdown hiển thị khi click -->
+          <div class="address-dropdown" *ngIf="dropdownOpen">
+            <div class="address-tabs">
+              <div
+                class="tab"
+                [class.active]="activeTab === 'tinh'"
+                (click)="activeTab = 'tinh'"
+              >
+                Tỉnh/Thành phố
+              </div>
+              <div
+                class="tab"
+                [class.active]="activeTab === 'huyen'"
+                [class.disabled]="!selectedProvince"
+                (click)="selectedProvince && (activeTab = 'huyen')"
+              >
+                Quận/Huyện
+              </div>
+              <div
+                class="tab"
+                [class.active]="activeTab === 'xa'"
+                [class.disabled]="!selectedDistrict"
+                (click)="selectedDistrict && (activeTab = 'xa')"
+              >
+                Phường/Xã
+              </div>
+            </div>
+
+            <!-- Nội dung từng tab -->
+            <div class="tab-content">
+              <!-- Danh sách tỉnh -->
+              <div *ngIf="activeTab === 'tinh'">
+                <div
+                  class="address-item"
+                  *ngFor="let p of listProvince"
+                  (click)="selectProvince(p)"
+                >
+                  {{ p.name }}
+                </div>
+              </div>
+
+              <!-- Danh sách huyện -->
+              <div *ngIf="activeTab === 'huyen'">
+                <div
+                  class="address-item"
+                  *ngFor="let d of listDistrict"
+                  (click)="selectDistrict(d)"
+                >
+                  {{ d.name }}
+                </div>
+              </div>
+
+              <!-- Danh sách xã -->
+              <div *ngIf="activeTab === 'xa'">
+                <div
+                  class="address-item"
+                  *ngFor="let w of listWard"
+                  (click)="selectWard(w)"
+                >
+                  {{ w.name }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <input class="form-input" formControlName="pho" placeholder="Số nhà, tên đường" style="width: 100%;">
+        </div>
+
+
+        <!--      <div class="form-group"><label class="form-label">Sản phẩm/Dịch vụ:</label><input class="form-input" formControlName="sanPhamDichVu"></div>-->
+        <div class="form-group mb-3">
+          <label class="form-label fw-semibold">Yêu cầu / Ghi chú:</label>
+          <textarea
+            formControlName="yeuCau"
+            class="form-textarea"
+            placeholder="Nhập yêu cầu, ghi chú về nhu cầu, sở thích hoặc quan tâm của khách hàng..."
+          ></textarea>
+        </div>
+
+        <div class="customer-row d-flex align-items-center mb-3">
+          <label class="customer-label me-3 mb-0">Nhóm khách hàng</label>
+          <select class="customer-select compact" formControlName="nhomKh">
+            <ng-container *ngFor="let item of listCommon">
+              <option *ngIf="item.type === COMMMON_CODE.NHOM_KH" [value]="item.code">
+                {{ item.name }}
+              </option>
+            </ng-container>
+          </select>
+        </div>
+
+        <!-- FILE ĐÍNH KÈM -->
+        <div class="form-group mb-3">
+          <label class="form-label fw-semibold">File:</label>
+
+          <!-- Ô chọn / kéo thả file -->
+          <div
+            class="file-dropzone"
+            (click)="fileInput.click()"
+            (drop)="onFileDrop($event)"
+            (dragover)="onDragOver($event)"
+            (dragleave)="onDragLeave($event)"
+          >
+            <span class="placeholder-text">Kéo & thả file vào đây hoặc bấm để chọn file...</span>
+            <input
+              type="file"
+              #fileInput
+              (change)="onFileSelect($event)"
+              multiple
+              hidden
+            />
+          </div>
+
+          <!-- Danh sách file -->
+          <ul class="file-list list-unstyled" *ngIf="selectedFiles?.length > 0">
+            <li
+              *ngFor="let file of selectedFiles; let i = index"
+              class="file-item d-flex align-items-center justify-content-between"
+            >
+              <div class="file-info d-flex align-items-center gap-2">
+                <i class="fas" [ngClass]="getFileIcon(file.name)"></i>
+                <span>{{ file.name }}</span>
+              </div>
+              <button
+                type="button"
+                class="btn-remove"
+                (click)="removeFile(i)"
+                title="Xóa file"
+              >
+                <i class="fas fa-times"></i>
+              </button>
+            </li>
+          </ul>
+        </div>
+
+
+    <!-- Hàng nút bên dưới -->
+    <div class="d-flex justify-content-end gap-2 mt-3" style="margin-right: 30px;">
+      <button class="btn btn-light btn-expand" type="button" (click)="changeSize()">
+        Mở rộng
+      </button>
+      <button class="btn btn-primary btn-save" type="submit">
+        lưu
+      </button>
+</div>

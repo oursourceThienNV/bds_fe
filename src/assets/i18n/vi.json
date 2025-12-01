@@ -1,0 +1,1780 @@
+{
+
+  "validation": {
+    "required": "{{field}} không được bỏ trống.",
+    "maxLength": "{{field}} chỉ được dài tối đa {{value}} ký tự",
+    "max": "{{field}} không lớn hơn {{value}}",
+    "minLength": "{{field}} phải dài tối thiểu {{value}} ký tự",
+    "pattern": "{{field}} sai định dạng",
+    "onlyNaturalNumber": "{{field}} phải là số nguyên dương",
+    "onlyNumber": "{{field}} phải là số",
+    "onlyDoubleNumber": "{{field}} phải là kiểu số",
+    "onlyCharacter": "{{field}} chỉ được nhập ký tự chữ cái, chữ số và dấu _",
+    "mustMatch": "{{field}} không khớp",
+    "passwordMustMatchChange": "Mật khẩu mới và nhập lại mật khẩu mới không khớp",
+    "existCheck": "{{field}} đã tồn tại",
+    "email": "Không đúng định dạng email",
+    "mustSameUnit": "{{field}} phải cùng đơn vị"
+  },
+  "HEADER": {
+    "SEARCH": "Tìm kiếm...",
+    "MEGA_MENU": "Mega Menu",
+    "NOTIFICATIONS": {
+      "TITLE": "Thông báo",
+      "VIEW_ALL": "Tất cả",
+      "LOAD_MORE": "Xem thêm..",
+      "FIRST": {
+        "TITLE": "Your order is placed",
+        "TEXT": "If several languages coalesce the grammar",
+        "TIME": "3 min ago"
+      },
+      "SECOND": {
+        "TITLE": "James Lemire",
+        "TEXT": "It will seem like simplified English.",
+        "TIME": "1 hours ago"
+      },
+      "THIRD": {
+        "TITLE": "Your item is shipped",
+        "TEXT": "If several languages coalesce the grammar",
+        "TIME": "3 min ago"
+      },
+      "FOUR": {
+        "TITLE": "Salena Layfield",
+        "TEXT": "As a skeptical Cambridge friend of mine occidental.",
+        "TIME": "1 hours ago"
+      }
+    },
+    "SETTINGS": "Settings",
+    "UI": {
+      "TITLE": "UI Components",
+      "LIGHTBOX": "LightBox",
+      "RANGE_SLIDER": "Range Slider",
+      "SWEET_ALERT": "Sweet Alert",
+      "RATING": "Rating",
+      "FORMS": "Forms",
+      "TABLES": "Tables",
+      "CHARTS": "Charts"
+    },
+    "APPLICATIONS": {
+      "TITLE": "Applications",
+      "ECOMMERCE": "Ecommerce",
+      "CALENDAR": "Calendar",
+      "EMAIL": "Email",
+      "PROJECTS": "Projects",
+      "TASKS": "Tasks",
+      "CONTACTS": "Contacts"
+    },
+    "EXTRA_PAGES": {
+      "TITLE": "Extra Pages",
+      "LIGHT_SIDEBAR": "Light Sidebar",
+      "COMPACT_SIDEBAR": "Compact Sidebar",
+      "HORIZONTAL_LAYOUT": "Horizontal layout",
+      "MAINTENANCE": "Maintenance",
+      "COMING SOON": "Coming Soon",
+      "TIMELINE": "Timeline",
+      "FAQ": "FAQs"
+    },
+    "LOGIN": {
+      "PROFILE": "Profile",
+      "MY_WALLET": "My Wallet",
+      "SETTINGS": "Settings",
+      "LOCK_SCREEN": "Lock screen",
+      "LOGOUT": "Logout"
+    }
+  },
+  "MENUITEMS": {
+    "MENU": {
+      "TEXT": "Menu"
+    },
+    "DASHBOARDS": {
+      "TEXT": "Dashboards",
+      "BADGE": "04",
+      "LIST": {
+        "DEFAULT": "Default",
+        "SAAS": "Saas",
+        "CRYPTO": "Crypto",
+        "BLOG": "Blog"
+      }
+    },
+    "LAYOUTS": {
+      "TEXT": "Layouts",
+      "LIST": {
+        "HORIZONTAL": "Horizontal",
+        "LIGHTSIDEBAR": "Light Sidebar",
+        "COMPACTSIDEBAR": "Compact Sidebar",
+        "ICONSIDEBAR": "Icons Sidebar",
+        "BOXED": "Boxed Layout",
+        "COLOREDSIDEBAR": "Colored Sidebar",
+        "VERTICAL": "Vertical",
+        "LIGHTTOPBAR": "Light Topbar",
+        "COLOREDHEADER": "Colored Header",
+        "SCROLLABLE": "Scrollable"
+      }
+    },
+    "APPS": {
+      "TEXT": "Ứng dụng"
+    },
+    "CALENDAR": {
+      "TEXT": "Calendar"
+    },
+    "CHAT": {
+      "TEXT": "Chat",
+      "BADGE": "New"
+    },
+    "FILEMANAGER": {
+      "TEXT": "File Manager",
+      "BADGE": "New"
+    },
+    "ECOMMERCE": {
+      "TEXT": "Ecommerce",
+      "LIST": {
+        "PRODUCTS": "Products",
+        "PRODUCTDETAIL": "Product Detail",
+        "ORDERS": "Orders",
+        "CUSTOMERS": "Customers",
+        "CART": "Cart",
+        "CHECKOUT": "Checkout",
+        "SHOPS": "Shops",
+        "ADDPRODUCT": "Add Product"
+      }
+    },
+    "CRYPTO": {
+      "TEXT": "Crypto",
+      "LIST": {
+        "WALLET": "Wallet",
+        "BUY/SELL": "Buy/Sell",
+        "EXCHANGE": "Exchange",
+        "LENDING": "Lending",
+        "ORDERS": "Orders",
+        "KYCAPPLICATION": "KYC Application",
+        "ICOLANDING": "ICO Landing"
+      }
+    },
+    "EMAIL": {
+      "TEXT": "Email",
+      "LIST": {
+        "INBOX": "Inbox",
+        "READEMAIL": "Read Email",
+        "TEMPLATE": {
+          "BADGE": "New",
+          "TEXT": "Template",
+          "LIST": {
+            "BASIC": "Basic Action",
+            "ALERT": "Alert Email",
+            "BILLING": "Billing Email"
+          }
+        }
+      }
+    },
+    "INVOICES": {
+      "TEXT": "Invoices",
+      "LIST": {
+        "INVOICELIST": "Invoice List",
+        "INVOICEDETAIL": "Invoice Detail"
+      }
+    },
+    "PROJECTS": {
+      "TEXT": "Projects",
+      "LIST": {
+        "GRID": "Projects Grid",
+        "PROJECTLIST": "Projects List",
+        "OVERVIEW": "Project Overview",
+        "CREATE": "Create New"
+      }
+    },
+    "TASKS": {
+      "TEXT": "Tasks",
+      "LIST": {
+        "TASKLIST": "Task List",
+        "KANBAN": "Kanban Board",
+        "CREATETASK": "Create Task"
+      }
+    },
+    "CONTACTS": {
+      "TEXT": "Contacts",
+      "LIST": {
+        "USERGRID": "User Grid",
+        "USERLIST": "User List",
+        "PROFILE": "Profile"
+      }
+    },
+    "BLOG": {
+      "TEXT": "Blog",
+      "BADGE": "New",
+      "LIST": {
+        "BLOGLIST": "Blog List",
+        "BLOGGRID": "Blog Grid",
+        "DETAIL": "Blog Details"
+      }
+    },
+    "PAGES": {
+      "TEXT": "Pages"
+    },
+    "AUTHENTICATION": {
+      "TEXT": "Authentication",
+      "BADGE": "New",
+      "LIST": {
+        "LOGIN": "Login",
+        "LOGIN2": "Login 2",
+        "REGISTER": "Register",
+        "REGISTER2": "Register 2",
+        "RECOVERPWD": "Recover Password",
+        "RECOVERPWD2": "Recover Password 2",
+        "LOCKSCREEN": "Lock screen",
+        "LOCKSCREEN2": "Lock screen 2",
+        "CONFIRMMAIL": "Confirm Mail",
+        "CONFIRMMAIL2": "Confirm Mail 2",
+        "EMAILVERIFICATION": "Email verification",
+        "EMAILVERIFICATION2": "Email verification 2",
+        "TWOSTEPVERIFICATION": "Two step verification",
+        "TWOSTEPVERIFICATION2": "Two step verification 2"
+      }
+    },
+    "UTILITY": {
+      "TEXT": "Utility",
+      "LIST": {
+        "STARTER": "Starter Page",
+        "MAINTENANCE": "Maintenance",
+        "TIMELINE": "Timeline",
+        "FAQS": "FAQs",
+        "PRICING": "Pricing",
+        "ERROR404": "Error 404",
+        "ERROR500": "Error 500"
+      }
+    },
+    "COMPONENTS": {
+      "TEXT": "Components"
+    },
+    "UIELEMENTS": {
+      "TEXT": "UI Elements",
+      "LIST": {
+        "ALERTS": "Alerts",
+        "BUTTONS": "Buttons",
+        "CARDS": "Cards",
+        "CAROUSEL": "Carousel",
+        "DROPDOWNS": "Dropdowns",
+        "GRID": "Grid",
+        "IMAGES": "Images",
+        "LIGHTBOX": "Lightbox",
+        "MODALS": "Modals",
+        "RANGESLIDER": "Range Slider",
+        "PROGRESSBAR": "Progress Bars",
+        "PLACEHOLDER": "Placeholder",
+        "SWEETALERT": "Sweet Alert",
+        "TABS": "Tabs & Accordions",
+        "TYPOGRAPHY": "Typography",
+        "VIDEO": "Video",
+        "GENERAL": "General",
+        "COLORS": "Colors",
+        "CROPPER": "Image Cropper"
+      }
+    },
+    "FORMS": {
+      "TEXT": "Forms",
+      "BADGE": "09",
+      "LIST": {
+        "ELEMENTS": "Form Elements",
+        "VALIDATION": "Form Validation",
+        "ADVANCED": "Form Advanced",
+        "EDITOR": "Form Editor",
+        "FILEUPLOAD": "Form File Upload",
+        "REPEATER": "Form Repeater",
+        "WIZARD": "Form Wizard",
+        "MASK": "Form Mask",
+        "LAYOUTS": "Form Layouts"
+      }
+    },
+    "TABLES": {
+      "TEXT": "Tables",
+      "LIST": {
+        "BASIC": "Basic Tables",
+        "ADVANCED": "Advanced Table"
+      }
+    },
+    "CHARTS": {
+      "TEXT": "Charts",
+      "LIST": {
+        "APEX": "Apex Chart",
+        "CHARTJS": "Chartjs Chart",
+        "CHARTIST": "Chartist Chart",
+        "ECHART": "E Chart"
+      }
+    },
+    "ICONS": {
+      "TEXT": "Icons",
+      "LIST": {
+        "BOXICONS": "Boxicons",
+        "MATERIALDESIGN": "Material Design",
+        "DRIPICONS": "Dripicons",
+        "FONTAWESOME": "Font Awesome"
+      }
+    },
+    "MAPS": {
+      "TEXT": "Maps",
+      "LIST": {
+        "GOOGLEMAP": "Google Maps"
+      }
+    },
+    "MULTILEVEL": {
+      "TEXT": "Multi Level",
+      "LIST": {
+        "LEVEL1": {
+          "1": "Level 1.1",
+          "2": "Level 1.2",
+          "LEVEL2": {
+            "1": "Level 2.1",
+            "2": "Level 2.2"
+          }
+        }
+      }
+    },
+    "ASSIGN_KPI": {
+      "TEXT": "Giao chỉ tiêu và kế hoạch",
+      "LIST": {
+        "ASSIGN_KPI": "Giao chỉ tiêu và kế hoạch"
+      }
+    }
+  },
+  "cat-item": {
+    "title": "Quản lý danh mục chung",
+    "create-title": "Thêm mới danh mục chung",
+    "update-title": "Cập nhật danh mục chung",
+    "column": {
+      "no": "STT",
+      "action": "Hành động",
+      "categoryId": "Loại danh mục",
+      "itemCode": "Mã",
+      "itemName": "Tên",
+      "itemValue": "Giá trị",
+      "position": "Thứ tự",
+      "parentItemName": "Danh mục cha",
+      "description": "Mô tả",
+      "status": "Trạng thái",
+      "editable": "Cho phép sửa",
+      "unit": "Đơn vị",
+      "updateTime": "Thời điểm tác động"
+    },
+    "button": {
+      "search": "Tìm kiếm",
+      "create": "Tạo mới",
+      "edit": "Sửa",
+      "delete": "Xóa",
+      "save": "Lưu",
+      "close": "Hủy bỏ"
+    },
+    "delete": {
+      "delete-title": "Xác nhận",
+      "delete-text": "Bạn có muốn xóa cấu hình?",
+      "delete": "Xác nhận"
+    },
+    "change": {
+      "change-title": "Xác nhận",
+      "change-text": "Bạn có muốn đổi trạng thái cấu hình?",
+      "change": "Xác nhận"
+    },
+    "select": {
+      "placeholder": "Lựa chọn",
+      "notFoundText": "Không có dữ liệu",
+      "status": {
+        "1": "Hoạt động",
+        "0": "Không hoạt động"
+      },
+      "editable": {
+        "1": "Có",
+        "0": "Không"
+      }
+    }
+  },
+  "cat-kpi-overview-graph": {
+    "title": "Quản lý chỉ tiêu theo nhóm",
+    "create-title": "Thêm mới chỉ tiêu theo nhóm",
+    "update-title": "Cập nhật chỉ tiêu theo nhóm",
+    "column": {
+      "no": "STT",
+      "action": "Hành động",
+      "position": "Thứ tự hiển thị",
+      "status": "Trạng thái",
+      "unit": "Đơn vị",
+      "updateTime": "Thời điểm tác động",
+      "kpiCode": "Mã chỉ tiêu",
+      "parentCode": "Chỉ tiêu cha",
+      "channelCode": "Kênh",
+      "groupCode": "Nhóm hiển thị",
+      "type": "Loại nghiệp vụ",
+      "hardLevel": "Hệ số khó/dễ",
+      "kpiDisplay": "Tên KPI hiển thị",
+      "typeDisplay": "Loại giá trị hiển thị",
+      "note": "Ghi chú"
+    },
+    "button": {
+      "search": "Tìm kiếm",
+      "create": "Tạo mới",
+      "edit": "Sửa",
+      "delete": "Xóa",
+      "save": "Lưu",
+      "close": "Hủy bỏ"
+    },
+    "delete": {
+      "delete-title": "Xác nhận",
+      "delete-text": "Bạn có muốn xóa cấu hình?",
+      "delete": "Xác nhận"
+    },
+    "change": {
+      "change-title": "Xác nhận",
+      "change-text": "Bạn có muốn đổi trạng thái cấu hình?",
+      "change": "Xác nhận"
+    },
+    "select": {
+      "placeholder": "Lựa chọn",
+      "notFoundText": "Không có dữ liệu",
+      "status": {
+        "1": "Hoạt động",
+        "0": "Không hoạt động"
+      },
+      "editable": {
+        "1": "Có",
+        "0": "Không"
+      }
+    }
+  },
+  "cat-group-position": {
+    "title": "Quản lý danh mục nhóm chức danh",
+    "create-title": "Thêm mới nhóm chức danh",
+    "update-title": "Cập nhật nhóm chức danh",
+    "column": {
+      "no": "STT",
+      "action": "Hành động",
+      "groupPositionCode": "Nhóm chức danh",
+      "positionCode": "Mã chức danh",
+      "channelCode": "Kênh",
+      "status": "Trạng thái",
+      "position": "Thứ tự",
+      "type": "Loại nghiệp vụ",
+      "unit": "Đơn vị"
+    },
+    "delete": {
+      "delete-title": "Xác nhận",
+      "delete-text": "Bạn có muốn xóa cấu hình?",
+      "delete": "Xác nhận"
+    },
+    "button": {
+      "search": "Tìm kiếm",
+      "create": "Tạo mới",
+      "edit": "Sửa",
+      "delete": "Xóa",
+      "export": "Xuất file",
+      "save": "Lưu",
+      "close": "Hủy bỏ"
+    },
+    "select": {
+      "placeholder": "Lựa chọn",
+      "notFoundText": "Không có dữ liệu",
+      "1": "Chức danh callout trên bản đồ",
+      "2": "Điều hành",
+      "status": {
+        "1": "Hoạt động",
+        "0": "Không hoạt động"
+      }
+    }
+  },
+  "sale-point-route-management": {
+    "title": "Lập lộ trình chăm sóc điểm bán",
+    "create-title": "Thêm lộ trình từ file",
+    "approve-title": "Phê duyệt/Từ chối lộ trình chăm sóc",
+    "column": {
+      "no": "STT",
+      "action": "Hành động",
+      "fromDate": "Từ ngày chăm sóc",
+      "toDate": "Tới ngày chăm sóc",
+      "provinceName": "Tỉnh/Thành phố",
+      "districtName": "Quận/Huyện",
+      "staffOwnerNo": "Mã NV quản lý",
+      "salePointCode": "Mã điểm bán",
+      "status": "Trạng thái",
+      "unit": "Đơn vị",
+      "staffOwnerName": "Tên NV quản lý",
+      "salePointName": "Tên điểm bán",
+      "dateCarePlanStr": "Ngày chăm sóc",
+      "villageName": "Xã/Phường",
+      "address": "Địa chỉ",
+      "note": "Ghi chú",
+      "createDateStr": "Ngày tạo",
+      "approveDateStr": "Ngày phê chuẩn/Từ chối",
+      "userApprove": "Người phê duyệt/Từ chối",
+      "importMonth": "Tháng chăm sóc"
+    },
+    "button": {
+      "search": "Tìm kiếm",
+      "import": "Import lộ trình",
+      "edit": "Sửa",
+      "delete": "Xóa",
+      "save": "Lưu",
+      "close": "Hủy bỏ",
+      "export-district": "DS điểm bán huyện",
+      "export": "KH lộ trình chăm sóc",
+      "approve": "Phê duyệt",
+      "deny": "Từ chối",
+      "approve-detail": "Phê duyệt chi tiết"
+    },
+    "delete": {
+      "delete-title": "Xác nhận",
+      "delete-text": "Bạn có muốn xóa cấu hình?",
+      "delete": "Xác nhận"
+    },
+    "change": {
+      "change-title": "Xác nhận",
+      "change-text": "Bạn có muốn đổi trạng thái cấu hình?",
+      "change": "Xác nhận"
+    },
+    "select": {
+      "placeholder": "Lựa chọn",
+      "notFoundText": "Không có dữ liệu",
+      "status": {
+        "1": "Hoạt động",
+        "0": "Không hoạt động"
+      },
+      "editable": {
+        "1": "Có",
+        "0": "Không"
+      }
+    }
+  },
+  "config-kpi-gboc": {
+    "title": "Danh mục chỉ tiêu trên GBOC",
+    "create-title": "Thêm mới chỉ tiêu trên GBOC",
+    "update-title": "Cập nhật chỉ tiêu trên GBOC",
+    "column": {
+      "no": "STT",
+      "action": "Hành động",
+      "position": "Thứ tự",
+      "serviceId": "ID chỉ tiêu",
+      "serviceName": "Tên chỉ tiêu",
+      "serviceCode": "Mã chỉ tiêu",
+      "parentServiceId": "Mã chỉ tiêu cha",
+      "unit": "Đơn vị tính",
+      "unitCode": "Đơn vị",
+      "status": "Trạng thái",
+      "havingChannel": "Loại chỉ tiêu",
+      "groupService": "Nhóm chỉ tiêu",
+      "isMain": "Là chỉ tiêu chính",
+      "rate": "Tỷ lệ hiển thị (RATE)",
+      "passAction": "Mật khẩu tác động",
+      "dataSource": "Nguồn dữ liệu",
+      "defineFormula": "Định nghĩa cách tính",
+      "effectGuildSale": "Hướng dẫn bán hàng hiệu quả",
+      "attributeCode": "Loại thuộc tính chỉ tiêu"
+    },
+    "delete": {
+      "delete-title": "Xác nhận",
+      "delete-text": "Bạn có muốn xóa cấu hình?",
+      "delete": "Xác nhận"
+    },
+    "button": {
+      "search": "Tìm kiếm",
+      "create": "Tạo mới",
+      "edit": "Sửa",
+      "delete": "Xóa",
+      "export": "Xuất file",
+      "save": "Lưu",
+      "close": "Hủy bỏ"
+    },
+    "select": {
+      "placeholder": "Lựa chọn",
+      "notFoundText": "Không có dữ liệu",
+      "1": "Chức danh callout trên bản đồ",
+      "2": "Điều hành",
+      "status": {
+        "1": "Hoạt động",
+        "0": "Không hoạt động"
+      }
+    }
+  },
+  "fo-management": {
+    "title": "Danh mục Fo chuyên quản tỉnh/TP",
+    "create-title": "THÊM MỚI DANH MỤC FO CHUYÊN QUẢN TỈNH/TP",
+    "update-title": "CẬP NHẬT DANH MỤC FO CHUYÊN QUẢN TỈNH/TP",
+    "column": {
+      "no": "STT",
+      "action": "Sửa",
+      "select": "Chọn",
+      "remove": "Bỏ chọn",
+      "zoneCode": "Mã vùng",
+      "zoneName": "Tên vùng",
+      "province": "Tỉnh/Thành phố",
+      "provinceBrief": "Mã tỉnh viết tắt",
+      "provinceCode": "Mã tỉnh",
+      "status": "Trạng thái",
+      "userName": "Tên User Bccs/Mbccs",
+      "staffName": "Nhân sự chuyên trách",
+      "staffCode": "Mã nhân viên",
+      "email": "Email",
+      "phoneNumber": "Số điện thoại",
+      "channelCode": "Kênh",
+      "description": "Mô tả"
+    },
+    "validator": {
+      "user-not-map": "Tên User không tồn tại",
+      "duplicate-record": "Bản ghi trùng lặp bản ghi khác trong DB "
+    }
+  },
+  "cat-kpi-alarm": {
+    "title": "Danh mục chỉ tiêu cảnh báo",
+    "create-title": "THÊM MỚI DANH MỤC CHỈ TIÊU CẢNH BÁO",
+    "update-title": "CẬP NHẬT DANH MỤC CHỈ TIÊU CẢNH BÁO",
+    "column": {
+      "id": "ID chỉ tiêu cảnh báo",
+      "serviceName": "Tên chỉ tiêu cảnh báo",
+      "serviceCode": "Mã chỉ tiêu cảnh báo",
+      "serviceCodeOld": "Mã chỉ tiêu gốc",
+      "unitCode": "Đơn vị tính",
+      "unit": "Đơn vị",
+      "displayName": "Tên chỉ tiêu hiển thị",
+      "password": "Mật khẩu tác động",
+      "alarmType": "Loại cảnh báo",
+      "position": "Thứ tự hiển thị",
+      "havingChannel": "Loại chỉ tiêu",
+      "groupAlarm": "Nhóm cảnh báo",
+      "groupService": "Nhóm chỉ tiêu"
+    },
+    "havingChannel": "Loại chỉ tiêu",
+    "unit": "Đơn vị tính",
+    "serviceCodeOld": "Chỉ tiêu gốc",
+    "groupService": "Nhóm chỉ tiêu",
+    "groupAlarm": "Nhóm cảnh báo",
+    "serviceName": "Chỉ tiêu cảnh báo"
+  },
+  "map-area-province": {
+    "title": "Danh mục map tỉnh với vùng miền",
+    "create-title": "THÊM MỚI DANH MỤC MAP TỈNH VỚI VÙNG MIỀN",
+    "update-title": "CẬP NHẬT DANH MỤC MAP TỈNH VỚI VÙNG MIỀN",
+    "area": "Vùng",
+    "province": "Tỉnh/Thành phố",
+    "column": {
+      "areaCode": "Mã vùng miền",
+      "areaName": "Tên vùng miền",
+      "provinceCode": "Mã tỉnh",
+      "provinceName": "Tên tỉnh"
+    }
+  },
+  "config-kpi-finish": {
+    "title": "Danh mục cấu hình ngưỡng chỉ tiêu hoàn thành",
+    "create-title": "THÊM MỚI CẤU HÌNH NGƯỠNG CHỈ TIÊU HOÀN THÀNH",
+    "update-title": "CẬP NHẬT CẤU HÌNH NGƯỠNG CHỈ TIÊU HOÀN THÀNH",
+    "kpi": "Chỉ tiêu",
+    "unit": "Thị trường",
+    "startValue": "Giá trị bắt đầu",
+    "endValue": "Giá trị kết thúc",
+    "kpiValue": "Kết quả hoàn thành",
+    "updateTime": "Thời gian cập nhật",
+    "channel": "Kênh"
+  },
+  "validation": {
+    "from-date": "Bạn phải chọn giá trị Từ ngày",
+    "to-date": "Bạn phải chọn giá trị Đến ngày",
+    "maxLength255": "Tên chiến dịch chỉ cho phép nhập tối đa 255 ký tự",
+    "change-status": "Chuyển trạng thái",
+    "change_status_sub": "Xác nhận chuyển trạng thái",
+    "number-phone-not-regex": "Số điện thoại gọi đến không đúng định dạng",
+    "phone-not-regex": "Số điện thoại liên hệ không đúng định dạng",
+    "required": "Bạn phải nhập  {{field}}",
+    "requiredCb": "Bạn phải chọn  {{field}}",
+    "maxlength": "{{field}} chỉ được dài tối đa {{value}} ký tự",
+    "minLength": "{{field}} phải dài tối thiểu {{value}} ký tự",
+    "minlength": "{{field}} phải dài tối thiểu {{value}} ký tự",
+    "pattern": "{{field}} không đúng định dạng",
+    "onlyNaturalNumber": "{{field}} phải là số nguyên dương",
+    "onlyNumber": "{{field}} phải là số",
+    "onlyDoubleNumber": "{{field}} phải là kiểu số",
+    "onlyCharacter": "{{field}} chỉ được nhập ký tự chữ cái, chữ số, dấu _ và không nhập tiếng Việt có dấu",
+    "mustMatch": "{{field}} không khớp",
+    "passwordMustMatchChange": "Mật khẩu mới và nhập lại mật khẩu mới không khớp",
+    "existCheck": "{{field}} đã tồn tại",
+    "email": "Không đúng định dạng email",
+    "mustSameUnit": "{{field}} phải cùng đơn vị",
+    "maxValue": "{{field}} không vượt quá {{value}}",
+    "customRequired": "Bạn phải nhập {{field}}",
+    "minValue": "{{field}} không nhỏ hơn {{value}}",
+    "invalidBrand": "Tên đăng nhập bắt buộc phải có \"smsbrand_\" ở đầu",
+    "invalidCpCode": "Chỉ cho phép nhập ký tự in hoa, in thường, không dấu, viết liền",
+    "invalidPhoneNumber": "Số điện thoại được nhập phải bắt đầu với 84 và số ký tự nhập vào phải ≥ 11 và ≤ 12!",
+    "invalidPassword": "Mật khẩu website tối thiểu 8 ký tự và phải gồm chữ hoa chữ thường, số và ký tự đặc biệt",
+    "must-input": "Bạn phải nhập {{field}}",
+    "must-select": "Bạn phải chọn {{field}}",
+    "isValidInput": "{{field}} không được chứa ký tự đặc biệt",
+    "number.greater0": "{{field}} phải là số >0!",
+    "dateFull": "Sai định dạng ngày",
+    "error.Date.pattern": "{{field}}  sai định dạng ngày tháng",
+    "requestType": "Bạn phải nhập loại yêu cầu",
+    "businessType": "Bạn phải nhập loại nghiệp vụ",
+    "priority": "Bạn phải chọn độ ưu tiên",
+    "content": "Bạn phải nhập nội dung yêu cầu",
+    "deadline.request": "Bạn phải chọn hạn yêu cầu",
+    "time": "Bạn phải nhập thời gian",
+    "phone": "Bạn phải nhập số điện thoại",
+    "email.require": "Bạn phải nhập email",
+    "typeChannel.require": "Chọn kênh tiếp nhận",
+    "content.require": "Bạn phải nhập nội dung trao đổi",
+    "level.require": "Vui lòng chọn mức độ hài lòng",
+    "malformed": "Không đúng định dạng",
+    "max_length": "{{field}} chỉ được nhập tối đa {{requiredLength}} ký tự",
+    "required2": "{{field}} không được phép bỏ trống.",
+    "fromOverTo": "{{from}} không được lớn hơn hoặc bằng {{to}}",
+    "isNotInteger": "{{field}} phải là số nguyên dương",
+    "beginDateMustLowerEndDate": "Ngày kết thúc phải lớn hơn ngày bắt đầu",
+    "invalidNaturalNumber": "{{field}} phải là số tự nhiên",
+    "passwordNotMatch": "Mật khẩu và nhập lại mật khẩu không khớp nhau"
+  },
+  "menu": {
+    "sysMng": "Cấu hình"
+  },
+  "common": {
+    "select": "Lựa chọn",
+    "select.placeholder": "Lựa chọn",
+    "select.notFoundText": "Không có dữ liệu",
+    "searchInfo": "Thông tin tìm kiếm",
+    "yes": "Có",
+    "no": "Không",
+    "close": "Đóng",
+    "save": "Lưu",
+    "search": "Tìm kiếm",
+    "delete": "Xóa",
+    "reset": "Nhập lại",
+    "addNew": "Thêm mới",
+    "stt": "STT",
+    "manipulation": "Thao tác",
+    "userUpdate": "Người cập nhật",
+    "updateTime": "Thời gian cập nhật",
+    "enterValue": "Nhập giá trị",
+    "info": "Thông tin chung",
+    "clear": "Xóa",
+    "edit": "Sửa",
+    "upload": "Nhập file",
+    "export": "Xuất file",
+    "warning": "Cảnh báo",
+    "error": "Thông báo lỗi",
+    "success": "Thành công",
+    "notify": "Thông báo",
+    "disagree": "Không đồng ý",
+    "agree": "Đồng ý",
+    "perform": "Thực hiện",
+    "noFileToUpload": "Vui lòng chọn file để thực hiện!",
+    "downloadResult": "Tải file kết quả!",
+    "downloadResultDetail": "Import thành công {{success}} bản ghi, thất bại {{error}} bản ghi",
+    "total": "Tổng số",
+    "totalSuccessRecord": "Bản ghi thành công",
+    "totalErrorRecord": "Bản ghi thất bại",
+    "record": "bản ghi",
+    "messageUpload": "Chọn file",
+    "noDataSearch": "Không có kết quả!",
+    "noDataSelect": "Không có dữ liệu",
+    "searchResults": "Kết quả tìm kiếm ({{number}})",
+    "noRecordToAction": "Vui lòng chọn bản ghi để tiếp tục!",
+    "confirm": "Xác nhận",
+    "delete-confirm": "Bạn có muốn xóa bản ghi không?",
+    "button": {
+      "search": "Tìm kiếm",
+      "export": "Xuất file",
+      "insert": "Thêm mới",
+      "edit": "Sửa",
+      "delete": "Xóa",
+      "confirm": "Xác nhận",
+      "close": "Đóng",
+      "save": "Lưu",
+      "resetPassword": "Thiết lập lại mật khẩu",
+      "cancel": "Hủy"
+    },
+    "message": {
+      "delete-success": "Xóa bản ghi thành công",
+      "update-success": "Cập nhật bản ghi thành công",
+      "insert-success": "Thêm mới bản ghi thành công",
+      "resetpass-success": "Cập nhật mật khẩu thành công"
+    },
+    "typeToSearch": "Nhập để tìm kiếm",
+    "clone": "Sao chép",
+    "pagination": {
+      "form": "Hiển thị từ",
+      "record": "bản ghi",
+      "show": "Hiển thị",
+      "page": "trang",
+      "of": "của"
+    },
+    "confirmCloseModal": "Bạn có chắc chắn muốn đóng popup không?",
+    "province": "Tỉnh/Thành phố",
+    "district": "Quận/Huyện",
+    "village": "Xã/Phường",
+    "status": "Trạng thái",
+    "numberSelectedRecord": "Đã chọn {{num}} bản ghi."
+  },
+  "kipMonth": {
+    "unit": "Đơn vị",
+    "kipType": "Loại chỉ tiêu",
+    "kip": "Chỉ tiêu",
+    "kipList": "Danh sách chỉ tiêu",
+    "month": "Tháng",
+    "channel": "Kênh",
+    "kipLevel": "Mức giao chỉ tiêu",
+    "title": "Danh mục giao chỉ tiêu theo tháng",
+    "addNewTitle": "Thêm mới chỉ tiêu theo tháng",
+    "editTitle": "Cập nhật chỉ tiêu theo tháng",
+    "deleteConfirm": "Bạn có chắc chắn muốn xóa chỉ tiêu này không?",
+    "deleteConfirms": "Bạn có chắc chắn muốn những chỉ tiêu này không?",
+    "deleteSuccess": "Xóa chỉ tiêu thành công.",
+    "hasChannel": "Có kênh",
+    "noChannel": "Không kênh",
+    "kpiCode": "Mã chỉ tiêu",
+    "kpiName": "Tên chỉ tiêu",
+    "clone": {
+      "title": "Sao chép chỉ tiêu giao theo tháng",
+      "fromMonth": "Sao chép từ tháng",
+      "toMonth": "Cho tháng",
+      "cloneSuccess": "Sao chép chỉ tiêu thành công.",
+      "cloneAgain": "Tháng {{month}} đã có dữ liệu giao chỉ tiêu. Nếu thực hiện sao chép sẽ xóa dữ liệu cũ và sao chép dữ liệu mới thay thế.",
+      "cloneConfirm": "Bạn có chắc chắn muốn sao chép chỉ tiêu theo tháng không?",
+      "choseMonthHasData": "Sao chép từ tháng không có dữ liệu, vui lòng chọn tháng có dữ liệu để sao chép."
+    },
+    "confirmCreate": "Bạn có chắc chắn muốn tạo mới chỉ tiêu theo tháng không?",
+    "confirmUpdate": "Bạn có chắc chắn muốn cập nhật chỉ tiêu theo tháng không?",
+    "createSuccess": "Tạo mới chỉ tiêu thành công!",
+    "updateSuccess": "Cập nhật chỉ tiêu thành công!"
+  },
+  "kipFlow": {
+    "title": "Cấu hình luồng giao chỉ tiêu",
+    "unit": "Thị trường",
+    "levelTargetView": "Mức giao hiển thị",
+    "levelTargetBD": "Mức giao lưu trong DB",
+    "typeKip": "Loại chỉ tiêu",
+    "mainSave": "Bảng lưu chính của mức giao",
+    "parentLevelView": "Mức giao cha hiển thị",
+    "parentLevelBD": "Mức giao cha lưu trong BD",
+    "isSum": "Có tính tổng hay không",
+    "operatorCheck": "Toán tử kiểm tra",
+    "note": "Mô tả mức giao",
+    "checkTotal": "Có kiểm tra dữ liệu tổng hay không",
+    "checkChannel": "Có kiểm tra dữ liệu kênh hay không",
+    "parentKeyTotal": "Key kiểm tra tổng so với mức giao cha",
+    "parentKeyChannel": "Key kiểm tra kênh so với mức giao cha",
+    "keyTotalSave": "Key lưu dữ liệu bảng tổng",
+    "keyTotalUpdate": "Key cập nhật dữ liệu bảng tổng",
+    "keyChannelSave": "Key lưu dữ liệu bảng kênh",
+    "keyChannelUpdate": "Key cập nhật dữ liệu bảng kênh",
+    "positionCode": "Nhóm chức danh nhận chỉ tiêu",
+    "allowModify": "Có cho phép điều chỉnh chỉ tiêu",
+    "userLevelModify": "Mức user điều chỉnh chỉ tiêu",
+    "userLevel": "Mức user",
+    "requiredProvince": "Bắt buộc nhập Tỉnh/Chi nhánh trên giao diện",
+    "requiredDistrict": "Bắt buộc nhập Huyện/TTKD trên giao diện",
+    "keyWithChannel": "Có kiểm tra chỉ tiêu theo kênh",
+    "totalObjectImport": "Tổng số đối tượng cần import",
+    "changeManager": "Có cho phép thay đổi quản lý",
+    "keyChanObjectDel": "Key xóa theo đối tượng được giao theo kênh",
+    "keyChanParentDel": "Key xóa các đối tượng cùng cấp theo kênh",
+    "keyTotalObjectDel": "Key xóa theo đối tượng được giao theo tổng",
+    "keyTotalParentDel": "Key xóa các đối tượng cùng cấp theo tổng",
+    "vtt": "VTT",
+    "province": "Tỉnh/ chi nhánh",
+    "district": "Huyện/TTKD",
+    "addNewFlowTitle": "Thêm mới cấu hình luồng giao chỉ tiêu",
+    "updateFlowTitle": "Cập nhật cấu hình luồng giao chỉ tiêu",
+    "addNewConfigTitle": "Cấu hình mức giao",
+    "hasChannel": "Loại chỉ tiêu",
+    "configType": "Loại cấu hình",
+    "orderNo": "Thứ tự hiển thị",
+    "priority": "Độ ưu tiên",
+    "configRequired": "Cấu hình bắt buộc nhập",
+    "totalMainSave": "Bảng tổng",
+    "channelMainSave": "Bảng kênh",
+    "confirmUpdate": "Bạn có chắc chắn muốn cập nhật cấu hình không?",
+    "confirmCreate": "Bạn có chắc chắn muốn thêm mới cấu hình không?",
+    "updateSuccess": "Cập nhật cấu hình thành công!",
+    "createSuccess": "Tạo mới cấu hình thành công!",
+    "deleteSuccess": "Xóa cấu hình thành công!",
+    "deleteConfirm": "Bạn có chắc chắn xóa cấu hình này không?",
+    "deleteConfirms": "Bạn có chắc chắn xóa những cấu hình này không?",
+    "configRequiredModal": {
+      "title": "Trường thông tin bắt buộc nhập trong file import",
+      "confirmSave": "Bạn có chắc chắn muốn lưu cấu hình bắt buộc nhập không?",
+      "saveSuccess": "Lưu cấu hình thành công!"
+    },
+    "configSearch": "1-Tìm kiếm",
+    "configAssign": "2-Giao chỉ tiêu",
+    "config": {
+      "confirmUpdate": "Bạn có chắc chắn muốn cập nhật mức giao không?",
+      "confirmCreate": "Bạn có chắc chắn muốn thêm mới mức giao không?",
+      "updateSuccess": "Cập nhật mức giao thành công!",
+      "createSuccess": "Tạo mới mức giao thành công!",
+      "updateTitle": "Cập nhật mức giao",
+      "deleteSuccess": "Xóa cấu hình mức giao thành công!",
+      "deleteConfirm": "Bạn có chắc chắn xóa cấu hình mức giao này không?",
+      "deleteConfirms": "Bạn có chắc chắn xóa những cấu hình mức giao này không?"
+    }
+  },
+  "language": {
+    "title": "Danh mục đa ngôn ngữ",
+    "market": "Thị trường",
+    "language": "Ngôn ngữ",
+    "majorTable": "Bảng nghiệp vụ",
+    "messageUpload": "Chọn file",
+    "noFileToUpload": "Vui lòng chọn file để tiếp tục!",
+    "noTableToUpload": "Vui lòng chọn Bảng nghiệp vụ để tiếp tục!",
+    "noLanguageToUpload": "Vui lòng chọn Ngôn ngữ để tiếp tục!"
+  },
+  "dataEndMonth": {
+    "title": "Import dữ liệu chốt tháng",
+    "month": "Tháng",
+    "downloadTemplate": "Tải file mẫu",
+    "note": "Hệ thống chỉ cho phép import dữ liệu trước ngày cuối tháng",
+    "importSuccess": "Import dữ liệu chốt số tháng thành công!",
+    "importError": "Import dữ liệu chốt số tháng thất bại!",
+    "errorFileFormat": "File sai định dạng, chỉ chấp nhận định file có excel có định dạng xlsx.",
+    "noteUploadFile": "Chỉ cho phép import file xlsx, kích thước tối đa 2MB"
+  },
+  "alert": {
+    "success-delete": "Xóa bản ghi thành công",
+    "success-create": "Tạo mới bản ghi thành công",
+    "success-download": "Xuất bản ghi thành công",
+    "success-import": "Nhập dữ liệu thành công",
+    "error-import": "Nhập dữ liệu thất bại",
+    "error-import-file": "Có lỗi khi thực hiện Import, kiểm tra chi tiết lỗi trong file lỗi trả về",
+    "success-update": "Cập nhật bản ghi thành công",
+    "success-change": "Cập trạng thái bản ghi thành công",
+    "success-approve": "Phê duyệt thành công",
+    "error-file": "File không đúng định dạng",
+    "error-max-time": "Khoảng thời gian tìm kiếm không vượt quá 31 ngày",
+    "success-deny": "Từ chối thành công",
+    "failed-import": "Import thất bại"
+  },
+  "assignType": {
+    "withChanel": "Có kênh",
+    "withoutChanel": "Không kênh"
+  },
+  "ASSIGN_KPI": {
+    "TEXT": "Giao chỉ tiêu và kế hoạch",
+    "LIST": {
+      "ASSIGN_KPI": "Giao chỉ tiêu và kế hoạch"
+    },
+    "COLUMN": {
+      "INDEX": "STT",
+      "MONTH": "Tháng",
+      "UNIT": "Đơn vị",
+      "ASSIGN_LEVEL": "Mức giao chỉ tiêu",
+      "STATUS": {
+        "TITLE": "Trạng thái"
+      },
+      "PROVINCE_CODE": "Mã tỉnh",
+      "PROVINCE_NAME": "Tên tỉnh",
+      "DISTRICT_CODE": "Mã huyện",
+      "DISTRICT_CNAME": "Tên huyện",
+      "STAFF_CODE_ASSIGNED": "Mã NV nhận chỉ tiêu",
+      "STAFF_NAME_ASSIGNED": "Tên NV nhận chỉ tiêu",
+      "UNIT_CODE": "Mã đơn vị",
+      "UNIT_NAME": "Tên đơn vị",
+      "STAFF_MANAGE": "Nhân viên quản lý",
+      "CHANNEL_CODE": "Mã kênh",
+      "KPI_CODE": "Mã chỉ tiêu",
+      "KPI_NAME": "Tên chỉ tiêu",
+      "QUANTITY": "Sản lượng",
+      "CUSTOMER_NUMBER": "Số lượng khách hàng",
+      "GROUP_CODE": "Mã nhóm",
+      "GROUP_NAME": "Tên nhóm",
+      "ASSIGNER": "Người giao",
+      "ASSIGN_TIME": "Thời gian giao"
+    },
+    "fromMonth": "Từ tháng",
+    "toMonth": "Đến tháng",
+    "assignType": "Loại giao",
+    "kpiLevel": "Mức nhận chỉ tiêu",
+    "province": "Tỉnh/TP",
+    "district": "Quận/Huyện",
+    "staffCode": "Mã nhân viên",
+    "manager": "Nhân viên quản lý",
+    "chanel": "Kênh",
+    "currency": "Đơn vị tiền tệ",
+    "searchResult": "Kết quả tìm kiếm",
+    "assignParentLevel": "Mức giao chỉ tiêu cha",
+    "importCurrency": "Đơn vị tiền tệ trong file import",
+    "warningCurrencyImport": "Chú ý đơn vị tiền tệ khi import giao chỉ tiêu",
+    "chooseOrDrop": "Chọn hoặc kéo file vào",
+    "downTemplate": "Tải file mẫu",
+    "downTemplateWithData": "Tải file với dữ liệu mẫu",
+    "templateWarning": "Vui lòng nhập đủ các trường dữ liệu để dữ liệu mẫu được chính xác nhất"
+  },
+  "map_cluster_location": {
+    "title": "Danh mục map địa bàn với cụm",
+    "channel": "Kênh",
+    "province": "Tỉnh",
+    "district": "Huyện",
+    "village": "Xã",
+    "clusterCode": "Mã cụm",
+    "clusterName": "Tên cụm",
+    "shopName": "Cửa hàng",
+    "delete-confirm": "Bạn có muốn xóa bản ghi không?",
+    "create-title": "Thông tin mapping",
+    "update-title": "Thông tin mapping",
+    "choose_location_cluster": "Chọn địa bàn cho cụm/cửa hàng",
+    "list_location": "Danh sách địa bàn",
+    "list_selected_location": "Danh sách địa bàn đã chọn",
+    "locationLevel": "Cấp địa bàn",
+    "locationLevel-district": "Quận/Huyên",
+    "locationLevel-village": "Xã/Phường",
+    "button-export-cluster": "Xuất cụm/cửa hàng map địa bàn",
+    "button-export-cluster-leader": "Xuất cụm trưởng",
+    "column": {
+      "no": "STT",
+      "action": "Sửa",
+      "select": "Chọn",
+      "remove": "Bỏ chọn",
+      "channelCode": "Mã kênh",
+      "clusterCode": "Mã cụm/cửa hàng",
+      "clusterName": "Tên cụm/cửa hàng",
+      "locationLevel": "Cấp địa bàn",
+      "province": "Tỉnh/Thành phố",
+      "district": "Quận/Huyện",
+      "village": "Xã/Phường",
+      "updateUser": "Người cập nhật",
+      "updateTime": "Thời gian cập nhật"
+    },
+    "location": {
+      "required": "Bạn phải chọn địa bàn",
+      "locationCode": "Mã địa bàn",
+      "locationName": "Tên địa bàn",
+      "districtName": "Quận/Huyện"
+    }
+  },
+  "configKpiGboc": {
+    "title": "Danh mục chỉ tiêu trên GBOC ",
+    "create-title": "Thêm mới nhóm chức danh",
+    "update-title": "Cập nhật nhóm chức danh",
+    "column": {
+      "no": "STT",
+      "action": "Hành động",
+      "groupPositionCode": "Nhóm chức danh",
+      "positionCode": "Mã chức danh",
+      "channelCode": "Mã kênh",
+      "status": "Trạng thái",
+      "position": "Thứ tự",
+      "type": "Loại nghiệp vụ",
+      "unit": "Đơn vị"
+    },
+    "delete": {
+      "delete-title": "Xác nhận",
+      "delete-text": "Bạn có muốn xóa cấu hình?",
+      "delete": "Xác nhận"
+    },
+    "button": {
+      "search": "Tìm kiếm",
+      "create": "Tạo mới",
+      "edit": "Sửa",
+      "delete": "Xóa",
+      "export": "Xuất file",
+      "save": "Lưu",
+      "close": "Hủy bỏ"
+    },
+    "select": {
+      "placeholder": "Lựa chọn",
+      "notFoundText": "Không có dữ liệu",
+      "1": "Chức danh callout trên bản đồ",
+      "2": "Điều hành"
+    }
+  },
+  "care": {
+    "title": "Cấu hình tần suất chăm sóc",
+    "market": "Thị trường",
+    "code": "Mã",
+    "name": "Tên",
+    "value": "Giá trị",
+    "deleteConfirm": "Bạn có chắc chắn xóa cấu hình này không?",
+    "deleteConfirms": "Bạn có chắc chắn xóa những cấu hình này không?",
+    "deleteSuccess": "Xóa cấu hình thành công!",
+    "addNewTitle": "Thêm mới cấu hình",
+    "editTitle": "Cập nhật cấu hình",
+    "confirmUpdate": "Bạn có chắc chắn muốn cập nhật cấu hình không?",
+    "confirmCreate": "Bạn có chắc chắn muốn tạo mới cấu hình không?",
+    "updateSuccess": "Cập nhật cấu hình thành công!",
+    "createSuccess": "Thêm mới cấu hình thành công!"
+  },
+  "saleCheck": {
+    "title": "Kiểm tra điểm bán",
+    "assignKpiAndPlan": "Giao chỉ tiêu",
+    "takeCareFromDate": "Từ ngày chăm sóc",
+    "takeCareToDate": "Đến ngày chăm sóc"
+  },
+  "programs": {
+    "title": "Cấu hình chương trình trọng điểm",
+    "name": "Tên chương trình",
+    "create_title": "Thông tin chương trình",
+    "endDate": "Ngày kết thúc",
+    "beginDate": "Ngày bắt đầu",
+    "isCheckTime": "Cập nhật KQTX",
+    "statusManagement": "Quản lý trạng thái",
+    "template": "Quản lý template",
+    "scenario": "Quản lý kịch bản",
+    "rule": "Quản lý luật",
+    "attribute": "Quản lý thuộc tính",
+    "assign_auto_staff": "Cấu hình giao nhân viên tự động",
+    "isCheckTime.all": "Toàn chương trình",
+    "isCheckTime.monthly": "Theo tháng",
+    "activeStatus": "Phân quyền chương trình",
+    "activeStatus.all": "Xem trên tất cả hệ thống",
+    "activeStatus.gboc": "Chỉ xem trên GBOC",
+    "isassign": "Giao nhân viên",
+    "isassign.yes": "Được phép giao nhân viên",
+    "isassign.no": "Không được phép giao nhân viên",
+    "groupProgram": "Nhóm chương trình",
+    "groupCode": "Loại thuê bao",
+    "channelCode": "Giao cho kênh",
+    "channelCode.all": "Tất cả các kênh",
+    "isRequired": "Bắt buộc nhập kết quả",
+    "isRequired.no": "Không",
+    "isRequired.yes": "Có",
+    "isCombine": "Loại chương trình",
+    "isCombine.single": "CT đơn lẻ",
+    "isCombine.combine": "CT gộp",
+    "isAutoAdhoc": "Lấy DL tự động từ Ahoc",
+    "isAutoAdhoc.no": "Không",
+    "isAutoAdhoc.yes": "Có",
+    "provincePermission": "Phân quyền tỉnh",
+    "provincePermission.all": "Tất cả các tỉnh",
+    "provincePermission.select": "Các tỉnh được chọn",
+    "provinces": "Tỉnh tham gia",
+    "programStatusManagement": "Quản lý trạng thái chương trình",
+    "programsTemplateManagement": "Quản lý template chương trình",
+    "column": {
+      "delete_btn": "Xóa",
+      "edit_btn": "Sửa",
+      "action": "Cấu hình liên quan",
+      "subType": "Loại thuê bao",
+      "endDate": "Ngày kết thúc",
+      "beginDate": "Ngày bắt đầu",
+      "name": "Tên chương trình",
+      "id": "Id chương trình"
+    },
+    "programs_status": {
+      "namestatus": "Tên trạng thái",
+      "valuestatus": "Giá trị trạng thái",
+      "contactStatus": "Trạng thái tiếp xúc",
+      "notSuccess": "Không thành công",
+      "success": "Thành công bởi CTV được giao",
+      "otherSuccess": "Thành công qua kênh khác",
+      "updateSuccess": "Cập nhật tiếp xúc thành công",
+      "create_title": "Thông tin trạng thái chương trình"
+    },
+    "programs_template": {
+      "columnName": "Tên cột",
+      "columnOrder": "Thứ tự cột",
+      "keySearch": "Cột tìm kiếm",
+      "dataType": "Kiểu dữ liệu",
+      "isrequire": "Ràng buộc",
+      "isstaff": "Là trường mã nhân viên",
+      "string": "String",
+      "number": "Number",
+      "required": "Bắt buộc",
+      "notRequired": "Không bắt buộc",
+      "yes": "Có",
+      "no": "Không",
+      "isExportPdf": "Cho phép xuất PDF",
+      "create_title": "Thông tin cột của template",
+      "orderType": "Kiểu sắp xếp",
+      "orderIndex": "Thứ tự sắp xếp",
+      "isUpdate": "Cho phép cập nhật",
+      "description": "Mô tả",
+      "orderType.no": "Không sắp xếp",
+      "orderType.asc": "Tăng dần",
+      "orderType.desc": "Giảm dần"
+    },
+    "reasonManagement": {
+      "title": "Quản lý kịch bản chương trình",
+      "question": "Câu hỏi",
+      "answer": "Câu trả lời",
+      "answerProperty": "Thuộc tính câu trả lời"
+    },
+    "reason_level": {
+      "create_title": "Thông tin câu hỏi",
+      "levelValue": "Mức câu hỏi",
+      "optiontype": "Loại câu hỏi",
+      "optiontype.one": "Một đáp án",
+      "optiontype.many": "Nhiều đáp án",
+      "levelName": "Câu hỏi"
+    },
+    "reason_detail": {
+      "levelValue": "Mức câu hỏi",
+      "levelName": "Câu hỏi",
+      "reasonValue": "Mức Câu trả lời",
+      "reasonName": "Câu trả lời",
+      "nextLevel": "Câu hỏi tiếp theo",
+      "updateStatus": "Trạng thái cập nhật",
+      "reasonCode": "Mã câu trả lời"
+    },
+    "reason_property": {
+      "create_title": "Thông tin thuộc tính câu trả lời",
+      "question": "Câu hỏi",
+      "answer": "Câu trả lời",
+      "propertyCode": "Mã thuộc tính",
+      "name": "Tên thuộc tính",
+      "dataType": "Loại dữ liệu",
+      "valueStr": "Giá trị thuộc tính",
+      "value": "Giá trị mặc định",
+      "strquery": "Câu lệnh SQL",
+      "optionTypeStr": "Loại tùy chọn",
+      "optionType": "Ràng buộc",
+      "optionType.notRequire": "Không bắt buộc",
+      "optionType.require": "Bắt buộc"
+    },
+    "programProperty": {
+      "title": "Quản lý thuộc tính chương trình",
+      "name": "Tên thuộc tính",
+      "value": "Giá trị thuộc tính",
+      "type": "Loại thuộc tính",
+      "create_title": "Thông tin thuộc tính"
+    },
+    "progTermExp": {
+      "title": "Quản lý luật của chương trình",
+      "create_title": "Thông tin luật",
+      "termCode": "Mã luật",
+      "levelValue": "Mức câu hỏi",
+      "levelName": "Câu hỏi",
+      "reasonValue": "Mức câu trả lời",
+      "reasonName": "Câu trả lời"
+    }
+  },
+  "mng-standard": {
+    "title": "Quản lý tiêu chuẩn",
+    "create-title": "Thêm mới tiêu chuẩn",
+    "update-title": "Cập nhật tiêu chuẩn",
+    "column": {
+      "no": "STT",
+      "manipulation": "Thao tác",
+      "kpi": "Chỉ tiêu",
+      "machines": "Thiết bị",
+      "typeProduct": "Nhóm sản phẩm",
+      "standardValue": "Giá trị tiêu chuẩn",
+      "minValue": "Giá trị nhỏ nhất",
+      "maxValue": "Giá trị lớn nhất",
+      "description": "Ghi chú",
+      "status": "Trạng thái",
+      "updateTime": "Thời gian cập nhật",
+      "note": "Ghi chú"
+    },
+    "label": {
+      "searchResult": "Kết quả tìm kiếm"
+    },
+    "button": {
+      "search": "Tìm kiếm",
+      "create": "Tạo mới",
+      "edit": "Sửa",
+      "delete": "Xóa",
+      "save": "Lưu lại",
+      "close": "Hủy bỏ",
+      "export": "Xuất file"
+    },
+    "delete": {
+      "delete-title": "Xác nhận",
+      "delete-text": "Bạn có muốn xóa Tiêu chuẩn?",
+      "delete": "Xác nhận"
+    },
+    "change": {
+      "change-title": "Xác nhận",
+      "change-text": "Bạn có muốn đổi trạng thái cấu hình?",
+      "change": "Xác nhận"
+    },
+    "select": {
+      "placeholder": "Lựa chọn",
+      "notFoundText": "Không có dữ liệu",
+      "status": {
+        "1": "Hoạt động",
+        "0": "Hủy"
+      },
+      "editable": {
+        "1": "Có",
+        "0": "Không"
+      }
+    }
+  },
+  "cat-product-type": {
+    "title": "Quản lý loại sản phẩm",
+    "create-title": "Thêm mới loại sản phẩm",
+    "update-title": "Cập nhật loại sản phẩm",
+    "column": {
+      "no": "STT",
+      "manipulation": "Thao tác",
+      "code": "Mã loại sản phẩm",
+      "name": "Tên loại sản phẩm",
+      "status": "Trạng thái",
+      "createDate": "Thời gian tạo",
+      "createUser": "Người tạo",
+      "updateUser": "Người cập nhật",
+      "updateTime": "Thời gian cập nhật",
+      "note": "Mô tả",
+      "groupName": "Nhóm loại sản phẩm"
+    },
+    "label": {
+      "searchResult": "Kết quả tìm kiếm"
+    },
+    "button": {
+      "search": "Tìm kiếm",
+      "create": "Tạo mới",
+      "edit": "Sửa",
+      "delete": "Xóa",
+      "save": "Lưu lại",
+      "close": "Hủy bỏ",
+      "export": "Xuất file"
+    },
+    "delete": {
+      "delete-title": "Xác nhận",
+      "delete-text": "Bạn có muốn xóa loại sản phẩm?",
+      "delete": "Xác nhận"
+    },
+    "change": {
+      "change-title": "Xác nhận",
+      "change-text": "Bạn có muốn đổi trạng thái cấu hình?",
+      "change": "Xác nhận"
+    },
+    "select": {
+      "placeholder": "Lựa chọn",
+      "notFoundText": "Không có dữ liệu",
+      "status": {
+        "1": "Hoạt động",
+        "0": "Hủy"
+      },
+      "editable": {
+        "1": "Có",
+        "0": "Không"
+      }
+    }
+  },
+  "cat-machines": {
+    "title": "Quản lý thiết bị thí nghiệm",
+    "target_title": "Thêm mới chỉ tiêu của thiết bị",
+    "target_title_selected": "Danh sách chỉ tiêu đã chọn",
+    "target_title_of_machines": "Danh sách chỉ tiêu của thiết bị",
+    "create-title": "Thêm mới thiết bị thí nghiệm",
+    "update-title": "Cập nhật thiết bị thí nghiệm",
+    "column": {
+      "no": "STT",
+      "manipulation": "Thao tác",
+      "code": "Mã máy",
+      "name": "Tên máy",
+      "original": "Xuất xứ",
+      "status": "Trạng thái",
+      "createDate": "Thời gian tạo",
+      "createUser": "Người tạo",
+      "updateUser": "Người cập nhật",
+      "updateTime": "Thời gian cập nhật",
+      "note": "Ghi chú"
+    },
+    "label": {
+      "searchResult": "Kết quả tìm kiếm",
+      "searchSelected": "Danh sách chỉ tiêu",
+      "tootipLink": "Danh sách chỉ tiêu"
+    },
+    "button": {
+      "search": "Tìm kiếm",
+      "create": "Tạo mới",
+      "edit": "Sửa",
+      "delete": "Xóa",
+      "save": "Lưu lại",
+      "close": "Hủy bỏ",
+      "export": "Xuất file"
+    },
+    "delete": {
+      "delete-title": "Xác nhận",
+      "delete-text": "Bạn có muốn xóa thiết bị thí nghiệm?",
+      "delete-target-text": "Bạn có muốn xóa liên kết chỉ tiêu và thiết bị?",
+      "delete": "Xác nhận"
+    },
+    "change": {
+      "change-title": "Xác nhận",
+      "change-text": "Bạn có muốn đổi thiết bị thí nghiệm?",
+      "change": "Xác nhận"
+    },
+    "select": {
+      "placeholder": "Lựa chọn",
+      "notFoundText": "Không có dữ liệu",
+      "status": {
+        "1": "Hoạt động",
+        "0": "Hủy"
+      },
+      "editable": {
+        "1": "Có",
+        "0": "Không"
+      }
+    }
+  },
+  "lab-data-raw-manage": {
+    "title": "Quản lý dữ liệu phòng thí nghiệm",
+    "create-title": "Thêm mới dữ liệu phòng thí nghiệm",
+    "update-title": "Cập nhật dữ liệu phòng thí nghiệm",
+    "import": "Nhập dữ liệu từ file",
+    "input_data": "Nhập liệu",
+    "column": {
+      "dateFrom": "Từ ngày",
+      "dateTo": "Đến ngày",
+      "request": "Yêu cầu thử nghiệm",
+      "sample": "Mẫu thí nghiệm",
+      "room": "Phòng ban",
+      "name_tbp": "Tên BTP",
+      "pallet": "Pallet",
+      "density": "Tỉ trọng",
+      "minutes": "Phút",
+      "hand_poison": "Độ cứng",
+      "black_coal_dispersion": "Phân tán than đen",
+      "suc_dinh": "Sức dính",
+      "re_check": "Kiểm lại",
+      "conlusion": "Kết luận",
+      "auditor": "Người kiểm tra",
+      "solution": "Biện pháp giải quyết",
+      "reject": "Từ chối/phê duyệt",
+      "impact": "Tác động",
+      "note": "Ghi chú",
+      "requestCode": "Mã yêu cầu"
+    },
+    "label": {
+      "searchResult": "Kết quả tìm kiếm",
+      "target_test": "Chỉ tiêu thử nghiệm",
+      "marchines_test": "Máy thử nghiệm",
+      "sample_test": "Mẫu thử nghiệm",
+      "date_import": "Ngày nhập liệu",
+      "request": "Yêu cầu thử nghiệm",
+      "import": "Import dữ liệu",
+      "status": "Trạng thái đánh giá",
+      "value": "giá trị",
+      "palletCode": "pallet"
+    },
+    "button": {
+      "search": "Tìm kiếm",
+      "create": "Tạo mới",
+      "edit": "Sửa",
+      "delete": "Xóa",
+      "save": "Lưu lại",
+      "close": "Hủy bỏ",
+      "export": "Xuất file",
+      "import": "Nhập file",
+      "approved": "Phê duyệt",
+      "rejected": "Từ chối"
+    },
+    "delete": {
+      "delete-title": "Xác nhận",
+      "delete-text": "Bạn có muốn xóa dữ liệu phòng thí nghiệm?",
+      "delete": "Xác nhận"
+    },
+    "approved": {
+      "approved-title": "Xác nhận",
+      "approved-text": "Bạn có muốn phê duyệt dữ liệu phòng thí nghiệm?",
+      "approved": "Xác nhận"
+    },
+    "rejected": {
+      "rejected-title": "Xác nhận",
+      "rejected-text": "Bạn có muốn từ chối dữ liệu phòng thí nghiệm?",
+      "rejected": "Xác nhận"
+    },
+    "change": {
+      "change-title": "Xác nhận",
+      "change-text": "Bạn có muốn đổi trạng thái cấu hình?",
+      "change": "Xác nhận"
+    },
+    "select": {
+      "placeholder": "Lựa chọn",
+      "notFoundText": "Không có dữ liệu",
+      "status": {
+        "1": "Đạt",
+        "0": "Không đạt"
+      },
+      "editable": {
+        "1": "Có",
+        "0": "Không"
+      }
+    }
+  },
+  "lab-data-raw-manage-report": {
+    "title": "Báo cáo số liệu",
+    "column": {
+      "ca_sx": "Ca sản xuất",
+      "ngay_sx": "Ngày sản xuất",
+      "nhom_btp": "Nhóm BTP",
+      "so_pallet": "Số pallet",
+      "do_cung": "Độ cứng",
+      "ty_trong": "Tỷ trọng",
+      "do_phan_tan": "Độ phân tán",
+      "suc_dinh_min": "Sức dính Min",
+      "suc_dinh_su_tanh": "Sức dính Su Tanh",
+      "ghi_chu": "Ghi chú",
+      "ket_luan": "Kết Luận"
+    }
+  },
+
+  "cat-machines": {
+    "title": "Quản lý thiết bị thí nghiệm",
+    "target_title": "Thêm mới chỉ tiêu của thiết bị",
+    "target_title_selected": "Danh sách chỉ tiêu đã chọn",
+    "target_title_of_machines": "Danh sách chỉ tiêu của thiết bị",
+    "create-title": "Thêm mới thiết bị thí nghiệm",
+    "update-title": "Cập nhật thiết bị thí nghiệm",
+    "column": {
+      "no": "STT",
+      "manipulation": "Thao tác",
+      "code": "Mã máy",
+      "name": "Tên máy",
+      "original": "Xuất xứ",
+      "status": "Trạng thái",
+      "createDate": "Thời gian tạo",
+      "createUser": "Người tạo",
+      "updateUser": "Người cập nhật",
+      "updateTime": "Thời gian cập nhật",
+      "note": "Ghi chú"
+    },
+    "label": {
+      "searchResult": "Kết quả tìm kiếm",
+      "searchSelected": "Danh sách chỉ tiêu",
+      "tootipLink": "Danh sách chỉ tiêu"
+    },
+    "button": {
+      "search": "Tìm kiếm",
+      "create": "Tạo mới",
+      "edit": "Sửa",
+      "delete": "Xóa",
+      "save": "Lưu lại",
+      "close": "Hủy bỏ",
+      "export": "Xuất file"
+    },
+    "delete": {
+      "delete-title": "Xác nhận",
+      "delete-text": "Bạn có muốn xóa thiết bị thí nghiệm?",
+      "delete-target-text": "Bạn có muốn xóa liên kết chỉ tiêu và thiết bị?",
+      "delete": "Xác nhận"
+    },
+    "delete": {
+      "delete-title": "Xác nhận",
+      "delete-text": "Bạn có muốn xóa thiết bị thí nghiệm?",
+      "delete-target-text": "Bạn có muốn xóa liên kết chỉ tiêu và thiết bị?",
+      "delete": "Xác nhận"
+    },
+    "change": {
+      "change-title": "Xác nhận",
+      "change-text": "Bạn có muốn đổi thiết bị thí nghiệm?",
+      "change": "Xác nhận"
+    },
+    "select": {
+      "placeholder": "Lựa chọn",
+      "notFoundText": "Không có dữ liệu",
+      "status": {
+        "1": "Hoạt động",
+        "0": "Hủy"
+      },
+      "editable": {
+        "1": "Có",
+        "0": "Không"
+      }
+    }
+  },
+  "cat-targets": {
+    "title": "Quản lý chỉ tiêu",
+    "create-title": "Thêm mới chỉ tiêu",
+    "update-title": "Cập nhật chỉ tiêu",
+    "column": {
+      "no": "STT",
+      "manipulation": "Thao tác",
+      "kpiCode": "Mã chỉ tiêu",
+      "kpiName": "Tên chỉ tiêu",
+      "parentCode": "Chỉ tiêu cha",
+      "unit": "Đơn vị tính",
+      "comparisonType": "Loại so sánh",
+      "status": "Trạng thái",
+      "createDateStr": "Ngày tạo",
+      "note": "Ghi chú"
+    },
+    "label": {
+      "searchResult": "Kết quả tìm kiếm"
+    },
+    "button": {
+      "search": "Tìm kiếm",
+      "create": "Tạo mới",
+      "edit": "Sửa",
+      "delete": "Xóa",
+      "save": "Lưu lại",
+      "close": "Hủy bỏ",
+      "export": "Xuất file"
+    },
+    "delete": {
+      "delete-title": "Xác nhận",
+      "delete-text": "Bạn có muốn xóa Chỉ tiêu?",
+      "delete": "Xác nhận"
+    },
+    "change": {
+      "change-title": "Xác nhận",
+      "change-text": "Bạn có muốn đổi trạng thái cấu hình?",
+      "change": "Xác nhận"
+    },
+    "select": {
+      "placeholder": "Lựa chọn",
+      "notFoundText": "Không có dữ liệu",
+      "status": {
+        "1": "Hoạt động",
+        "0": "Hủy"
+      },
+      "compare": {
+        "equal": "So sánh bằng ",
+        "equal_in_range": "So sánh trong khoảng",
+        "compare_bigger": "So sánh lớn hơn",
+        "compare_lower": "So sánh nhỏ hơn"
+      },
+      "editable": {
+        "1": "Có",
+        "0": "Không"
+      }
+    }
+  },
+  "sample_manage": {
+    "no": "STT",
+    "action": "Thao tác",
+    "title": "Quản lý mẫu",
+    "nameOrCode": "Tên/Mã mẫu vật",
+    "productType": "Loại sản phẩm",
+    "groupId": "Nhóm quản lý",
+    "status": "Trạng thái",
+    "code": "Mã mẫu vật",
+    "weigh": "Khối lượng (kg)",
+    "note": "Mô tả",
+    "manufacturingSession": "Ca sản xuất",
+    "manufacturingDate": "Ngày sản xuất",
+    "name": "Tên mẫu vật",
+    "create_title": "Thêm mới mẫu vật",
+    "update_title": "Cập nhật mẫu vật"
+  },
+  "validation.max": "",
+  "cat-requirements": {
+    "title": "Quản lý yêu cầu",
+    "target_title": "Danh sách yêu cầu",
+    "target_title_selected": "Danh sách yêu cầu đã chọn",
+    "create-title": "Thêm mới yêu cầu",
+    "update-title": "Cập nhật yêu cầu",
+    "process-title": "Xử lý yêu cầu",
+    "success-update": "Cập nhật yêu cầu thành công",
+    "success-created": "Thêm mới yêu cầu thành công",
+    "detail-title": "Chi tiết yêu cầu",
+    "detail": {
+      "don_pha_che": "Đơn pha chế",
+      "quy_cach_mau": "Quy cách mẫu",
+      "khoi_luong": "Khối lượng (kg)",
+      "luyen_tn": "Luyện TN trên máy luyện",
+      "muc_dich": "Mục đích thí nghiệm",
+      "don_vi_yc": "Đơn vị yêu cầu",
+      "don_vi_xl": "Đơn vị xử lý",
+      "ngay_giao_mau": "Ngày giao mẫu",
+      "ngay_tra_kq": "Ngày trả kết quả",
+      "hang_muc_tn": "Hạng mục thí nghiệm",
+      "dieu_kien_tn": "Điều kiện thí nghiệm",
+      "pp_thi_nghiem": "Phương pháp thí nghiệm",
+      "ghi_them": "Ghi thêm",
+      "ghi_chu": "Ghi chú",
+      "download_file_yc": "Download file yêu cầu",
+      "upload_file_yc": "Upload file yêu cầu",
+      "phan_hoi_kq": "Phản hồi kết quả",
+      "download_file_kq": "Download file kết quả",
+      "qua_trinh_xu_ly": "Quá trình xử lý",
+      "noi_dung": "Nội dung",
+      "thoi_gian":  "Thời gian",
+      "nguoi_thuc_hien": "Người thực hiện"
+    },
+    "column": {
+      "no": "STT",
+      "manipulation": "Thao tác",
+      "sample_name": "Tên mẫu thí nghiệm",
+      "order_purpose": "Mục đích thí nghiệm",
+      "dept_request_name": "Đơn vị yêu cầu",
+      "dept_process_name": "Đơn vị xử lý",
+      "status": "Trạng thái yêu cầu",
+      "priority": "Mức độ ưu tiên",
+      "create-date-form": "Thời gian tạo từ",
+      "create-date-to": "Thời gian tạo đến",
+      "delivery_sample_date": "Thời gian giao mẫu",
+      "delivery_result_date": "Thời gian nhận kết quả",
+      "createDate": "Thời gian tạo",
+      "createUser": "Người tạo",
+      "updateUser": "Người cập nhật",
+      "upload_file_result": "Upload file kết quả",
+      "updateTime": "Thời gian cập nhật",
+      "note": "Ghi chú",
+      "action":"Hành động",
+      "action-type-title": "Loại thao tác",
+      "request-type-title": "Loại yêu cầu"
+    },
+    "label": {
+      "searchResult": "Kết quả tìm kiếm",
+      "searchSelected": "Danh sách yêu cầu",
+      "tootipLink": "Danh sách yêu cầu"
+    },
+    "button": {
+      "search": "Tìm kiếm",
+      "create": "Tạo mới",
+      "edit": "Sửa",
+      "delete": "Xóa",
+      "save": "Lưu lại",
+      "close": "Hủy bỏ",
+      "export": "Xuất file"
+    },
+    "delete": {
+      "delete-title": "Xác nhận",
+      "delete-text": "Bạn có muốn xóa yêu cầu?",
+      "delete-target-text": "Bạn có muốn xóa yêu cầu ?",
+      "delete": "Xác nhận"
+    },
+    "change": {
+      "change-title": "Xác nhận",
+      "change-text": "Bạn có muốn đổi yêu cầu?",
+      "change": "Xác nhận"
+    },
+    "select": {
+      "placeholder": "– Tất cả  – ",
+      "notFoundText": "Không có dữ liệu",
+      "status": {
+        "0": "Hủy",
+        "1": "Yêu cầu mới",
+        "2": "Đã tiếp nhận chờ xử lý",
+        "3": "Đang xử lý",
+        "4": "Từ chối tiếp nhận",
+        "5": "Trả kết quả thí nghiệm",
+        "6": "Chấp nhận kết quả",
+        "7": "Gửi phản hồi kết quả"
+      },
+      "priority": {
+        "placeholder": "– Tất cả  –",
+        "1": "Bình thường",
+        "2": "Khẩn cấp"
+      },
+      "editable": {
+        "1": "Có",
+        "0": "Không"
+      }
+    }
+  },
+  "home": {
+    "title": "Trang chủ",
+    "totalRequest": "Tổng số yêu cầu",
+    "totalRequestDone": "Số yêu cầu đã hoàn thành",
+    "totalRequestNotDone": "Số yêu cầu chưa hoàn thành"
+  },
+  "users": {
+    "title": "Quản lý người dùng",
+    "name": "Người dùng",
+    "login": "Tên đăng nhập",
+    "firstName": "Tên",
+    "lastName": "Họ",
+    "deptId": "Đơn vị",
+    "authority": "Chức danh",
+    "mobile": "Số điện thoại",
+    "status": "Trạng thái",
+    "no": "STT",
+    "action": "Thao tác",
+    "firstName": "Tên",
+    "lastName": "Họ",
+    "email": "Email",
+    "password": "Mật khẩu",
+    "rePassword": "Nhập lại mật khẩu",
+    "reset_password_title": "Cập nhật lại mật khẩu",
+    "mobile": "SĐT liên hệ",
+    "authorityName": "Chức danh",
+    "deptName": "Đơn vị",
+    "authority": "Vai trò",
+    "create_title": "Thêm mới người dùng",
+    "update_title": "Cập nhật người dùng"
+  }
+}

@@ -1,0 +1,378 @@
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';
+@import '~@circlon/angular-tree-component/css/angular-tree-component.css';
+@import '~font-awesome/css/font-awesome.css';
+@import "~ag-grid-community/dist/styles/ag-grid.css";
+@import "~ag-grid-community/dist/styles/ag-theme-balham.css";
+
+/* You can add global styles to this file, and also import other style files */
+.modal-holder {
+  animation-name: example;
+  animation-duration: 0.3s;
+}
+
+@keyframes example {
+  0% {
+    transform: scale(0.5)
+  }
+
+  100% {
+    transform: scale(1)
+  }
+}
+.modal-xl {
+  max-width: 95% !important;
+}
+
+.carousel-item {
+  transition: opacity 0.7s ease !important;
+  position: absolute !important;
+  display: block !important;
+  opacity: 0;
+}
+
+.carousel-item.active {
+  position: relative !important;
+  opacity: 1;
+}
+
+
+.hoverItem:hover {
+  color: #50a5f1;
+}
+
+.btnAction {
+  width: 32px;
+  display: flex;
+  height: 32px;
+  align-items: center;
+  justify-content: center;
+}
+
+.vertical-align-center {
+  vertical-align: middle;
+}
+
+.w-60p {
+  width: 60px !important;
+  min-width: 60px !important;
+  max-width: 60px !important;
+}
+
+.btn-minus {
+  color: #fff;
+  background-color: #B09E88;
+  border-color: #B09E88;
+}
+
+.btn-upload {
+  color: #fff;
+  background-color: #9966A1;
+  border-color: #9966A1;
+}
+
+.btn-upload:focus {
+  color: #fff;
+  background-color: #9966A1;
+  border-color: #9966A1;
+  box-shadow: 0 0 0 0.15rem #e1b9e8;
+}
+
+.btn-hot-todo {
+  color: #fff;
+  background-color: #C44875;
+  border-color: #C44875;
+}
+
+.btn-hot-todo :focus {
+  color: #fff;
+  background-color: #C44875;
+  border-color: #C44875;
+  box-shadow: 0 0 0 0.15rem #e093ac;
+}
+
+.custom-select:focus-visible {
+  outline: none !important;
+}
+
+.custom-select {
+  border-radius: 5px;
+  border: 1px solid #cac9d5;
+}
+
+.custom-select:focus {
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem #007bff40;
+}
+
+.w100px {
+  width: 100px;
+  max-width: 100px !important;
+  min-width: 100px !important;
+}
+.w130px {
+  width: 130px;
+  max-width: 130px !important;
+  min-width: 130px !important;
+}
+.w150px {
+  width: 150px;
+  max-width: 150px !important;
+  min-width: 150px !important;
+}
+
+.w200px {
+  width: 200px;
+  max-width: 200px !important;
+  min-width: 200px !important;
+}
+
+.w250px {
+  width: 250px;
+  max-width: 250px !important;
+  min-width: 250px !important;
+}
+
+.w300px {
+  width: 300px;
+  max-width: 300px !important;
+  min-width: 300px !important;
+}
+
+.w350px {
+  width: 350px;
+  max-width: 350px !important;
+  min-width: 350px !important;
+}
+
+.badge-soft-info {
+  color: #50a5f1;
+  background-color: rgba(52, 195, 143, 0.18);
+}
+
+.invalid-feedback_2 {
+  width: 100%;
+
+  font-size: 80%;
+  color: #f46a6a;
+}
+
+.float-right {
+  float: right;
+}
+
+.linkOrFile {
+  color: #485EC4;
+  font-size: 15px;
+  font-style: italic;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline !important;
+  }
+}
+
+.linkOrFileTable {
+  color: #485EC4;
+  font-size: 15px;
+  font-style: italic;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+    color: #FFFFFF !important;
+  }
+}
+
+.btn {
+  &:disabled,
+  &.disabled,
+  fieldset:disabled & {
+    opacity: 0.3 !important;
+  }
+}
+
+.badge-soft-info {
+  color: #50a5f1;
+  background-color: rgba(52, 195, 143, 0.18);
+}
+
+.invalid-feedback_2 {
+  width: 100%;
+
+  font-size: 80%;
+  color: #f46a6a;
+}
+
+.float-right {
+  float: right;
+}
+
+.linkOrFile {
+  color: #485EC4;
+  font-size: 15px;
+  font-style: italic;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline !important;
+  }
+}
+
+.linkOrFileTable {
+  color: #485EC4;
+  font-size: 15px;
+  font-style: italic;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+    color: #FFFFFF !important;
+  }
+}
+
+.btn {
+  &:disabled,
+  &.disabled,
+  fieldset:disabled & {
+    opacity: 0.3 !important;
+  }
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected, .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected.ng-option-marked, .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked {
+  background-color: #eff2f7 !important;
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected, .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected.ng-option-marked {
+  color: #333 !important;
+}
+
+.font-italic {
+  font-style: italic;
+}
+
+.font-italic-hover {
+  font-style: italic;
+
+  &:hover {
+    color: #FFFFFF !important;
+    background: #34c38f !important;
+  }
+}
+
+.hoverUnderline {
+  &:hover {
+    text-decoration: underline !important;
+  }
+}
+
+.showOneLine {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.ng-select.ng-select-disabled > .ng-select-container {
+  background-color: #eff2f7 !important;
+}
+
+::ng-deep {
+  .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected, .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected.ng-option-marked, .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked {
+    background-color: #eff2f7 !important;
+  }
+
+  .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected, .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected.ng-option-marked {
+    color: #333 !important;
+  }
+
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected, .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected.ng-option-marked, .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked {
+  background-color: #eff2f7 !important;
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected, .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected.ng-option-marked {
+  color: #333 !important;
+}
+
+label {
+  font-weight: 600 !important;
+}
+.invalid-feedback_2 {
+  width: 100%;
+  font-size: 80%;
+  color: #f46a6a;
+}
+.is-invalid_2{
+  padding-right: calc(1.5em + 0.94rem);
+  background-size: calc(0.75em + 0.47rem) calc(0.75em + 0.47rem);
+  border-color: rgb(244, 106, 106);
+  background-repeat: no-repeat;
+  background-position: right calc(0.375em + 0.235rem) center
+}
+.vertical-collpsed .vertical-menu #sidebar-menu > ul > li:hover > a {
+  position: relative;
+  width: calc(300px);
+  color: rgb(85, 110, 230);
+  background-color: whitesmoke;
+  transition: none 0s ease 0s;
+}
+.dz-filename:hover{
+  width: 200px !important;
+}
+.ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value {
+  background-color: #556ee6 !important;
+  color: #fff;
+}
+.btnAction {
+  width: 32px;
+  display: flex;
+  height: 32px;
+  align-items: center;
+  justify-content: center;
+}
+
+.showOne {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+.ng-select .ng-select-container{
+  overflow-x: overlay !important;
+}
+.ml-2 {
+  margin-left: 0.3rem;
+}
+.class_nowrap_lims {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 50ch
+}
+.modal_machines {
+  max-width: 70% !important;
+}
+svg.gantt { background:#fff !important; }              /* nền svg */
+.gantt .grid-background rect { fill:#fff !important; } /* nền lưới */
+.gantt .grid-header { background:#f9fafb !important; }
+.gantt .grid-row rect { fill:#fff !important; }
+.gantt .grid-row:nth-child(even) rect { fill:#fafafa !important; }
+
+.gantt .grid-ticks line { stroke:#e5e7eb !important; }
+.gantt .tick text { fill:#111827 !important; font-size:12px; }
+
+.gantt .bar { stroke:#d1d5db !important; }
+.gantt .bar-label { fill:#111827 !important; }
+.gantt .arrow { stroke:#9ca3af !important; }
+.gantt .today-highlight { fill:rgba(59,130,246,.10) !important; }
+
+/* (tuỳ chọn) nếu layout còn ép svg toàn cục */
+svg { background: transparent; }
+.ng-dropdown-panel {
+    z-index: 10000 !important; /* Số càng to càng nổi lên trên */
+}

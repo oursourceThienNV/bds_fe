@@ -1,0 +1,13 @@
+<div class="position-relative">
+  <input #element type="text" placeholder="Datepicker" class="form-control w-100" [id]="idDate + 'date'"
+         [(ngModel)]="input"
+         [placeholder]="dateInputFormat ? dateInputFormat : 'DD/MM/YYYY'"
+         [formControl]="control"
+         (change)="ngModelChange($event)"
+         [ngClass]="{'is-invalid_2':  control.errors && (control.touched || control.dirty)}"
+         [bsConfig]="{ dateInputFormat: dateInputFormat ? dateInputFormat : 'DD/MM/YYYY', containerClass: 'theme-dark-blue' , minMode: minMode ? minMode : null }"
+         bsDatepicker>
+  <div style="position: absolute; top: 7px; right: 5px">
+    <i (click)="element.click()" class="bx bx-calendar mb-0 text-primary font-size-20"></i>
+  </div>
+</div>

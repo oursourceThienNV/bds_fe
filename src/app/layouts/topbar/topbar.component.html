@@ -1,0 +1,47 @@
+<div class="topbar-wrapper d-flex justify-content-between align-items-center p-2 position-relative">
+  <!-- Logo Section -->
+  <div class="logo-section d-flex align-items-center">
+    <img *ngIf="logo" [src]="logo" alt="Logo" class="logo-image"/>
+    <span *ngIf="!logo" class="logo-text">CRM</span>
+  </div>
+
+  <!-- User Section -->
+  <div class="sidebar">
+    <div class="sidebar-bottom">
+      <div class="sidebar-user d-flex align-items-center gap-2" (click)="toggleDropdown($event)">
+        <img class="user-avatar" [src]="urlAvatar ? avatar : 'assets/images/icon/avatar.svg'" alt="Avatar"/>
+        <div class="user-info">
+          <strong>{{ fullname || 'Người dùng' }}</strong>
+          <p class="mb-0 small text-muted">{{ username || 'N/A' }}</p>
+        </div>
+      </div>
+
+      <div class="user-dropdown mt-2" *ngIf="showDropdown">
+        <button class="dropdown-item has-caret" (click)="toggleGeneral($event)">
+          Cài đặt chung
+          <span class="caret" [class.open]="showGeneral">›</span>
+        </button>
+        <div class="dropdown-sub" *ngIf="showGeneral">
+          <button (click)="updateProfile(); $event.stopPropagation()">Cập nhật thông tin</button>
+        </div>
+        <button>Tài khoản & Gói</button>
+        <button class="dropdown-item has-caret" (click)="toggleSecurity($event)">
+          Bảo mật & Tuân thủ
+          <span class="caret" [class.open]="showSecurity">›</span>
+        </button>
+        <div class="dropdown-sub" *ngIf="showSecurity">
+          <button (click)="changePassWord(); $event.stopPropagation()">Đổi mật khẩu</button>
+        </div>
+        <button>Thanh toán & Đơn hàng</button>
+        <button>Tổ chức & Nhân sự</button>
+        <button>Không gian làm việc</button>
+        <button>CRM & Khách hàng</button>
+        <button>Giao tiếp & Hỗ trợ</button>
+        <button>Diễn đàn</button>
+        <button>Tệp & Lưu trữ</button>
+        <button>Chợ & Hệ sinh thái</button>
+        <button (click)="logout()">Đăng xuất</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,160 @@
+<div class="container-fluid">
+  <app-page-title title="Quản lý license"></app-page-title>
+  <app-full-page-loading [isLoading]="isLoading"></app-full-page-loading>
+  <div class="row">
+    <div class="card w-100" style="margin-bottom: 8px;">
+      <div class="card-body" style="padding: 8px;">
+        <form [formGroup]="searchForm" (submit)="search()">
+          <div class="row align-items-end g-2">
+            <div class="col-md-3">
+              <label for="code" class="form-label mb-1" style="font-size: 13px;">Key Value</label>
+              <input id="code" type="text" class="form-control form-control-sm" formControlName="keyValue" maxlength="500">
+            </div>
+            <div class="col-md-3">
+              <label for="statusId" class="form-label mb-1" style="font-size: 13px;">Trạng thái</label>
+              <ng-select formControlName="status" style="font-size: 13px;">
+                <ng-option value="">Tất cả</ng-option>
+                <ng-option value="{{LICENSE_STATUS.USED}}">Đã áp dụng</ng-option>
+                <ng-option value="{{LICENSE_STATUS.NOT_USED}}">Chưa áp dụng</ng-option>
+                <ng-option value="{{LICENSE_STATUS.SENT}}">Đã gửi cho khách hàng</ng-option>
+              </ng-select>
+            </div>
+            <div class="col-md-3" *ngIf="role===ROLE.ADMIN">
+              <label class="form-label mb-1" style="font-size: 13px;">Thuộc cửa hàng<span class="text-danger">*</span></label>
+              <ng-select [items]="listStore" bindLabel="name" bindValue="id" formControlName="companyId"
+                placeholder="Chọn cửa hàng" style="font-size: 13px;">
+                <ng-template ng-label-tmp let-item="item">
+                  {{ item.code }} - {{ item.name }}
+                </ng-template>
+                <ng-template ng-option-tmp let-item="item">
+                  {{ item.code }} - {{ item.name }}
+                </ng-template>
+              </ng-select>
+            </div>
+            <div class="col-md-3">
+              <button type="submit" class="btn btn-primary btn-sm me-2">
+                <i class="fas fa-search"></i> Tìm kiếm
+              </button>
+              <button type="button" (click)="create()" class="btn btn-success btn-sm">
+                <i class="bx bx-plus-medical"></i> Thêm mới
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <style>
+    th {
+      white-space: nowrap;
+      color: #B5B7C0;
+      font-size: 13px;
+      font-family: 'Inter';
+      font-weight: 500;
+      padding: 8px !important;
+    }
+
+    .table-bordered td {
+      background: white;
+      padding: 6px 8px !important;
+      font-size: 13px;
+    }
+
+    .table-bordered {
+      border: 2px solid #dee2e6;
+      margin-bottom: 0;
+    }
+
+    .table-bordered th,
+    .table-bordered td {
+      border: 1px solid #dee2e6;
+      vertical-align: middle;
+    }
+
+    .table-bordered thead th {
+      background-color: #f8f9fa;
+      font-weight: 600;
+      border-bottom: 2px solid #dee2e6;
+    }
+
+    .table-bordered tbody tr {
+      height: 35px;
+    }
+
+    .btn-sm {
+      padding: 4px 10px;
+      font-size: 13px;
+    }
+
+    /* Fix ng-select height to match form-control-sm */
+    ng-select.ng-select ::ng-deep .ng-select-container {
+      min-height: 31px !important;
+      height: 31px !important;
+    }
+
+    ng-select.ng-select ::ng-deep .ng-value-container {
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+    }
+
+    ng-select.ng-select ::ng-deep .ng-input input {
+      font-size: 13px !important;
+    }
+  </style>
+  <div class="card" style="margin-bottom: 0;">
+    <div class="card-body" style="padding: 8px;">
+      <div style="overflow-x: auto;">
+        <table id="basic-datatable" class="table table-bordered dt-responsive nowrap">
+          <thead>
+            <tr>
+              <th>STT</th>
+              <th>Key Value</th>
+              <th>Thời hạn</th>
+              <th>Trạng thái</th>
+              <th>Hành động</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let table of tables; let i = index">
+              <td>{{ i + 1 + (currentPage * pageSize) }}</td>
+              <td>{{ table.keyValue }}</td>
+              <td>{{ labelType[table.type] }}</td>
+              <td>{{labelStatus[table.status]}}</td>
+              <td style="white-space: nowrap;">
+                <button (click)="edit(table)" class="btn btn-sm" style="background: #0ECA9E;
+    color: white;
+    border-radius: 4px;
+    border: 1px #0ECA9E solid;
+    padding: 3px 6px;
+    margin-right: 4px;
+    font-size: 12px;">Cập nhật <img src="./assets/images/icon/edit.svg" style="width: 12px;" /></button>
+                <button (click)="send(table)" class="btn btn-sm" style="background: #4F7958;
+    color: white;
+    border-radius: 4px;
+    border: 1px #4F7958 solid;
+    padding: 3px 6px;
+    font-size: 12px;">Gửi mã license <img src="./assets/images/icon/send.svg" style="width: 12px;" /></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination -->
+      <div class="d-flex justify-content-between align-items-center" style="padding-top: 8px; border-top: 1px solid #dee2e6;">
+        <div class="pagination d-flex align-items-center gap-2">
+            <button (click)="loadPage(currentPage - 1)" [disabled]="currentPage === 0" class="btn btn-outline-primary btn-sm">
+              Trước
+            </button>
+            <span style="font-size: 13px;">Page {{ currentPage + 1 }} of {{ totalPages }}</span>
+            <button (click)="loadPage(currentPage + 1)" [disabled]="currentPage >= totalPages - 1"
+              class="btn btn-outline-primary btn-sm">
+              Sau
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

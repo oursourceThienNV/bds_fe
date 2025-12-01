@@ -1,0 +1,103 @@
+#tree-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  overflow: auto;
+  background: linear-gradient(180deg, #f9fbff 0%, #eef3f9 100%);
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+:host {
+  font-family: 'Segoe UI', 'Roboto', sans-serif;
+  color: #0c80df;
+
+  ::ng-deep path.link {
+    fill: none;
+    stroke: #b0bec5;
+    stroke-width: 2px;
+    transition: stroke 0.3s ease;
+
+    &:hover {
+      stroke: #0c80df;
+      stroke-width: 3px;
+    }
+  }
+
+
+  ::ng-deep g.node {
+    cursor: pointer;
+    transform-origin: center;
+    transition: filter 0.25s ease, transform 0.25s ease;
+    filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.1));
+
+    rect {
+      fill: #ffffff;
+      stroke: #0c80df;
+      stroke-width: 2px;
+      rx: 15px;
+      ry: 15px;
+      transition: all 0.3s ease;
+      width: 160px;
+      height: 60px;
+      x: -80px;
+      y: -30px;
+    }
+
+    text {
+      font-family: inherit;
+      text-anchor: middle;
+      fill: #0c80df;
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      user-select: none;
+
+      &:nth-of-type(1) {
+        font-size: 15px;
+        font-weight: 700;
+      }
+
+      &:nth-of-type(2),
+      &:nth-of-type(3) {
+        font-size: 13px;
+        fill: #1976d2;
+        font-weight: 500;
+      }
+    }
+
+
+
+
+    &:nth-of-type(4n + 1) rect {
+      stroke: #1565c0;
+      fill: #e8f1ff;
+    }
+    &:nth-of-type(4n + 2) rect {
+      stroke: #2e7d32;
+      fill: #e8f5e9;
+    }
+    &:nth-of-type(4n + 3) rect {
+      stroke: #f57c00;
+      fill: #fff3e0;
+    }
+    &:nth-of-type(4n + 4) rect {
+      stroke: #8e24aa;
+      fill: #f3e5f5;
+    }
+  }
+
+  @media (max-width: 768px) {
+    ::ng-deep g.node rect {
+      width: 120px;
+      height: 50px;
+      x: -60px;
+      y: -25px;
+    }
+
+    ::ng-deep g.node text {
+      font-size: 12px;
+    }
+  }
+}

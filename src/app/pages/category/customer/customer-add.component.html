@@ -1,0 +1,709 @@
+<style>
+  .upload-box {
+    border: 2px dashed #aaa;
+    border-radius: 8px;
+    padding: 30px;
+    text-align: center;
+    background-color: #F8F9FF;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    width: 100%;
+  }
+
+  .upload-box.dragover {
+    background-color: #e2f0ff;
+  }
+
+  .upload-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    cursor: pointer;
+  }
+
+  .upload-btn:hover {
+    background-color: #0056b3;
+  }
+
+  .file-list {
+    margin-top: 15px;
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .file-list li {
+    padding: 6px 0;
+    font-weight: 500;
+    color: #333;
+  }
+
+
+  ::ng-deep .modal-dialog.custom-xl-modal {
+    width: 80vw; /* 80% chiều rộng màn hình */
+    max-width: none; /* Bỏ giới hạn max-width mặc định */
+    height: 100vh; /* Chiều cao 100% màn hình */
+    margin: 0 auto; /* Căn giữa */
+    display: flex;
+    align-items: center;
+  }
+
+  ::ng-deep .modal-content {
+    height: 100%;
+  }
+  .form-label {
+    font-weight: 500;
+    display: inline-block;
+    width: 180px;
+  }
+
+  .form-input, .form-select, .form-textarea {
+    border: none;
+    border-bottom: 1px solid #ccc;
+    width: 100%;
+    padding: 4px 8px;
+    background: transparent;
+    outline: none;
+  }
+
+  .form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  .form-section {
+    padding: 20px;
+  }
+
+  .form-select {
+    border-radius: 22px;
+    padding: 2px 12px;
+    height: 28px;
+    background: #4C7FFF;
+    color: white;
+    width: 110px;
+  }
+
+  .form-textarea {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    resize: vertical;
+    min-height: 60px;
+  }
+   /* Địa chỉ  */
+/* Đảm bảo khung bao ngoài là điểm neo cho dropdown */
+.form-group {
+  position: relative;
+}
+
+/* Ô input hiển thị địa chỉ */
+.address-input {
+  width: 100%;            /* QUAN TRỌNG: Bắt buộc rộng hết cỡ khung chứa */
+  min-height: 42px;       /* Tăng chiều cao lên 42px (cũ là 34px hơi bé) */
+  padding: 8px 12px;      /* Tăng khoảng cách lề trong cho thoáng */
+  
+  border: 1px solid #d0d7de;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-size: 15px;        /* Tăng cỡ chữ lên 1 xíu cho dễ đọc */
+  background: #fff;
+  box-sizing: border-box; /* Đảm bảo padding không làm vỡ khung */
+  transition: all 0.2s;
+}
+
+/* Khi hover vào thì đổi màu viền để người dùng dễ nhận biết */
+.address-input:hover {
+  border-color: #e74c3c;
+}
+
+.address-input i {
+  color: #888;
+  font-size: 14px; /* Icon cũng to lên theo */
+  margin-left: 10px;
+}
+
+/* Dropdown thả xuống */
+.address-dropdown {
+  position: absolute; /* Thay đổi từ relative sang absolute */
+  top: 100%;          /* Đẩy xuống ngay dưới đáy ô input */
+  left: 0;            /* Căn trái bằng ô input */
+  width: 100%;        /* Chiều rộng bằng 100% ô input */
+  background: #fff;
+  border: 1px solid #d0d7de;
+  border-radius: 0 0 4px 4px; /* Bo góc dưới cho đẹp */
+  margin-top: 2px;    /* Tạo khoảng cách nhỏ */
+  z-index: 1000;      /* Đảm bảo nổi lên trên các thành phần khác */
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Thêm bóng đổ cho nổi bật */
+}
+
+/* Phần Tabs (Tỉnh/Huyện/Xã) */
+.address-tabs {
+  display: flex;
+  background-color: #f8f9fa; /* Màu nền nhẹ cho thanh tab */
+  border-bottom: 1px solid #eee;
+}
+
+.tab {
+  flex: 1;            /* Chia đều chiều rộng cho 3 tab */
+  text-align: center;
+  padding: 10px 0;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  color: #555;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+}
+
+.tab.active {
+  color: #e74c3c;
+  border-bottom-color: #e74c3c;
+  background-color: #fff;
+}
+
+.tab.disabled {
+  color: #ccc;
+  cursor: not-allowed;
+  pointer-events: none; /* Chặn click vào tab chưa kích hoạt */
+}
+
+/* Nội dung danh sách */
+.tab-content {
+  max-height: 200px; /* Chiều cao tối đa của danh sách */
+  overflow-y: auto;  /* Hiện thanh cuộn nếu danh sách dài */
+  padding: 0;        /* Bỏ padding bao quanh để item sát lề */
+}
+
+/* Từng dòng địa chỉ */
+.address-item {
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 14px;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.address-item:last-child {
+  border-bottom: none;
+}
+
+.address-item:hover {
+  background-color: #fff5f5; /* Hiệu ứng hover nhẹ màu đỏ */
+  color: #e74c3c;
+}
+
+/* Tùy chỉnh thanh cuộn (Scrollbar) cho đẹp hơn */
+.tab-content::-webkit-scrollbar {
+  width: 6px;
+}
+.tab-content::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 3px;
+}
+</style>
+<div class="container-fluid" style="margin-top: 32px;">
+  <app-page-title title="Quản lý khách hàng"></app-page-title>
+<form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
+  <style>
+    .form-label {
+      font-weight: 500;
+      display: inline-block;
+      width: 130px;
+    }
+
+    .form-input {
+      border: none;
+      border-bottom: 1px solid #ccc;
+      width: 100%;
+      padding: 4px 8px;
+      background: transparent;
+      outline: none;
+    }
+
+    .form-group {
+      display: flex;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .form-section {
+      padding: 20px;
+    }
+
+    .form-select {
+      border-radius: 22px;
+      padding: 2px 12px;
+      height: 28px;
+    }
+  </style>
+
+  <div class="row form-section">
+    <!-- Cột trái -->
+    <div class="col-md-6">
+      <div class="form-group"><label class="form-label">Họ tên:</label><input class="form-input" formControlName="hoTen"></div>
+      <div class="form-group"><label class="form-label">SĐT:</label><input class="form-input" formControlName="sdt"></div>
+      <div class="form-group"><label class="form-label">Giới tính:</label><select class="form-select" formControlName="gioiTinh"><option>Nam</option><option>Nữ</option></select></div>
+      <div class="form-group"><label class="form-label">CCCD:</label><input class="form-input" formControlName="cccd"></div>
+      <div class="form-group ">
+        <label class="form-label">Ngày Sinh:</label>
+        <input
+          type="text"
+          class="form-input"
+          bsDatepicker
+          formControlName="ngaySinh"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          style="width: 100%;"
+        />
+      </div>
+              <div class="form-group mb-3">
+                <label class="form-label">Địa chỉ</label>
+
+                <!-- Ô hiển thị địa chỉ -->
+                <div class="address-input" (click)="toggleDropdown()">
+                    <span *ngIf="!selectedWard" style="color: #999;">
+                        Tỉnh/ Thành phố, Quận/Huyện, Phường/Xã
+                    </span>
+                    
+                    <span *ngIf="selectedWard" style="color: #333; font-weight: 500;">
+                        {{ selectedProvince?.name }}, {{ selectedDistrict?.name }}, {{ selectedWard?.name }}
+                    </span>
+                    
+                    <i class="fa fa-chevron-down"></i>
+                </div>
+
+                <!-- Dropdown hiển thị khi click -->
+                <div class="address-dropdown" *ngIf="dropdownOpen">
+                  <div class="address-tabs">
+                    <div
+                      class="tab"
+                      [class.active]="activeTab === 'tinh'"
+                      (click)="activeTab = 'tinh'"
+                    >
+                      Tỉnh/Thành phố
+                    </div>
+                    <div
+                      class="tab"
+                      [class.active]="activeTab === 'huyen'"
+                      [class.disabled]="!selectedProvince"
+                      (click)="selectedProvince && (activeTab = 'huyen')"
+                    >
+                      Quận/Huyện
+                    </div>
+                    <div
+                      class="tab"
+                      [class.active]="activeTab === 'xa'"
+                      [class.disabled]="!selectedDistrict"
+                      (click)="selectedDistrict && (activeTab = 'xa')"
+                    >
+                      Phường/Xã
+                    </div>
+                  </div>
+
+                  <!-- Nội dung từng tab -->
+                  <div class="tab-content">
+                    <!-- Danh sách tỉnh -->
+                    <div *ngIf="activeTab === 'tinh'">
+                      <div
+                        class="address-item"
+                        *ngFor="let p of listProvince"
+                        (click)="selectProvince(p)"
+                      >
+                        {{ p.name }}
+                      </div>
+                    </div>
+
+                    <!-- Danh sách huyện -->
+                    <div *ngIf="activeTab === 'huyen'">
+                      <div
+                        class="address-item"
+                        *ngFor="let d of listDistrict"
+                        (click)="selectDistrict(d)"
+                      >
+                        {{ d.name }}
+                      </div>
+                    </div>
+
+                    <!-- Danh sách xã -->
+                    <div *ngIf="activeTab === 'xa'">
+                      <div
+                        class="address-item"
+                        *ngFor="let w of listWard"
+                        (click)="selectWard(w)"
+                      >
+                        {{ w.name }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+      <div class="form-group">
+        <input class="form-input" formControlName="pho" placeholder="Số nhà, tên đường" style="width: 100%;">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Sản phẩm/Dịch vụ:</label>
+        <input class="form-input" formControlName="sanPhamDichVu">
+      </div>
+
+      <label class="form-label">File đính kèm:</label>
+      <div class="form-group" *ngIf="action!=='view'">
+
+        <!-- Phần 1: Label -->
+
+        <!-- Phần 2: Ô kéo thả -->
+        <div class="col-md-12 mb-2">
+          <div
+            class="upload-box"
+            (drop)="onFileDrop($event)"
+            (dragover)="onDragOver($event)"
+            (dragleave)="onDragLeave($event)"
+          >
+            <button type="button" class="upload-btn" (click)="fileInput.click()">
+              Tải file <img src="assets/images/icon/icon_upload.svg"/>
+            </button>
+            <p>KÉO THẢ</p>
+            <input
+              type="file"
+              #fileInput
+              (change)="onFileSelect($event)"
+              multiple
+              hidden
+            />
+          </div>
+
+        </div>
+      </div>
+      <div class="form-group">
+      <ul class="file-list list-unstyled">
+        <li *ngFor="let file of selectedFiles; let i = index" class="d-flex align-items-center gap-2">
+          <i class="fas" [ngClass]="getFileIcon(file.name)"></i>
+          <span class="flex-grow-1">{{ file.name }}</span>
+
+          <!-- Nút remove -->
+          <button type="button" class="btn btn-sm btn-outline-danger" *ngIf="action!=='view'"
+                  (click)="removeFile(i)" title="Xóa file">
+            <i class="fas fa-times"></i>
+          </button>
+        </li>
+      </ul>
+      </div>
+
+      <div class="form-group"><label class="form-label">Yêu cầu:</label></div>
+      <div class="form-group"><textarea _ngcontent-ydc-c170="" formControlName="yeuCau" class="form-textarea" style="
+   height: 113px;
+    background: #F8F9FF;
+    border-radius: 20px;
+    width: 100%;
+    padding:10px;
+"></textarea></div>
+      <div class="form-group"><label class="form-label">Nhóm khách hàng:</label>
+        <select class="form-select" formControlName="nhomKh">
+          <ng-container *ngFor="let item of listCommon">
+            <option *ngIf="item.type === COMMMON_CODE.NHOM_KH" [value]="item.code">
+              {{ item.name }}
+            </option>
+          </ng-container>
+        </select>
+        <button type="button" (click)="addCommon(COMMMON_CODE.NHOM_KH)"
+                style="padding: 6px 10px; background-color: green; color: white; border: none; border-radius: 4px; cursor: pointer; margin-left: 10px" *ngIf="action!=='view'">
+          +
+        </button>
+      </div>
+      <div class="form-group"><label class="form-label">Tình trạng hôn nhân:</label>
+        <select class="form-select" formControlName="tinhTrangHonNhan">
+          <option value="DT">Độc thân</option>
+          <option value="DKH">Đã kết hôn</option>
+          <option value="LH">Ly hôn</option>
+          <option value="GVC">Góa vợ/Góa chồng</option>
+          <option value="LT">Ly thân</option></select></div>
+
+
+           <div class="form-group"><label class="form-label">Ngành nghề:</label>
+               <select class="form-select" formControlName="nganhNghe">
+                 <ng-container *ngFor="let item of listCommon">
+                   <option *ngIf="item.type === COMMMON_CODE.LINHVUC" [value]="item.code">
+                     {{ item.name }}
+                   </option>
+                 </ng-container>
+               </select>
+               <button type="button" (click)="addCommon(COMMMON_CODE.LINHVUC)"
+                       style="padding: 6px 10px; background-color: green; color: white; border: none; border-radius: 4px; cursor: pointer; margin-left: 10px" *ngIf="action!=='view'">
+                 +
+               </button>
+             </div>
+      <div class="form-group"><label class="form-label">Thu nhập:</label><input class="form-input" formControlName="thuNhap"></div>
+      <div class="form-group">
+        <label class="form-label">
+          Trạng thái mua hàng
+        </label>
+        
+        <div style="display: flex; align-items: center;">
+          
+          <select class="form-select" formControlName="tinhTrangMuaHang">
+            <ng-container *ngFor="let item of listCommon">
+              <option *ngIf="item.type === COMMMON_CODE.TTMH" [value]="item.code">
+                {{ item.name }}
+              </option>
+            </ng-container>
+          </select>
+
+          <button type="button" 
+                  (click)="addCommon(COMMMON_CODE.TTMH)"
+                  style="padding: 6px 10px; background-color: green; color: white; border: none; border-radius: 4px; cursor: pointer; margin-left: 10px; white-space: nowrap;" 
+                  *ngIf="action !== 'view' && isOwner">
+            +
+          </button>
+
+        </div>
+      </div>
+      <div class="form-group"><label class="form-label">Nhu cầu:</label><input class="form-input" formControlName="nhuCau"></div>
+      <div class="form-group"><label class="form-label">Sở thích:</label><input class="form-input" formControlName="soThich"></div>
+      <div class="form-group"><label class="form-label">Mối quan tâm:</label><input class="form-input" formControlName="moiQuanTam"></div>
+      <div class="form-group"><label class="form-label">SP từng mua:</label><input class="form-input" formControlName="sanPhamTungMua"></div>
+    </div>
+
+    <!-- Cột phải -->
+    <div class="col-md-6">
+      <div class="form-group"><label class="form-label">Kênh liên hệ:</label>
+        <select class="form-select" formControlName="kenhLienHe">
+            <ng-container *ngFor="let item of listCommon">
+              <option *ngIf="item.type === COMMMON_CODE.CHANNEL" [value]="item.code">
+                {{ item.name }}
+              </option>
+            </ng-container>
+        </select>
+        <button type="button" (click)="addCommon(COMMMON_CODE.CHANNEL)"
+                style="padding: 6px 10px; background-color: green; color: white; border: none; border-radius: 4px; cursor: pointer; margin-left: 10px" *ngIf="action!=='view'">
+          +
+        </button>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Lịch sử đóng phí gần nhất:</label>
+        <input
+          type="text"
+          class="form-input"
+          bsDatepicker
+          formControlName="ngayDongPhiGanNhat"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          style="width: 100%;"
+        />
+      </div>
+      <div class="form-group"><label class="form-label">Ngày đóng phí kế tiếp:</label>
+        <input
+          type="text"
+          class="form-input"
+          bsDatepicker
+          formControlName="ngayDongPhiKeTiep"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          style="width: 100%;"
+        />
+        </div>
+      <div class="form-group">
+        <label class="form-label">Tổng doanh thu:</label>
+        <input
+          type="text"
+          class="form-input "
+          formControlName="tongDoanhThu"
+          placeholder="Nhập tổng doanh thu (VNĐ)"
+          (input)="formatCurrency('tongDoanhThu', $event)"
+        />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Doanh thu năm gần nhất:</label>
+        <input
+          type="text"
+          class="form-input"
+          formControlName="doanhThuGanNhat"
+          placeholder="Nhập doanh thu năm gần nhất (VNĐ)"
+          (input)="formatCurrency('doanhThuGanNhat', $event)"
+        />
+      </div>
+
+        <div formArrayName="relationshipList">
+          <div *ngFor="let relationship of relationshipList.controls; let i = index"
+               [formGroupName]="i"
+               style="display:flex;align-items:center;margin-bottom:10px;flex-wrap:wrap">
+
+            <label class="form-label" style="width:100%">Mối quan hệ với:</label>
+
+            <input class="form-input"
+                   placeholder="Nhập mối quan hệ"
+                   style="width:30%;margin-right:10px"
+                   formControlName="label" />
+
+            <ng-select
+              [items]="listCustomer"
+              bindLabel="hoTen"
+              bindValue="id"
+              formControlName="customerId"
+              placeholder="Chọn khách hàng"
+              style="flex:1;margin-right:10px;margin-bottom:10px">
+              <ng-template ng-option-tmp let-item="item">
+                {{ item.hoTen }}
+              </ng-template>
+            </ng-select>
+
+            <button type="button"
+                    (click)="removeRelationShip(i)"
+                    style="padding:6px 10px;background:red;color:#fff;border:none;border-radius:4px;cursor:pointer;margin-right:5px"
+                    [disabled]="relationshipList.length === 1"
+                    *ngIf="action!=='view'">-</button>
+
+            <button type="button"
+                    (click)="addRelationShip()"
+                    style="padding:6px 10px;background:green;color:#fff;border:none;border-radius:4px;cursor:pointer"
+                    *ngIf="action!=='view'">+</button>
+          </div>
+        </div>
+      <div formArrayName="meets">
+        <div *ngFor="let meet of meets.controls; let i = index" class="form-group">
+          <label class="form-label">Lần gặp {{ i + 1 }}:</label>
+          <input
+            type="text"
+            class="form-input"
+            bsDatepicker
+            [formControlName]="i"
+            [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+            style="max-width: 100%"
+          />
+          <button type="button" (click)="removeMeeting(i)"
+                  style="padding: 6px 10px; background-color: red; color: white; border: none; border-radius: 4px; cursor: pointer;"
+                  [disabled]="meets.length === 1" *ngIf="action!=='view'">-</button>
+          <button type="button" (click)="addMeeting()"
+                  style="padding: 6px 10px; background-color: green; color: white; border: none; border-radius: 4px; cursor: pointer; margin-left: 10px" *ngIf="action!=='view'">
+            +
+          </button>
+        </div>
+      </div>
+      <div class="form-group"><label class="form-label">Người phụ trách:</label>
+        <ng-select
+          [items]="listUser"
+          bindLabel="displayName"
+          bindValue="id"
+          formControlName="nguoiPhuTrach"
+          placeholder="Chọn người dùng"
+          style="flex: 1;"
+        >
+          <ng-template ng-option-tmp let-item="item">
+            {{ item.username }} - {{ item.fullname }}
+          </ng-template>
+        </ng-select>
+      </div>
+      <div class="form-group"><label class="form-label">Nhân viên tư vấn:</label>
+        <ng-select
+          [items]="listUser"
+          bindLabel="displayName"
+          bindValue="id"
+          formControlName="nhanVienTuVan"
+          placeholder="Chọn người dùng"
+          style="flex: 1;"
+        >
+          <ng-template ng-option-tmp let-item="item">
+            {{ item.username }} - {{ item.fullname }}
+          </ng-template>
+        </ng-select>
+      </div>
+      <div class="form-group"><label class="form-label">Nguồn:</label>
+        <select class="form-select" formControlName="nguon">
+          <ng-container *ngFor="let item of listCommon">
+            <option *ngIf="item.type === COMMMON_CODE.SOURCE" [value]="item.code">
+              {{ item.name }}
+            </option>
+          </ng-container>
+        </select>
+        <button type="button" (click)="addCommon(COMMMON_CODE.SOURCE)"
+                style="padding: 6px 10px; background-color: green; color: white; border: none; border-radius: 4px; cursor: pointer; margin-left: 10px" *ngIf="action!=='view'">
+          +
+        </button>
+      </div>
+      <div class="form-group"><label class="form-label">Trạng thái CSKH:</label><select class="form-select" formControlName="trangThaiCskh">
+          <ng-container *ngFor="let item of listCommon">
+            <option *ngIf="item.type === COMMMON_CODE.TTCSKH" [value]="item.code">
+              {{ item.name }}
+            </option>
+          </ng-container>
+        </select>
+        <button type="button" (click)="addCommon(COMMMON_CODE.TTCSKH)"
+                style="padding: 6px 10px; background-color: green; color: white; border: none; border-radius: 4px; cursor: pointer; margin-left: 10px" *ngIf="action!=='view'">
+          +
+        </button>
+      </div>
+     <div class="form-group">
+  <label class="form-label">Chi phí CSKH:</label>
+  <input
+    type="text"
+    class="form-input"
+    formControlName="chiPhiCskh"
+    placeholder="Nhập chi phí CSKH (VNĐ)"
+    (input)="formatCurrency('chiPhiCskh', $event)"
+  />
+      </div>
+
+<!--      <div class="form-group"><label class="form-label">Tình trạng CSKH:</label><input class="form-input" formControlName="tinhTrangCSKH"></div>-->
+     <div class="form-group">
+        <label class="form-label">Số tiền hiện tại trong TK CSKH:</label>
+        <input
+          type="text"
+          class="form-input"
+          formControlName="soTienHienTai"
+          placeholder="Nhập số tiền hiện tại (VNĐ)"
+          (input)="formatCurrency('soTienHienTai', $event)"
+        />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Tổng tiền trong TK CSKH:</label>
+        <input
+          type="text"
+          class="form-input "
+          formControlName="tongTienCskh"
+          placeholder="Nhập tổng tiền (VNĐ)"
+          (input)="formatCurrency('tongTienCskh', $event)"
+        />
+      </div>
+
+      <div class="form-group"><label class="form-label">Email:</label><input class="form-input" formControlName="email"></div>
+      <div class="d-flex justify-content-end gap-2 p-3">
+        
+        <button type="button" class="btn btn-secondary" (click)="goBack()" style="
+            border-radius: 20px;
+            width: 105px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        ">
+          <i class="bi bi-arrow-return-left" style="font-size: 16px;"></i> 
+          Quay lại
+        </button>
+
+        <button *ngIf="action !== 'view'" type="submit" class="btn btn-primary" style="
+            border-radius: 20px;
+            background: #4C7FFF;
+            border: none;
+            width: 105px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        ">
+          Lưu
+          <img src="assets/images/icon/u_save.svg" alt="Save" style="height: 16px;" />
+        </button>
+        
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Nút lưu -->
+  
+</form>
+</div>

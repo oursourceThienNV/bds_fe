@@ -1,0 +1,24 @@
+<ngb-toast style="width: auto !important;"
+           *ngFor="let toast of toastService.toasts"
+           [class]="toast.classname"
+           [autohide]="true"
+           [delay]="toast.delay"
+           (hidden)="toastService.remove(toast)"
+>
+  <ng-template [ngIf]="isTemplate(toast)" [ngIfElse]="text">
+    <ng-template [ngTemplateOutlet]="toast.textOrTpl"></ng-template>
+  </ng-template>
+
+  <ng-template #text>
+    <div class="d-flex align-items-center">
+      <div >
+        <i *ngIf="!toast.isSuccess" class="far fa-times-circle font-size-20" style="margin-right: 10px"></i>
+        <i *ngIf="toast.isSuccess" class="far fa-check-circle font-size-20" style="margin-right: 10px"></i>
+      </div>
+      <div>
+        {{ toast.textOrTpl | translate}}
+      </div>
+    </div>
+  </ng-template>
+</ngb-toast>
+

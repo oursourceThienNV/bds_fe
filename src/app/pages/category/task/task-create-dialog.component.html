@@ -1,0 +1,1714 @@
+<form [formGroup]="createTaskForm" (ngSubmit)="onSubmit()">
+  <div class="modal-header">
+    <h3 class="modal-title"><b>{{title}}</b></h3>
+    <button type="button" class="btn-close" (click)="modal.dismiss('cancel')"></button>
+  </div>
+
+  <div class="modal-body row">
+    <!-- Mã công việc - ẩn giao diện -->
+    <input type="hidden" formControlName="code" />
+    <!-- Tên công việc -->
+    <div class="col-md-12 mb-2">
+      <label for="taskName">Tên công việc<span class="text-danger">*</span></label>
+      <input id="taskName" class="form-control"
+        [class.is-invalid]="createTaskForm.get('name')?.invalid && createTaskForm.get('name')?.touched"
+        formControlName="name" type="text" placeholder="Nhập tên công việc" />
+      <div class="invalid-feedback" *ngIf="createTaskForm.get('name')?.invalid && createTaskForm.get('name')?.touched">
+        Vui lòng nhập tên công việc
+      </div>
+    </div>
+
+    <!-- Trạng thái công việc -->
+    <div class="col-md-6 mb-2">
+      <label>Trạng thái <span class="text-danger">*</span></label>
+      <select class="form-control"
+        [class.is-invalid]="createTaskForm.get('status')?.invalid && createTaskForm.get('status')?.touched"
+        formControlName="status">
+        <option [value]="'start'"
+          [selected]="createTaskForm.get('status')?.value === 'start' || !createTaskForm.get('status')?.value">Bắt đầu
+        </option>
+        <option *ngFor="let status of listStatus" [value]="status?.code">
+          {{ status?.name }}
+        </option>
+      </select>
+      <div class="invalid-feedback"
+        *ngIf="createTaskForm.get('status')?.invalid && createTaskForm.get('status')?.touched">
+        Vui lòng chọn trạng thái
+      </div>
+    </div>
+    <div class="col-md-6 mb-2">
+      <label for="priority">Mức độ ưu tiên <span class="text-danger">*</span></label>
+      <select id="priority" class="form-control"
+        [class.is-invalid]="createTaskForm.get('priority')?.invalid && createTaskForm.get('priority')?.touched"
+        formControlName="priority">
+        <option value="medium">Trung bình</option>
+        <option value="high">Cao</option>
+        <option value="low">Thấp</option>
+      </select>
+      <div class="invalid-feedback"
+        *ngIf="createTaskForm.get('priority')?.invalid && createTaskForm.get('priority')?.touched">
+        Vui lòng chọn mức độ ưu tiên
+      </div>
+    </div>
+    <!-- người phụ trách -->
+    <div class="col-md-6 mb-2">
+      <label for="assignedTo">Người phụ trách<span class="text-danger">*</span></label>
+      <ng-select [items]="listUser" bindLabel="fullname" bindValue="id" formControlName="assigned"
+        placeholder="Chọn người dùng"
+        [class.is-invalid]="createTaskForm.get('assigned')?.invalid && createTaskForm.get('assigned')?.touched">
+        <ng-template ng-option-tmp let-item="item">
+          {{ item.username }} - {{ item.fullname }}
+        </ng-template>
+      </ng-select>
+      <div class="invalid-feedback d-block"
+        *ngIf="createTaskForm.get('assigned')?.invalid && createTaskForm.get('assigned')?.touched">
+        Vui lòng chọn người phụ trách
+      </div>
+    </div>
+
+    <style>
+      ::ng-deep .ng-dropdown-panel .ng-option {
+        border-bottom: 1px solid #ccc;
+        /* viền xám nhạt */
+        /* căn lề đẹp hơn */
+        transition: all 0.2s ease;
+        /* hiệu ứng hover mượt */
+      }
+
+      ::ng-deep .ng-dropdown-panel .ng-option:hover {
+        border-color: #007bff;
+        /* đổi màu viền khi hover */
+        background-color: #f0f8ff;
+        /* nền sáng khi hover */
+      }
+    </style>
+
+    <!-- Người tiếp nhận (multi-select + chips + Select all) -->
+    <div class="col-md-6 mb-2">
+      <label for="recipients">Người tiếp nhận<span class="text-danger">*</span></label>
+
+      <ng-select id="recipients" formControlName="recipients" [items]="listUser" bindLabel="fullname" bindValue="id"
+        [multiple]="true" [closeOnSelect]="false" [searchable]="true" [dropdownPosition]="'bottom'"
+        [compareWith]="compareIds" placeholder="Tìm theo tên..." (change)="onRecipientsChange($event)"
+        class="ng-select-recipients"
+        [class.is-invalid]="createTaskForm.get('recipients')?.invalid && createTaskForm.get('recipients')?.touched">
+
+        <!-- 🟩 Header: chọn tất cả -->
+        <ng-template ng-header-tmp>
+          <div class="select-all-container px-2 py-1 d-flex align-items-center" (click)="$event.stopPropagation()">
+            <input type="checkbox" [checked]="isAllSelected" [indeterminate]="isIndeterminate"
+              (click)="$event.stopPropagation()" (change)="toggleSelectAll($event)" id="selectAll" />
+            <label for="selectAll" class="select-all-label mb-0 ms-2">Chọn tất cả</label>
+          </div>
+          <div class="dropdown-divider my-1"></div>
+        </ng-template>
+
+        <!-- 🟦 Option template: từng người -->
+        <ng-template ng-option-tmp let-item="item" let-selected="selected">
+          <div class="d-flex align-items-center gap-2" (click)="$event.stopPropagation()">
+            <input type="checkbox" [checked]="selected" (click)="$event.stopPropagation()"
+              (change)="onOptionCheckboxChange(item, selected)" />
+            <span>{{ item.fullname }}</span>
+          </div>
+        </ng-template>
+      </ng-select>
+
+      <!-- 🟨 CHIP hiển thị dưới input -->
+      <div class="mt-2 d-flex flex-wrap gap-2">
+        <span class="badge rounded-pill bg-light border" *ngFor="let u of recipientsSelected">
+          {{ u.fullname || u.id }}
+          <button type="button" class="btn btn-sm btn-link p-0 ms-1" (click)="removeRecipient(u.id)">×</button>
+        </span>
+      </div>
+      <div class="invalid-feedback d-block"
+        *ngIf="createTaskForm.get('recipients')?.invalid && createTaskForm.get('recipients')?.touched">
+        Vui lòng chọn ít nhất một người tiếp nhận
+      </div>
+    </div>
+
+    <style>
+      ::ng-deep .ng-select.ng-select-recipients {
+
+        border-radius: 6px;
+        padding: 2px 4px;
+      }
+
+      ::ng-deep .ng-dropdown-panel {
+        z-index: 9999 !important;
+        position: absolute !important;
+        background: white !important;
+        border: 1px solid #ccc !important;
+        border-radius: 4px;
+      }
+
+      /* Khung chọn tất cả */
+      .select-all-container {
+        display: flex;
+        align-items: center;
+        margin-left: 0px !important;
+        gap: 8px;
+        padding: 6px 3px !important;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+      }
+
+      /* Hiệu ứng hover nhẹ */
+      .select-all-container:hover {
+        background-color: #f5f5f5;
+      }
+
+      /* Checkbox đẹp hơn */
+      .select-all-container input[type="checkbox"] {
+
+        accent-color: #198754;
+        /* xanh Bootstrap */
+        cursor: pointer;
+      }
+
+      /* Chữ chọn tất cả — không đậm */
+      .select-all-label {
+        font-weight: 400 !important;
+        /* 🔹 Bình thường, không bold */
+        font-size: 14px;
+        color: #333;
+      }
+
+      .badge {
+        font-size: 10px;
+        border: 1px solid #999 !important;
+        padding: 4px 6px;
+        background-color: #f9f9f9;
+        color: #333;
+      }
+
+      .badge button {
+        font-size: 10px;
+        /* nút × to hơn */
+        color: #767575;
+      }
+
+      .badge button:hover {
+        color: #000;
+        /* khi hover nút sẽ đậm hơn */
+      }
+    </style>
+
+
+    <!-- phòng ban -->
+    <div class="col-md-6 mb-2">
+      <label for="department">Phòng ban <span class="text-danger">*</span></label>
+      <select id="department" class="form-control"
+        [class.is-invalid]="createTaskForm.get('department')?.invalid && createTaskForm.get('department')?.touched"
+        formControlName="department">
+        <option value="">-- Chọn phòng ban --</option>
+        <option *ngFor="let dept of listDepartment" [value]="dept.code">{{ dept.name }}</option>
+      </select>
+      <div class="invalid-feedback"
+        *ngIf="createTaskForm.get('department')?.invalid && createTaskForm.get('department')?.touched">
+        Vui lòng chọn phòng ban
+      </div>
+    </div>
+
+    <style>
+
+    </style>
+
+    <!-- Ngày hết hạn -->
+    <div class="col-md-6 mb-3">
+      <label class="fw-semibold">Ngày hết hạn <span class="text-danger">*</span></label>
+      <input type="date" id="dueDate" name="dueDate" class="form-control text-uppercase"
+        [class.is-invalid]="createTaskForm.get('dueDate')?.invalid && createTaskForm.get('dueDate')?.touched"
+        formControlName="dueDate" placeholder="DD/MM/YYYY" />
+      <div class="invalid-feedback"
+        *ngIf="createTaskForm.get('dueDate')?.invalid && createTaskForm.get('dueDate')?.touched">
+        Vui lòng chọn ngày hết hạn
+      </div>
+    </div>
+    <!-- ngày và thời gian -->
+    <!-- <div class="col-md-6 mb-2">
+      <label for="dueDate">Ngày và thời gian <span class="text-danger">*</span></label>
+
+      <div class="d-flex align-items-stretch gap-2"> -->
+    <!-- DATE -->
+    <!-- <input
+          type="text"
+          class="form-control"
+          bsDatepicker
+          formControlName="dueDate"
+          [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+          style="max-width: 180px;"
+        /> -->
+
+    <!-- TIME: giả lập như 1 ô input -->
+    <!--          <timepicker-->
+    <!--            formControlName="dueTime"-->
+    <!--            [showMeridian]="false"-->
+    <!--            [showSpinners]="false"-->
+    <!--            [showSeconds]="false"-->
+    <!--            [mousewheel]="false"-->
+    <!--            [arrowkeys]="true"-->
+    <!--          ></timepicker>-->
+    <!-- </div>
+    </div> -->
+    <!-- mô tả cv -->
+    <div class="col-md-12 mb-2">
+      <label for="description">Mô tả công việc<span class="text-danger">*</span></label>
+      <textarea id="description" class="form-control" formControlName="description"
+        placeholder="Nhập mô tả công việc"></textarea>
+    </div>
+    <!-- File Upload Section -->
+    <div class="col-md-12 mb-4">
+      <div class="section-header">
+        <label class="form-label section-title">
+          <span class="title-icon">
+            <i class="fas fa-paperclip"></i>
+          </span>
+          <span class="title-text">Tài liệu đính kèm</span>
+          <span class="title-badge">{{ selectedFiles?.length || 0 }}</span>
+        </label>
+        <p class="section-subtitle">Thêm tài liệu để bổ sung thông tin cho công việc</p>
+      </div>
+      
+      <!-- Upload Area -->
+      <div class="premium-upload-container" 
+           (drop)="onFileDrop($event)" 
+           (dragover)="onDragOver($event)" 
+           (dragleave)="onDragLeave($event)">
+        
+        <!-- Upload Box -->
+        <div class="premium-upload-box" 
+             [class.dragover]="isDragOver"
+             [class.has-files]="selectedFiles?.length > 0">
+          
+          <!-- Background Pattern -->
+          <div class="upload-pattern"></div>
+          
+          <!-- Icon Area -->
+          <div class="upload-icon-wrapper">
+            <div class="upload-icon-bg">
+              <i class="fas fa-cloud-upload-alt"></i>
+            </div>
+            <div class="upload-pulse"></div>
+            <div class="upload-ripple"></div>
+          </div>
+          
+          <!-- Content Area -->
+          <div class="upload-content-wrapper">
+            <div class="upload-title">
+              <span *ngIf="!selectedFiles?.length" class="upload-empty-state">
+                <i class="fas fa-magic me-2"></i>
+                Kéo thả file vào đây hoặc <span class="browse-link">chọn file</span>
+              </span>
+              <span *ngIf="selectedFiles?.length" class="files-selected-state">
+                <i class="fas fa-check-circle me-2"></i>
+                <strong>{{ selectedFiles.length }}</strong> file đã sẵn sàng
+              </span>
+            </div>
+            
+            <div class="upload-subtitle">
+              <span *ngIf="!selectedFiles?.length" class="supported-formats">
+                <i class="fas fa-info-circle me-1"></i>
+                Hỗ trợ: PDF, DOC, XLS, PNG, JPG, ZIP (tối đa 25MB)
+              </span>
+              <span *ngIf="selectedFiles?.length" class="add-more-text">
+                <i class="fas fa-plus-circle me-1"></i>
+                Kéo thả thêm hoặc click để chọn file khác
+              </span>
+            </div>
+            
+            <!-- Progress Indicator -->
+            <div class="upload-progress" *ngIf="selectedFiles?.length > 0">
+              <div class="progress-bar">
+                <div class="progress-fill" [style.width.%]="(selectedFiles.length / 10) * 100"></div>
+              </div>
+              <span class="progress-text">{{ selectedFiles.length }}/10 files</span>
+            </div>
+          </div>
+          
+          <!-- Hidden Input -->
+          <input type="file" 
+                 #fileInput 
+                 (change)="onFileSelect($event)" 
+                 multiple 
+                 class="premium-file-input" 
+                 accept=".pdf,.doc,.docx,.xls,.xlsx,.png,.jpg,.jpeg,.gif,.zip,.rar,.txt" />
+        </div>
+      </div>
+    </div>
+    <!-- Files List -->
+    <div class="col-md-12 mb-3" *ngIf="selectedFiles?.length > 0">
+      <div class="files-list-header">
+        <div class="header-left">
+          <h6 class="files-list-title">
+            <i class="fas fa-folder-open me-2"></i>
+            Danh sách tài liệu
+          </h6>
+          <span class="files-count-badge">{{ selectedFiles.length }} file</span>
+        </div>
+        <div class="header-right">
+          <button type="button" class="btn-clear-all" (click)="clearAllFiles()" *ngIf="selectedFiles?.length > 0">
+            <i class="fas fa-trash-alt me-1"></i>
+            Xóa tất cả
+          </button>
+        </div>
+      </div>
+      
+      <div class="premium-files-list">
+        <div *ngFor="let file of selectedFiles; let i = index" class="premium-file-item">
+          <!-- File Status Indicator -->
+          <div class="file-status-indicator">
+            <div class="status-dot status-success"></div>
+          </div>
+          
+          <!-- File Icon -->
+          <div class="file-icon-wrapper">
+            <div class="file-icon-bg">
+              <i class="fas" [ngClass]="getFileIcon(file.name)"></i>
+            </div>
+          </div>
+          
+          <!-- File Info -->
+          <div class="file-info">
+            <div class="file-name">{{ file.name }}</div>
+            <div class="file-meta">
+              <span class="file-size">
+                <i class="fas fa-database me-1"></i>
+                {{ formatFileSize(file.size) }}
+              </span>
+              <span class="file-type-badge">
+                {{ getFileType(file.name) }}
+              </span>
+              <span class="upload-time">
+                <i class="fas fa-clock me-1"></i>
+                Vừa xong
+              </span>
+            </div>
+          </div>
+          
+          <!-- File Actions -->
+          <div class="file-actions">
+            <button type="button" 
+                    class="btn-action btn-preview" 
+                    (click)="previewFile(file)" 
+                    title="Xem trước">
+              <i class="fas fa-eye"></i>
+            </button>
+            <button type="button" 
+                    class="btn-action btn-download" 
+                    (click)="downloadFile(file)" 
+                    title="Tải xuống">
+              <i class="fas fa-download"></i>
+            </button>
+            <button type="button" 
+                    class="btn-action btn-remove" 
+                    (click)="removeFile(i)" 
+                    title="Xóa file">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    /* ===== PREMIUM FILE UPLOAD STYLES ===== */
+    
+    /* Section Header */
+    .section-header {
+      margin-bottom: 24px;
+    }
+    
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 18px;
+      font-weight: 700;
+      color: #1a202c;
+      margin-bottom: 8px;
+    }
+    
+    .title-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 16px;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    }
+    
+    .title-text {
+      flex: 1;
+    }
+    
+    .title-badge {
+      background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+      color: white;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      min-width: 24px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(72, 187, 120, 0.3);
+    }
+    
+    .section-subtitle {
+      color: #718096;
+      font-size: 14px;
+      margin: 0;
+      margin-left: 52px;
+    }
+    
+    /* Premium Upload Container */
+    .premium-upload-container {
+      position: relative;
+      width: 100%;
+    }
+
+    .premium-upload-box {
+      position: relative;
+      background: linear-gradient(145deg, #ffffff 0%, #f8fafc 50%, #edf2f7 100%);
+      border: 3px dashed transparent;
+      border-image: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%) 1;
+      border-radius: 24px;
+      padding: 60px 30px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      overflow: hidden;
+      min-height: 220px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 
+        0 10px 40px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    }
+
+    .premium-upload-box:hover {
+      border-image: linear-gradient(135deg, #48bb78 0%, #38a169 50%, #68d391 100%) 1;
+      background: linear-gradient(145deg, #f0fff4 0%, #c6f6d5 50%, #9ae6b4 100%);
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 
+        0 20px 60px rgba(72, 187, 120, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    }
+
+    .premium-upload-box.dragover {
+      border-image: linear-gradient(135deg, #4299e1 0%, #3182ce 50%, #63b3ed 100%) 1;
+      background: linear-gradient(145deg, #ebf8ff 0%, #bee3f8 50%, #90cdf4 100%);
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 
+        0 25px 80px rgba(66, 153, 225, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    }
+
+    .premium-upload-box.has-files {
+      border-image: linear-gradient(135deg, #48bb78 0%, #38a169 50%, #68d391 100%) 1;
+      background: linear-gradient(145deg, #f0fff4 0%, #e6fffa 50%, #c6f6d5 100%);
+    }
+    
+    /* Background Pattern */
+    .upload-pattern {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: 
+        radial-gradient(circle at 20% 80%, rgba(102, 126, 234, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(118, 75, 162, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(240, 147, 251, 0.03) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    /* ===== PREMIUM UPLOAD ICON ===== */
+    .upload-icon-wrapper {
+      position: relative;
+      margin-bottom: 24px;
+    }
+
+    .upload-icon-bg {
+      width: 100px;
+      height: 100px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      color: white;
+      box-shadow: 
+        0 15px 35px rgba(102, 126, 234, 0.4),
+        0 5px 15px rgba(102, 126, 234, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      transition: all 0.4s ease;
+      position: relative;
+      z-index: 3;
+    }
+
+    .premium-upload-box:hover .upload-icon-bg {
+      transform: scale(1.15) rotate(10deg);
+      background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+      box-shadow: 
+        0 20px 45px rgba(72, 187, 120, 0.5),
+        0 8px 20px rgba(72, 187, 120, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    }
+
+    .premium-upload-box.dragover .upload-icon-bg {
+      background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
+      animation: premium-pulse 2s infinite;
+    }
+
+    .upload-pulse {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      opacity: 0.2;
+      z-index: 1;
+    }
+
+    .upload-ripple {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 2px solid rgba(102, 126, 234, 0.3);
+      opacity: 0;
+      z-index: 2;
+    }
+
+    .premium-upload-box:hover .upload-ripple {
+      animation: ripple-effect 2s infinite;
+    }
+
+    .premium-upload-box.dragover .upload-pulse {
+      animation: premium-pulse-animation 3s infinite;
+    }
+
+    @keyframes premium-pulse {
+      0%, 100% { transform: scale(1); opacity: 0.2; }
+      50% { transform: scale(1.2); opacity: 0.1; }
+    }
+
+    @keyframes premium-pulse-animation {
+      0% { transform: scale(1); opacity: 0.3; }
+      50% { transform: scale(1.5); opacity: 0; }
+      100% { transform: scale(1); opacity: 0.3; }
+    }
+
+    @keyframes ripple-effect {
+      0% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+      100% { transform: translate(-50%, -50%) scale(2); opacity: 0; }
+    }
+
+    /* ===== PREMIUM UPLOAD CONTENT ===== */
+    .upload-content-wrapper {
+      text-align: center;
+      max-width: 500px;
+      position: relative;
+      z-index: 4;
+    }
+
+    .upload-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #1a202c;
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+
+    .upload-empty-state {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .files-selected-state {
+      color: #48bb78;
+      font-weight: 700;
+    }
+
+    .browse-link {
+      color: #667eea;
+      font-weight: 800;
+      text-decoration: underline;
+      text-decoration-style: wavy;
+      text-underline-offset: 4px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .browse-link:hover {
+      color: #5a67d8;
+      text-decoration-style: solid;
+    }
+
+    .browse-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .browse-link:hover::after {
+      transform: scaleX(1);
+    }
+
+    .upload-subtitle {
+      font-size: 15px;
+      color: #4a5568;
+      line-height: 1.6;
+      font-weight: 500;
+    }
+
+    .supported-formats {
+      color: #718096;
+    }
+
+    .add-more-text {
+      color: #48bb78;
+      font-weight: 600;
+    }
+
+    /* Progress Indicator */
+    .upload-progress {
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .progress-bar {
+      flex: 1;
+      height: 8px;
+      background: rgba(226, 232, 240, 0.6);
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #48bb78 0%, #38a169 100%);
+      border-radius: 4px;
+      transition: width 0.6s ease;
+      box-shadow: 0 0 10px rgba(72, 187, 120, 0.3);
+    }
+
+    .progress-text {
+      font-size: 12px;
+      font-weight: 600;
+      color: #48bb78;
+      min-width: 60px;
+    }
+
+    /* ===== HIDDEN INPUT ===== */
+    .premium-file-input {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+      z-index: 10;
+    }
+
+    /* ===== PREMIUM FILES LIST ===== */
+    .files-list-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding: 0 4px;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .files-list-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1a202c;
+      margin: 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .files-count-badge {
+      background: linear-gradient(135deg, #edf2f7 0%, #e2e8f0 100%);
+      color: #4a5568;
+      padding: 6px 14px;
+      border-radius: 16px;
+      font-size: 12px;
+      font-weight: 600;
+      border: 1px solid #cbd5e0;
+    }
+
+    .btn-clear-all {
+      background: linear-gradient(135deg, #fed7d7 0%, #fc8181 100%);
+      border: none;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(252, 129, 129, 0.3);
+    }
+
+    .btn-clear-all:hover {
+      background: linear-gradient(135deg, #fc8181 0%, #f56565 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(252, 129, 129, 0.4);
+    }
+
+    .premium-files-list {
+      background: white;
+      border-radius: 20px;
+      border: 1px solid #e2e8f0;
+      overflow: hidden;
+      box-shadow: 
+        0 10px 40px rgba(0, 0, 0, 0.06),
+        0 2px 10px rgba(0, 0, 0, 0.04);
+    }
+
+    .premium-file-item {
+      display: flex;
+      align-items: center;
+      padding: 20px 24px;
+      border-bottom: 1px solid #f7fafc;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    }
+
+    .premium-file-item:last-child {
+      border-bottom: none;
+    }
+
+    .premium-file-item:hover {
+      background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+      transform: translateX(8px);
+    }
+
+    .premium-file-item::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 6px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      transform: scaleY(0);
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border-radius: 0 3px 3px 0;
+    }
+
+    .premium-file-item:hover::before {
+      transform: scaleY(1);
+    }
+
+    /* File Status Indicator */
+    .file-status-indicator {
+      margin-right: 16px;
+    }
+
+    .status-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      position: relative;
+    }
+
+    .status-success {
+      background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+      box-shadow: 0 0 0 3px rgba(72, 187, 120, 0.2);
+    }
+
+    .status-success::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 6px;
+      height: 6px;
+      background: white;
+      border-radius: 50%;
+    }
+
+    /* ===== PREMIUM FILE ICON ===== */
+    .file-icon-wrapper {
+      margin-right: 20px;
+    }
+
+    .file-icon-bg {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      box-shadow: 
+        0 8px 25px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .file-icon-bg::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .premium-file-item:hover .file-icon-bg {
+      transform: scale(1.1) rotate(5deg);
+      box-shadow: 
+        0 12px 35px rgba(0, 0, 0, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    }
+
+    .premium-file-item:hover .file-icon-bg::before {
+      opacity: 1;
+    }
+
+    /* ===== PREMIUM FILE INFO ===== */
+    .file-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .file-name {
+      font-size: 16px;
+      font-weight: 700;
+      color: #1a202c;
+      margin-bottom: 8px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .file-meta {
+      display: flex;
+      gap: 16px;
+      font-size: 13px;
+      color: #718096;
+      align-items: center;
+    }
+
+    .file-size {
+      font-weight: 600;
+      color: #4a5568;
+    }
+
+    .file-type-badge {
+      background: linear-gradient(135deg, #edf2f7 0%, #e2e8f0 100%);
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      border: 1px solid #cbd5e0;
+      color: #4a5568;
+    }
+
+    .upload-time {
+      font-size: 12px;
+      color: #a0aec0;
+      font-style: italic;
+    }
+
+    /* ===== PREMIUM FILE ACTIONS ===== */
+    .file-actions {
+      display: flex;
+      gap: 8px;
+      margin-left: 20px;
+    }
+
+    .btn-action {
+      width: 40px;
+      height: 40px;
+      border: none;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      font-size: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-action::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .btn-action:hover::before {
+      opacity: 1;
+    }
+
+    .btn-preview {
+      background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
+      color: white;
+      box-shadow: 0 4px 15px rgba(66, 153, 225, 0.3);
+    }
+
+    .btn-preview:hover {
+      background: linear-gradient(135deg, #3182ce 0%, #2c5282 100%);
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 8px 25px rgba(66, 153, 225, 0.4);
+    }
+
+    .btn-download {
+      background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+      color: white;
+      box-shadow: 0 4px 15px rgba(72, 187, 120, 0.3);
+    }
+
+    .btn-download:hover {
+      background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 8px 25px rgba(72, 187, 120, 0.4);
+    }
+
+    .btn-remove {
+      background: linear-gradient(135deg, #fc8181 0%, #f56565 100%);
+      color: white;
+      box-shadow: 0 4px 15px rgba(252, 129, 129, 0.3);
+    }
+
+    .btn-remove:hover {
+      background: linear-gradient(135deg, #f56565 0%, #e53e3e 100%);
+      transform: translateY(-3px) scale(1.05) rotate(90deg);
+      box-shadow: 0 8px 25px rgba(252, 129, 129, 0.4);
+    }
+
+    /* ===== RESPONSIVE DESIGN ===== */
+    @media (max-width: 768px) {
+      .section-title {
+        font-size: 16px;
+      }
+      
+      .title-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
+      }
+      
+      .section-subtitle {
+        margin-left: 44px;
+        font-size: 13px;
+      }
+      
+      .premium-upload-box {
+        padding: 40px 20px;
+        min-height: 180px;
+      }
+
+      .upload-icon-bg {
+        width: 80px;
+        height: 80px;
+        font-size: 32px;
+      }
+
+      .upload-title {
+        font-size: 18px;
+      }
+
+      .upload-subtitle {
+        font-size: 14px;
+      }
+
+      .files-list-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .premium-file-item {
+        padding: 16px 20px;
+      }
+
+      .file-icon-wrapper {
+        margin-right: 16px;
+      }
+
+      .file-icon-bg {
+        width: 48px;
+        height: 48px;
+        font-size: 20px;
+      }
+
+      .file-name {
+        font-size: 15px;
+      }
+
+      .file-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+        font-size: 12px;
+      }
+
+      .file-actions {
+        margin-left: 16px;
+        gap: 6px;
+      }
+
+      .btn-action {
+        width: 36px;
+        height: 36px;
+        font-size: 12px;
+      }
+    }
+  </style>
+
+
+
+
+
+  <!-- ✅ Form nhập tác vụ con -->
+  <div class="subtask-container">
+    <h6 class="fw-bold mb-3">Công việc con</h6>
+
+    <!-- Nút thêm tác vụ con -->
+    <button type="button" class="btn btn-success mb-3" (click)="onAddSubtask()">
+      <i class="bx bx-plus"></i> Thêm tác vụ con
+    </button>
+
+    <div class="table-responsive">
+      <table class="table table-bordered align-middle subtask-table">
+        <thead class="table-header">
+          <tr>
+            <th>Mã</th>
+            <th>Tiêu đề</th>
+            <th>Người thực hiện</th>
+            <th>Ưu tiên</th>
+            <th>Trạng thái</th>
+            <th colspan="2">Hạn</th>
+            <th>Chia sẻ</th>
+            <th></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <!-- ✅ Form thêm tác vụ con -->
+          <tr *ngIf="showAddForm" [formGroup]="subtaskForm">
+            <td>
+              <input type="hidden" formControlName="code" />
+              <span class="text-muted">Auto</span>
+            </td>
+            <td>
+              <input formControlName="title" class="form-control"
+                [class.is-invalid]="subtaskForm.get('title')?.invalid && subtaskForm.get('title')?.touched"
+                placeholder="Tiêu đề" (keydown.enter)="$event.preventDefault(); saveSubtask()" />
+              <div class="invalid-feedback"
+                *ngIf="subtaskForm.get('title')?.invalid && subtaskForm.get('title')?.touched">
+                Vui lòng nhập tiêu đề
+              </div>
+            </td>
+            <td>
+              <select formControlName="assignee" class="form-select"
+                [class.is-invalid]="subtaskForm.get('assignee')?.invalid && subtaskForm.get('assignee')?.touched">
+                <option value="">-- Chọn người thực hiện --</option>
+                <option *ngFor="let user of getRecipientsForSubtask()" [value]="user.id">{{ user.fullname }}</option>
+              </select>
+              <div class="invalid-feedback d-block"
+                *ngIf="subtaskForm.get('assignee')?.invalid && subtaskForm.get('assignee')?.touched">
+                Vui lòng chọn người thực hiện
+              </div>
+            </td>
+            <td>
+              <select formControlName="priority" class="form-select"
+                [class.is-invalid]="subtaskForm.get('priority')?.invalid && subtaskForm.get('priority')?.touched">
+                <option value="low">Thấp</option>
+                <option value="medium">Trung bình</option>
+                <option value="high">Cao</option>
+              </select>
+              <div class="invalid-feedback"
+                *ngIf="subtaskForm.get('priority')?.invalid && subtaskForm.get('priority')?.touched">
+                Vui lòng chọn mức độ ưu tiên
+              </div>
+            </td>
+            <td>
+              <select formControlName="status" class="form-select"
+                [class.is-invalid]="subtaskForm.get('status')?.invalid && subtaskForm.get('status')?.touched">
+                <option value="">-- Chọn trạng thái --</option>
+                <option *ngFor="let status of listStatus" [value]="status?.code">
+                  {{ status?.name }}
+                </option>
+              </select>
+              <div class="invalid-feedback"
+                *ngIf="subtaskForm.get('status')?.invalid && subtaskForm.get('status')?.touched">
+                Vui lòng chọn trạng thái
+              </div>
+            </td>
+            <td colspan="2">
+              <input formControlName="dueDate" type="date" class="form-control"
+                [class.is-invalid]="subtaskForm.get('dueDate')?.invalid && subtaskForm.get('dueDate')?.touched"
+                (keydown.enter)="$event.preventDefault()" />
+              <div class="invalid-feedback"
+                *ngIf="subtaskForm.get('dueDate')?.invalid && subtaskForm.get('dueDate')?.touched">
+                Vui lòng chọn ngày hết hạn
+              </div>
+            </td>
+
+            <!-- Chia sẻ -->
+            <td class="text-center">
+              <button type="button" class="btn-share" (click)="shareSubtask()" title="Chia sẻ tác vụ">
+                <img src="assets/images/icon/share-icon.png" alt="Chia sẻ" width="14" height="14" />
+              </button>
+            </td>
+
+            <!-- Nút lưu / hủy -->
+            <td class="text-center">
+              <button type="button" class="btn btn-link text-success p-0" (click)="saveSubtask()" title="Lưu">
+                <i class="bx bx-check"></i>
+              </button>
+              <button type="button" class="btn btn-link text-danger p-0" (click)="cancelAdd()" title="Hủy">
+                <i class="bx bx-x"></i>
+              </button>
+            </td>
+          </tr>
+
+          <!-- ✅ Danh sách tác vụ con -->
+          <tr *ngFor="let task of subtaskList">
+            <td>{{ task.code }}</td>
+            <td>{{ task.title }}</td>
+            <td>{{ getAssigneeName(task.assignee) }}</td>
+            <td>{{ task.priority === 'high' ? 'Cao' : task.priority === 'medium' ? 'Trung bình' : task.priority ===
+              'low' ? 'Thấp' : task.priority }}</td>
+            <td>{{ getStatusName(task.status) }}</td>
+            <td colspan="2">{{ task.dueDate }}</td>
+            <td class="text-center">
+              <button type="button" class="btn-share" (click)="shareSubtask(task)" title="Chia sẻ">
+                <img src="assets/images/icon/share-icon.png" alt="Chia sẻ" width="14" height="14" />
+              </button>
+            </td>
+            <td class="text-center">
+              <button type="button" class="btn btn-link p-0 text-success" style="background-color: #c9c9c9"
+                (click)="editSubtask(task)" title="Chỉnh sửa">
+                <img src="assets/images/icon/edit.svg" alt="Sửa" width="16" />
+              </button>
+              <button type="button" class="btn btn-link p-0 text-danger" style="background-color: #c9c9c9"
+                (click)="deleteSubtask(task)" title="Xóa">
+                <img src="assets/images/icon/delete.svg" alt="Xóa" width="16" />
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <style>
+    /* ===== CONTAINER CHÍNH ===== */
+    .subtask-container {
+      background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+      padding: 10px 10px;
+      border-radius: 20px;
+      font-family: "Inter", sans-serif;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+
+
+    .subtask-container h6 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      color: #2d3748;
+      text-align: center;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+
+    }
+
+    /* ===== NÚT THÊM TÁC VỤ CON ===== */
+    .btn.btn-success {
+      background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 16px;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 2rem;
+
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+
+    }
+
+
+
+    .btn.btn-success:hover {
+
+      background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
+    }
+
+    .btn.btn-success:hover::before {
+      left: 100%;
+    }
+
+
+
+    .btn.btn-success .bx {
+      font-size: 18px;
+      transition: transform 0.3s ease;
+    }
+
+
+
+    /* ===== BẢNG DỮ LIỆU ===== */
+    .table-responsive {
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      overflow-y: auto; /* Thêm scroll dọc */
+      max-height: 400px; /* Giới hạn chiều cao để kích hoạt scroll */
+    }
+
+    .subtask-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0;
+      background: white;
+    }
+
+    /* Tùy chỉnh thanh scroll dọc */
+    .table-responsive::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .table-responsive::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 4px;
+    }
+
+    .table-responsive::-webkit-scrollbar-thumb {
+      background: #c1c1c1;
+      border-radius: 4px;
+    }
+
+    .table-responsive::-webkit-scrollbar-thumb:hover {
+      background: #a8a8a8;
+    }
+
+    .subtask-table thead {
+      background: linear-gradient(135deg, #566ac4 0%, #6b399d 100%) !important;
+      color: #fff !important;
+    }
+
+    .subtask-table thead th {
+      background: transparent !important;
+      /* để nhìn thấy gradient từ thead */
+      color: #fff !important;
+      border: none;
+    }
+
+    .subtask-table thead::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #f093fb 0%, #f441a5 100%);
+    }
+
+    .subtask-table th {
+      font-size: 13px;
+      font-weight: 700;
+      text-align: center;
+      color: white;
+      padding: 18px 12px;
+      white-space: nowrap;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+      border: none;
+      position: relative;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .subtask-table th::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 25%;
+      height: 50%;
+      width: 1px;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .subtask-table th:last-child::after {
+      display: none;
+    }
+
+    .subtask-table tbody tr {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border-bottom: 1px solid #e2e8f0;
+      background: white;
+      min-height: 80px;
+      position: relative;
+    }
+
+    .subtask-table tbody tr:hover {
+      background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    /* ===== DÒNG FORM THÊM MỚI ===== */
+    .subtask-table tbody tr[formGroup] {
+      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+      border: 2px solid #0ea5e9;
+      min-height: 120px;
+    }
+
+    .subtask-table tbody tr[formGroup]:hover {
+      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+      background: linear-gradient(135deg, #fef5e7 0%, #fed7aa 100%);
+      transform: translateY(-1px);
+    }
+
+    @keyframes slideInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px) scale(0.95);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .subtask-table td {
+      text-align: center;
+      font-size: 13px;
+      padding: 20px 10px;
+      vertical-align: middle;
+      border: none;
+      font-weight: 500;
+      color: #4a5568;
+      min-height: 80px;
+      position: relative;
+    }
+
+    /* Đảm bảo tất cả element trong td có thể click */
+    .subtask-table td * {
+      pointer-events: auto !important;
+    }
+
+    .subtask-table td ng-select {
+      pointer-events: auto !important;
+      z-index: 100 !important;
+      position: relative;
+    }
+
+    /* ===== INPUT & SELECT SIÊU ĐẸP ===== */
+    .subtask-table input.form-control,
+    .subtask-table select.form-select {
+      width: 100%;
+      font-size: 13px;
+      height: 42px;
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 2px solid #e2e8f0;
+      text-align: center;
+      background-color: #fff;
+      box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.04),
+        inset 0 1px 2px rgba(0, 0, 0, 0.02);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      font-weight: 500;
+      color: #2d3748;
+      margin: 4px 0;
+    }
+
+    .subtask-table select.form-select {
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23667eea' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+      background-position: right 12px center;
+      background-repeat: no-repeat;
+      background-size: 16px;
+      padding-right: 40px;
+    }
+
+    .subtask-table input.form-control:focus,
+    .subtask-table select.form-select:focus {
+      outline: none;
+      border-color: #566ac4;
+      box-shadow:
+        0 0 0 3px rgba(86, 106, 196, 0.1),
+        0 4px 12px rgba(86, 106, 196, 0.15);
+      transform: translateY(-1px);
+    }
+
+    /* ===== NG-SELECT STYLES ===== */
+    .subtask-table ng-select {
+      min-height: 60px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .subtask-table ng-select .ng-select-container {
+      min-height: 50px;
+      border-radius: 12px;
+      border: 2px solid #e2e8f0;
+      background-color: #fff;
+      position: relative;
+      z-index: 10;
+    }
+
+    .subtask-table ng-select .ng-select-container .ng-value-container {
+      padding: 8px 14px;
+    }
+
+    .subtask-table ng-select.ng-select-opened .ng-select-container {
+      border-color: #566ac4;
+      box-shadow: 0 0 0 3px rgba(86, 106, 196, 0.1);
+    }
+
+    /* Dropdown panel positioning */
+    .subtask-table ng-select .ng-dropdown-panel {
+      z-index: 9999 !important;
+      margin-top: 4px;
+    }
+
+    /* Đảm bảo ng-select có thể click */
+    .subtask-table ng-select .ng-select-container:hover {
+      cursor: pointer;
+    }
+
+    .subtask-table ng-select .ng-select-container {
+      pointer-events: auto !important;
+    }
+
+    .subtask-table input.form-control::placeholder {
+      color: #a0aec0;
+      font-weight: 400;
+    }
+
+    /* ===== CĂNG ĐỀU CỘT ===== */
+    .subtask-table th:nth-child(1),
+    .subtask-table td:nth-child(1) {
+      width: 80px;
+    }
+
+    .subtask-table th:nth-child(2),
+    .subtask-table td:nth-child(2) {
+      width: 200px;
+    }
+
+    .subtask-table th:nth-child(3),
+    .subtask-table td:nth-child(3) {
+      width: 180px;
+    }
+
+    .subtask-table th:nth-child(4),
+    .subtask-table td:nth-child(4),
+    .subtask-table th:nth-child(5),
+    .subtask-table td:nth-child(5) {
+      width: 120px;
+    }
+
+    .subtask-table th:nth-child(6),
+    .subtask-table td:nth-child(6),
+    .subtask-table th:nth-child(7),
+    .subtask-table td:nth-child(7) {
+      width: 140px;
+    }
+
+    .subtask-table th:nth-child(8),
+    .subtask-table td:nth-child(8) {
+      width: 100px;
+    }
+
+    .subtask-table th:last-child,
+    .subtask-table td:last-child {
+      width: 150px;
+    }
+
+    /* ===== NÚT CHIA SẺ SIÊU ĐẸP ===== */
+    .btn-share {
+      background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
+      border: none;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow:
+        0 4px 15px rgba(66, 153, 225, 0.3),
+        0 2px 8px rgba(66, 153, 225, 0.2);
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-share::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .btn-share:hover {
+      transform: translateY(-3px) scale(1.1);
+      box-shadow:
+        0 8px 25px rgba(66, 153, 225, 0.4),
+        0 4px 15px rgba(66, 153, 225, 0.3);
+      background: linear-gradient(135deg, #3182ce 0%, #2c5282 100%);
+    }
+
+    .btn-share:hover::before {
+      opacity: 1;
+    }
+
+    .btn-share img {
+      width: 18px;
+      height: 18px;
+      filter: brightness(0) invert(1);
+      transition: transform 0.3s ease;
+    }
+
+    .btn-share:hover img {
+      transform: scale(1.1);
+    }
+
+    /* ===== NÚT SỬA & XÓA ===== */
+    .btn-edit,
+    .btn-delete {
+      background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+      border: 2px solid #e2e8f0;
+      border-radius: 10px;
+      width: 36px;
+      height: 36px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 3px;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-edit::before,
+    .btn-delete::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      border-radius: 8px;
+    }
+
+    .btn-edit:hover {
+      background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+      border-color: #48bb78;
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 6px 20px rgba(72, 187, 120, 0.3);
+    }
+
+    .btn-edit:hover img {
+      filter: brightness(0) invert(1);
+      transform: scale(1.1);
+    }
+
+    .btn-delete:hover {
+      background: linear-gradient(135deg, #f56565 0%, #e53e3e 100%);
+      border-color: #f56565;
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 6px 20px rgba(245, 101, 101, 0.3);
+    }
+
+    .btn-delete:hover img {
+      filter: brightness(0) invert(1);
+      transform: scale(1.1);
+    }
+
+    .btn-edit img,
+    .btn-delete img {
+      width: 16px;
+      height: 16px;
+      transition: all 0.3s ease;
+    }
+  </style>
+
+
+
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-primary">Lưu</button>
+
+    <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Hủy</button>
+  </div>
+</form>

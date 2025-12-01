@@ -1,0 +1,550 @@
+<div class="issue-detail container-fluid">
+  <!-- Header -->
+  <div class="issue-header">
+    <h2><i class="fas fa-folder-open me-2" style="color: #3b82f6;"></i>Hồ sơ chi tiết</h2>
+  </div>
+
+  <!-- Subheader: Code — Name + Status + Priority -->
+  <div class="issue-subheader">
+    <div class="title-line">
+      <span class="issue-key"><i class="fas fa-hashtag me-1" style="color: #64748b; font-size: 14px;"></i>{{ task?.code }} — {{ task?.name }}</span>
+
+      <!-- Status: nền trắng, chữ & viền = task.color -->
+      <span class="status-pill" [ngStyle]="{ color: task?.color, 'border-color': task?.color }">
+        {{ task?.statusName }}
+      </span>
+
+      <!-- Priority -->
+      <ng-container [ngSwitch]="task?.priority">
+        <span *ngSwitchCase="'low'" class="prio-pill prio-low">Thấp</span>
+        <span *ngSwitchCase="'medium'" class="prio-pill prio-medium">Trung bình</span>
+        <span *ngSwitchCase="'high'" class="prio-pill prio-high">Cao</span>
+      </ng-container>
+    </div>
+  </div>
+
+  <!-- VÙNG CUỘN -->
+  <div class="scroll-area">
+    <div class="row g-4 mt-3">
+      <!-- LEFT -->
+      <div class="col-lg-8 left-col">
+        <!-- Nội dung công việc -->
+        <div class="panel">
+          <div class="panel-heading"><h6 class="m-0">Nội dung công việc</h6></div>
+
+          <div class="panel-body">
+            <div class="mb-3">
+              <div class="label-row">
+                <label for="description" class="form-label">
+                  Mô tả công việc <span class="text-danger">*</span>
+                </label>
+
+                <button *ngIf="!editState.description" type="button" class="icon-btn"
+                        (click)="enterEdit('description')" title="Sửa">
+                  <i class="fas fa-pen"></i>
+                </button>
+                <button *ngIf="editState.description" type="button" class="icon-btn"
+                        (click)="saveField('description')" title="Lưu">
+                  <i class="fas fa-check"></i>
+                </button>
+              </div>
+
+              <textarea id="description" rows="6" class="form-control"
+                        [(ngModel)]="description" [ngModelOptions]="{ standalone: true }"
+                        [readOnly]="!editState.description" [class.read-only]="!editState.description"
+                        style="border-radius: 10px; border: 1px solid #e2e8f0; font-size: 14px; transition: all 0.2s ease;"></textarea>
+            </div>
+            <!-- Upload -->
+            <div class="mb-2">
+              <div class="label-row">
+                <label class="form-label m-0">Tệp đính kèm</label>
+
+                <button *ngIf="!editState.files" type="button" class="icon-btn"
+                        (click)="enterEdit('files')" title="Sửa">
+                  <i class="fas fa-pen"></i>
+                </button>
+                <button *ngIf="editState.files" type="button" class="icon-btn"
+                        (click)="saveField('files')" title="Lưu">
+                  <i class="fas fa-check"></i>
+                </button>
+              </div>
+
+              <div class="upload-box" [class.disabled]="!editState.files"
+                   (drop)="onFileDrop($event)" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)">
+                <!-- <i class="fas fa-cloud-upload-alt" style="font-size: 36px; color: #3b82f6; margin-bottom: 12px;"></i> -->
+                <button type="button" class="upload-btn" (click)="fileInput.click()">
+                  <i class="fas fa-paperclip me-2"></i>Tải file
+                </button>
+                <p style="color: #64748b; font-weight: 500; margin-top: 8px; margin-bottom: 0;">hoặc KÉO & THẢ tệp vào đây</p>
+                <input type="file" #fileInput (change)="onFileSelect($event)" multiple hidden />
+              </div>
+
+              <ul class="file-list list-unstyled mt-2">
+                <li *ngFor="let file of selectedFiles; let i = index" class="d-flex align-items-center gap-2">
+                  <i class="fas" [ngClass]="getFileIcon(file.name)"></i>
+                  <span class="flex-grow-1 text-truncate">{{ file.name }}</span>
+
+                  <a class="btn btn-sm btn-outline-primary" *ngIf="fileHref(file) as href"
+                     [href]="href" [attr.download]="file.name" target="_blank" rel="noopener">
+                    <i class="fas fa-download"></i>
+                  </a>
+                  <button type="button" class="btn btn-sm btn-outline-danger"
+                          (click)="removeFile(i)" [disabled]="!editState.files">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </li>
+              </ul>
+            </div>
+            <div class="mb-3">
+              <div class="label-row">
+                <label for="recipients" class="form-label m-0">
+                  Người tiếp nhận <span class="text-danger">*</span>
+                </label>
+
+                <button *ngIf="!editState.recipients" type="button" class="icon-btn"
+                        (click)="enterEdit('recipients')" title="Sửa">
+                  <i class="fas fa-pen"></i>
+                </button>
+                <button *ngIf="editState.recipients" type="button" class="icon-btn"
+                        (click)="saveField('recipients')" title="Lưu">
+                  <i class="fas fa-check"></i>
+                </button>
+              </div>
+
+              <ng-select
+                #recipientsSelect
+                id="recipients"
+                formControlName="recipients"
+                [items]="listUser"
+                bindLabel="fullname"
+                bindValue="id"
+                [multiple]="true"
+                [closeOnSelect]="false"
+                [searchable]="true"
+                [dropdownPosition]="'auto'"
+                [appendTo]="'body'"
+                [hideSelected]="false"
+                [clearSearchOnAdd]="true"
+                (open)="onRecipientsOpen()"
+                [compareWith]="compareIds"
+                (change)="onRecipientsChange($event)"
+                class="ng-select-recipients"
+                [disabled]="!editState.recipients"
+              >
+                <ng-template ng-option-tmp let-item="item" let-selected="selected">
+                  <div class="d-flex align-items-center gap-2" (click)="$event.stopPropagation()">
+                    <input type="checkbox"
+                           [checked]="selected"
+                           (click)="$event.stopPropagation()"
+                           (change)="onOptionCheckboxChange(item, selected)"
+                           [disabled]="!editState.recipients"/>
+                    <span>{{ item.fullname }}</span>
+                  </div>
+                </ng-template>
+              </ng-select>
+
+              <!-- Chips -->
+              <div class="mt-2 d-flex flex-wrap gap-2">
+    <span class="badge rounded-pill text-bg-light border"
+          *ngFor="let u of recipientsSelected"
+          style="padding: 8px 14px; font-size: 13px; font-weight: 500; background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%) !important; border: 1px solid #cbd5e1 !important; color: #475569 !important;">
+      <i class="fas fa-user me-1" style="font-size: 11px;"></i>{{ u.fullname || u.id }}
+      <button type="button" class="btn btn-sm btn-link p-0 ms-1 chip-btn"
+              (click)="removeRecipient(u.id)" [disabled]="!editState.recipients"
+              style="color: #64748b; font-weight: 700; font-size: 16px; line-height: 1;">×</button>
+    </span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-heading"><h6 class="m-0"><i class="fas fa-tasks me-2" style="color: #6366f1;"></i>Tác vụ con</h6></div>
+
+          <div class="panel-body">
+            <div class="row-head">
+              <div class="spacer"></div>
+              <button class="btn btn-success" type="button" (click)="completeAll()">
+                <i class="fas fa-check-double me-2"></i>Hoàn thành tất cả
+              </button>
+              <button class="btn btn-primary" type="button" (click)="addSubtask()">
+                <i class="fas fa-plus-circle me-2"></i>Thêm tác vụ con
+              </button>
+            </div>
+
+            <form [formGroup]="subForm">
+              <table class="table-subtasks">
+                <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Mã</th>
+                  <th>Công việc</th>
+                  <th>Người thực hiện</th>
+                  <th>Hạn</th>
+                  <th>Trạng thái</th>
+                  <th>Hành động</th>
+                </tr>
+                </thead>
+
+                <tbody formArrayName="subtasks">
+                <tr *ngFor="let fg of subtaskRows; let i = index; trackBy: trackByIndex" [formGroupName]="i">
+                  <td>{{ i + 1 }}</td>
+
+                  <td><input class="cell-input" formControlName="code" readonly /></td>
+
+                  <td><input class="cell-input" formControlName="taskName" placeholder="Nhập tên công việc" /></td>
+
+                  <td>
+                    <select class="cell-select" formControlName="userId">
+                      <option [ngValue]="null" disabled>Chọn người thực hiện</option>
+                      <option *ngFor="let m of members" [value]="m.id">{{ m.fullname }}</option>
+                    </select>
+                  </td>
+
+                  <td>
+                    <input class="cell-input"
+                           type="text"
+                           formControlName="dueDate"
+                           bsDatepicker
+                           [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"/>
+                  </td>
+
+                  <td>
+                    <select class="cell-select"
+                            formControlName="status">
+<!--                            (change)="onStatusChange($event, i, fg.value)">-->
+                      <option *ngFor="let s of statusOptions" [value]="s.code" >{{ s.name }}</option>
+                    </select>
+                  </td>
+
+                  <td class="col-actions">
+                    <div class="d-flex gap-2 justify-content-center">
+                      <button type="button" class="btn btn-sm btn-outline-danger" (click)="removeSubtask(i)" title="Xóa">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                      <button type="button" class="btn btn-sm btn-outline-info"
+                              *ngIf="fg.get('no')?.value === 'CD'"
+                              (click)="openReviewModal(i, fg.value)" title="Xem">
+                        <i class="fas fa-eye"></i>
+                      </button>
+                      <button type="button" class="btn btn-sm btn-outline-success"
+                              *ngIf="fg.get('no')?.value !== 'CD' && fg.get('no')?.value !== 'KT'"
+                              (click)="openComplete(i, fg.value)" title="Hoàn thành">
+                        <i class="fas fa-check"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </form>
+
+            <div class="footer-actions">
+              <button class="btn btn-success" type="button" (click)="saveSubtasks()" [disabled]="subForm.invalid">
+                Lưu tác vụ con
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Activity -->
+        <div class="panel">
+          <div class="panel-heading"><h6 class="m-0"><i class="fas fa-comments me-2" style="color: #8b5cf6;"></i>Bình luận</h6></div>
+          <div class="panel-body">
+            <div class="mb-3">
+              <textarea class="form-control" rows="3" placeholder="Viết bình luận..." [(ngModel)]="newComment"
+                        style="border-radius: 10px; border: 1px solid #e2e8f0; font-size: 14px;"></textarea>
+            </div>
+            <div class="mb-3 text-end">
+              <button class="btn btn-primary btn-sm" (click)="postComment()" style="border-radius: 8px; padding: 8px 20px; font-weight: 600;">
+                <i class="fas fa-paper-plane me-2"></i>Gửi
+              </button>
+            </div>
+
+            <div *ngIf="comments?.length > 0; else noComments" style="max-height:700px; overflow:auto">
+              <div *ngFor="let cmt of comments" class="border-bottom py-2">
+                <strong>{{ cmt.userName }} - {{ cmt.fullName }}</strong>
+                <p class="mb-1">{{ cmt.comment }}</p>
+                <small class="text-muted">{{ cmt.createdAt | date:'dd/MM/yyyy HH:mm' }}</small>
+              </div>
+            </div>
+            <ng-template #noComments>
+              <div class="p-3 text-muted">— Chưa có bình luận —</div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT -->
+      <div class="col-lg-3 right-col">
+        <div class="panel">
+          <div class="panel-heading"><h6 class="m-0"><i class="fas fa-info-circle me-2" style="color: #14b8a6;"></i>Thông tin</h6></div>
+        <div class="sidebar-card">
+          <div class="row gy-2">
+            <div class="col-12">
+              <div class="label-row">
+                <label class="fw-semibold mb-1 m-0"><i class="fas fa-user-check me-2" style="color: #3b82f6; font-size: 13px;"></i>Người thực hiện:</label>
+
+                <!-- ✏️ Sửa -->
+                <button *ngIf="!editState.assigned" type="button" class="icon-btn"
+                        (click)="enterEdit('assigned')" title="Sửa">
+                  <i class="fas fa-pen"></i>
+                </button>
+
+                <!-- ✔️ Lưu -->
+                <button *ngIf="editState.assigned" type="button" class="icon-btn"
+                        (click)="saveField('assigned')" title="Lưu">
+                  <i class="fas fa-check"></i>
+                </button>
+              </div>
+
+              <ng-select
+                [items]="listUser"
+                bindLabel="fullname"
+                bindValue="id"
+                [(ngModel)]="assigned"
+              [disabled]="!editState.assigned"
+              placeholder="Chọn người dùng">
+              <ng-template ng-option-tmp let-item="item">
+                {{ item.fullname }}
+              </ng-template>
+              </ng-select>
+            </div>
+
+            <div class="col-12">
+              <div class="label-row">
+                <label class="fw-semibold mb-1 m-0"><i class="fas fa-exclamation-circle me-2" style="color: #f59e0b; font-size: 13px;"></i>Mức độ ưu tiên:</label>
+
+                <!-- ✏️ Sửa -->
+                <button *ngIf="!editState.priority" type="button" class="icon-btn"
+                        (click)="enterEdit('priority')" title="Sửa">
+                  <i class="fas fa-pen"></i>
+                </button>
+
+                <!-- ✔️ Lưu -->
+                <button *ngIf="editState.priority" type="button" class="icon-btn"
+                        (click)="saveField('priority')" title="Lưu">
+                  <i class="fas fa-check"></i>
+                </button>
+              </div>
+
+              <select class="form-control"
+                      [(ngModel)]="priority"
+                      [disabled]="!editState.priority">
+                <option value="low">Thấp</option>
+                <option value="medium">Trung bình</option>
+                <option value="high">Cao</option>
+              </select>
+            </div>
+
+            <div class="col-12">
+              <div class="label-row">
+                <label class="fw-semibold mb-1 m-0"><i class="fas fa-calendar-alt me-2" style="color: #ef4444; font-size: 13px;"></i>Thời hạn:</label>
+
+                <!-- ✏️ -->
+                <button *ngIf="!editState.dueDate" type="button" class="icon-btn"
+                        (click)="enterEdit('dueDate')" title="Sửa">
+                  <i class="fas fa-pen"></i>
+                </button>
+
+                <!-- ✔️ -->
+                <button *ngIf="editState.dueDate" type="button" class="icon-btn"
+                        (click)="saveField('dueDate')" title="Lưu">
+                  <i class="fas fa-check"></i>
+                </button>
+              </div>
+
+              <div class="d-flex align-items-stretch gap-2">
+                <input
+                  type="text"
+                  class="form-control"
+                  bsDatepicker
+                  [(ngModel)]="dueDate"
+                [disabled]="!editState.dueDate"
+                [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+                />
+
+                <!-- Nếu dùng timepicker thì mở comment và cùng khoá theo dueDate
+                <timepicker
+                  [(ngModel)]="dueTime"
+                  [disabled]="!editState.dueDate"
+                  [showMeridian]="false"
+                  [showSpinners]="false"
+                  [showSeconds]="false">
+                </timepicker>
+                -->
+              </div>
+            </div>
+
+            <div class="col-md-12 mb-2">
+              <div class="label-row">
+                <label class="m-0">Trạng thái công việc <span class="text-danger">*</span></label>
+
+                <!-- ✏️ -->
+<!--                <button *ngIf="!editState.status" type="button" class="icon-btn"-->
+<!--                        (click)="enterEdit('status')" title="Sửa">-->
+<!--                  <i class="fas fa-pen"></i>-->
+<!--                </button>-->
+
+                <!-- ✔️ -->
+                <button *ngIf="editState.status" type="button" class="icon-btn"
+                        (click)="saveField('status')" title="Lưu">
+                  <i class="fas fa-check"></i>
+                </button>
+              </div>
+
+              <select class="form-control"
+                      [(ngModel)]="status"
+              [disabled]="!editState.status">
+              <option *ngFor="let s of listStatus" [value]="s?.code">
+                {{ s?.name }}
+              </option>
+              </select>
+            </div>
+
+            <div class="col-12 d-flex">
+              <label class="fw-semibold mb-0 w-120">Người tạo:</label>
+              <div>{{ task?.userCreateUserName }} - {{ task?.userCreateName }}</div>
+            </div>
+
+            <div class="col-12 d-flex">
+              <label class="fw-semibold mb-0 w-120">Ngày tạo:</label>
+              <div>{{ task?.createDate | date:'dd/MM/yyyy HH:mm' }}</div>
+            </div>
+
+            <div class="col-12 d-flex">
+              <label class="fw-semibold mb-0 w-120">Cập nhật cuối:</label>
+              <div>{{ task?.userUpdateUserName }} - {{ task?.userUpdateName }}</div>
+            </div>
+
+            <div class="col-12 d-flex">
+              <label class="fw-semibold mb-0 w-120">Ngày cập nhật:</label>
+              <div>{{ task?.updatedDt | date:'dd/MM/yyyy HH:mm' }}</div>
+            </div>
+          </div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-heading"><h6 class="m-0"><i class="fas fa-chart-line me-2" style="color: #10b981;"></i>Tiến độ</h6></div>
+        <div class="progress-card p-4 border rounded-3">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="fs-5 fw-bold" style="color: #1e293b;">
+              <i class="fas fa-tasks me-2" style="color: #6366f1;"></i>Tổng tiến độ
+            </div>
+            <div class="fs-3 fw-bold" [style.color]="percent === 100 ? '#10b981' : (percent > 0 ? '#f59e0b' : '#64748b')">{{ percent }}%</div>
+          </div>
+
+          <!-- thanh tiến độ -->
+          <div class="pg-track rounded-pill">
+            <div class="pg-bar rounded-pill"
+                 [style.width.%]="percent"
+                 [class.pg-ok]="percent === 100"
+                 [class.pg-warn]="percent > 0 && percent < 100"></div>
+          </div>
+
+          <div class="mt-3 d-flex align-items-center gap-2" style="color: #475569;">
+            <i class="fas fa-check-circle" [style.color]="countDone > 0 ? '#10b981' : '#cbd5e1'"></i>
+            <span class="fs-6 fw-semibold">{{ countDone }}/{{ countSubtask }} đã duyệt</span>
+          </div>
+        </div>
+          </div>
+      </div>
+      <!-- /RIGHT -->
+    </div>
+  </div>
+  <div *ngIf="showReviewModal">
+    <!-- Backdrop -->
+    <div class="modal-backdrop fade show"></div>
+
+    <!-- Modal -->
+    <div class="modal fade show d-block" tabindex="-1" (click)="closeIfBackdrop($event)">
+      <div class="modal-dialog modal-lg modal-dialog-centered" (click)="$event.stopPropagation()">
+        <div class="modal-content">
+          <div class="modal-header align-items-center">
+            <h5 class="modal-title mb-0">Kiểm duyệt</h5>
+            <span class="badge bg-warning text-dark ms-2">Chờ duyệt</span>
+            <button type="button" class="btn-close" aria-label="Close" (click)="closeReviewModal()"></button>
+          </div>
+
+          <div class="modal-body">
+            <div class="mb-2 text-muted">
+              {{activeSubtask?.code}}. {{activeSubtask?.title}}
+<!--              <span *ngIf="activeSubtask?.assigneeName"> _ Người thực hiện: {{activeSubtask?.assigneeName}}</span>-->
+            </div>
+
+            <form [formGroup]="reviewForm" class="mt-3">
+              <div class="mb-3">
+                <label class="form-label fw-semibold">Nội dung bàn giao</label>
+                <textarea class="form-control" rows="4" formControlName="deliveryContent"
+                          placeholder="Mô tả ngắn gọn công việc đã hoàn thành..."></textarea>
+                <div class="text-danger small mt-1" *ngIf="reviewForm.controls.deliveryContent.invalid && reviewForm.controls.deliveryContent.touched">
+                  Vui lòng nhập nội dung bàn giao.
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label fw-semibold">Ghi chú phản hồi</label>
+                <textarea class="form-control" rows="3" formControlName="feedbackNote"
+                          placeholder="(Tuỳ chọn) Góp ý/ghi chú..."></textarea>
+              </div>
+            </form>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" (click)="approveSubtask()">Duyệt</button>
+            <button type="button" class="btn btn-danger" (click)="requestChanges()">Yêu cầu sửa</button>
+            <button type="button" class="btn btn-secondary" (click)="closeReviewModal()">Đóng</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade"
+       [class.show]="isModalOpen"
+       [style.display]="isModalOpen ? 'block' : 'none'"
+       tabindex="-1"
+       role="dialog"
+       [attr.aria-modal]="isModalOpen ? 'true' : null"
+       [attr.aria-hidden]="isModalOpen ? null : 'true'"
+       (click)="close()">
+    <div class="modal-dialog modal-lg modal-dialog-centered"
+         role="document" (click)="$event.stopPropagation()">
+      <div class="modal-content handover-modal">
+
+        <div class="modal-header">
+          <h5 class="modal-title fw-bold">Bàn giao tác vụ con</h5>
+          <button type="button" class="btn-close" aria-label="Đóng" (click)="close()"></button>
+        </div>
+
+        <div class="modal-body">
+          <div class="subtitle">
+            <span class="code">{{active?.code}}</span>
+            <span> . {{active?.title}}</span>
+<!--            <span class="label">Người thực hiện:</span>-->
+<!--            <span class="bold">{{active?.assigneeName}}</span>-->
+          </div>
+
+          <form [formGroup]="handoverForm" class="mt-3">
+            <label class="form-label fw-semibold">Nội dung bàn giao / link:</label>
+            <textarea class="form-control" rows="6" formControlName="content"
+                      placeholder="Dán link / ghi chú đã hoàn thành..."></textarea>
+            <div class="text-danger small mt-1"
+                 *ngIf="handoverForm.get('content')?.touched && handoverForm.get('content')?.invalid">
+              Vui lòng nhập nội dung.
+            </div>
+          </form>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" (click)="close()">Hủy</button>
+          <button type="button" class="btn btn-primary" (click)="submit()">Gửi bàn giao</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Backdrop -->
+  <div class="modal-backdrop fade"
+       [class.show]="isModalOpen"
+       [style.display]="isModalOpen ? 'block' : 'none'"></div>
+</div>

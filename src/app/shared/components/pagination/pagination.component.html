@@ -1,0 +1,45 @@
+<div class="d-flex justify-content-between align-items-center" style="height: 48px; margin-top: 15px">
+  <div class="d-flex align-items-center" style="height: 48px">
+    <div class="dataTables_info" id="tickets-table_info" role="status" aria-live="polite">Hiển thị từ
+      {{ collectionSize == 0 ? collectionSize : pageSize * (page - 1) + 1 }} -
+      {{ pageSize * page <= collectionSize ? pageSize * page : collectionSize}} của {{collectionSize}}
+      bản ghi
+    </div>
+  </div>
+  <div class="d-flex align-items-center" style="height: 48px">
+
+    <div class="dataTables_length d-flex align-items-center" id="tickets-table_length" style="height: 48px">
+      <div class="d-inline-flex align-items-center">Hiển thị
+        <select aria-controls="tickets-table" name="pageSize" [(ngModel)]="pageSize"
+                (ngModelChange)="pageSizeChangeEvent(pageSize)"
+                class="form-control form-control-sm mx-2" style="width: 50px">
+          <option [ngValue]="10">10</option>
+          <option [ngValue]="20">20</option>
+          <option [ngValue]="30">30</option>
+          <option [ngValue]="50">50</option>
+          <option [ngValue]="100">100</option>
+        </select>bản ghi/ trang
+      </div>
+    </div>
+
+    <div class="text-md-right float-md-end pagination-rounded" style="padding-top: 15px">
+      <ngb-pagination [collectionSize]="collectionSize" [page]="page" [pageSize]="pageSize" [ellipses]="true"
+                      (pageChange)="onPageChange($event)"
+                      [rotate]="true"
+                      [maxSize]="5" [size]="'sm'">
+        <ng-template ngbPaginationPrevious>
+          <a class="page-link" href="javascript: void(0);" aria-label="Previous">
+            <i class="mdi mdi-chevron-left"></i>
+          </a>
+        </ng-template>
+        <ng-template ngbPaginationNext>
+          <a class="page-link" href="javascript: void(0);" aria-label="Next">
+            <i class="mdi mdi-chevron-right"></i>
+          </a>
+        </ng-template>
+      </ngb-pagination>
+    </div>
+  </div>
+
+</div>
+

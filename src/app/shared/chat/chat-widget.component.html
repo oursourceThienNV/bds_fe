@@ -1,0 +1,269 @@
+<!-- Nút chat nổi -->
+<div class="chat-button" (click)="toggleChatList()">💬</div>
+
+<!-- Danh sách chat -->
+<div class="chat-list" *ngIf="showChatList && !creatingGroup">
+  <h4>Danh sách trò chuyện</h4>
+
+  <div class="section-title">Người dùng</div>
+  <input
+    type="text"
+    placeholder="Tìm mã / tên nhân viên..."
+    [(ngModel)]="searchText"
+    class="form-control mb-2"
+  />
+
+  <ul>
+    <ng-container *ngFor="let group of groups">
+      <li *ngIf="isPerson(group)" (click)="openGroupChat(group)">
+        <img [src]="dmPeerAvatar(group)" class="avatar" />
+        <div class="item-col">
+          <div class="title">{{ dmPeerName(group) }}</div>
+<!--          <div class="sub">ID: {{ dmPeerId(group) }}</div>-->
+        </div>
+      </li>
+    </ng-container>
+  </ul>
+
+  <div class="section-title">Nhóm</div>
+  <ul>
+    <ng-container *ngFor="let group of groups">
+      <li *ngIf="(group.type || '').toUpperCase() === 'GROUP'"
+          (click)="openGroupChat(group)">
+        <img [src]="'assets/images/icon/icon-team-group.svg'" class="avatar" />
+        <div class="item-col"><div class="title">{{ group.name }}</div></div>
+      </li>
+    </ng-container>
+  </ul>
+
+  <button class="create-group-btn" (click)="startCreateGroup()">+ Tạo nhóm</button>
+  <button class="create-group-btn" (click)="startCreateDm()">+ Tạo mới</button>
+</div>
+<div class="chat-list" *ngIf="creatingDm">
+  <h4>Tạo tin nhắn 1-1</h4>
+
+  <div class="section-title">Chọn người nhận</div>
+  <input [(ngModel)]="dmSearchTerm" placeholder="Nhập tên để tìm..." class="group-input" />
+
+  <ul class="user-picker">
+    <li *ngFor="let u of usersForDm">
+      <label class="user-check">
+        <input
+          type="radio"
+          name="dmUser"
+          [value]="u.id"
+          [checked]="selectedDmUserId === u.id"
+          (change)="selectDmUser(u.id)"
+        />
+        <img [src]="u.logoUrl ? (url + u.logoUrl) : 'assets/images/icon/avatar.svg'" class="avatar" />
+        <span>{{ u.fullname }}</span>
+      </label>
+    </li>
+  </ul>
+
+  <div class="group-actions">
+    <button class="submit" [disabled]="!selectedDmUserId" (click)="createDm()">Tạo</button>
+    <button class="cancel-btn" (click)="cancelCreateDm()">Hủy</button>
+  </div>
+</div>
+<!-- Form tạo nhóm -->
+<div class="chat-list" *ngIf="creatingGroup">
+  <h4>Tạo nhóm mới</h4>
+
+  <label class="lbl">Tên nhóm</label>
+  <input [(ngModel)]="groupName" placeholder="Ví dụ: Team Sales Q3" class="group-input" />
+
+  <div class="section-title">Tìm & chọn thành viên</div>
+  <input [(ngModel)]="createSearchTerm" placeholder="Nhập tên để tìm..." class="group-input" />
+
+  <ul class="user-picker">
+    <li *ngFor="let user of usersForCreate">
+      <label class="user-check">
+        <input
+          type="checkbox"
+          [checked]="selectedUserIds.has(user.id)"
+          (change)="toggleUserSelection(user.id, $event)"
+        />
+        <img [src]="user.logoUrl ? (url + user.logoUrl) : 'assets/images/icon/avatar.svg'" class="avatar" />
+        <span>{{ user.fullname }}</span>
+      </label>
+    </li>
+  </ul>
+
+  <div class="group-actions">
+    <button class="submit" [disabled]="!groupName.trim() || selectedUserIds.size===0" (click)="createGroup()">Tạo</button>
+    <button class="cancel-btn" (click)="cancelCreateGroup()">Hủy</button>
+  </div>
+</div>
+
+<!-- ======= DOCK CHỨA NHIỀU CỬA SỔ CHAT ======= -->
+<div class="chat-dock" *ngIf="openChats.length > 0">
+  <div
+    class="chat-box"
+    *ngFor="let w of openChats; trackBy: trackByKey"
+    (mousedown)="focusWindow(w)"
+    [class.is-active]="w.key === activeKey"
+  >
+    <!-- Header -->
+    <div class="chat-header" (mousedown)="$event.stopPropagation()">
+      <div class="header-left">
+        <img [src]="'assets/images/icon/icon-team-group.svg'" class="avatar" />
+        <div class="head-col">
+          <span class="title">{{ w.data?.name }}</span>
+          <span class="sub" *ngIf="w.type === 'group'"></span>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <button
+          *ngIf="w.type==='group'"
+          class="icon-only"
+          (click)="toggleMenu(w); $event.stopPropagation()"
+          title="Tuỳ chọn"
+        >⚙️</button>
+
+        <!-- Menu nổi -->
+        <div *ngIf="w.type==='group' && w.showMenu" class="app-menu" (click)="$event.stopPropagation()">
+          <div class="menu-item" (click)="toggleMemberPanel(w)">👥 Thành viên</div>
+          <div class="menu-item" (click)="openRenameModalFor(w)">✏️ Đổi tên nhóm</div>
+          <div class="menu-item danger" (click)="openDeleteConfirmFor(w)">🗑️ Xóa nhóm</div>
+        </div>
+
+        <button
+          class="close-btn"
+          (click)="closeChatWindow(w.key); $event.stopPropagation()"
+          title="Đóng"
+        >✖</button>
+      </div>
+    </div>
+
+    <!-- Member panel -->
+    <div *ngIf="w.type==='group' && w.showMemberPanel" class="member-panel">
+      <div class="section-title" style="margin:0 0 8px;">Quản lý thành viên</div>
+      <div class="member-grid">
+        <div>
+          <input [(ngModel)]="w.memberSearchTerm" placeholder="Tìm người dùng để thêm..." class="group-input" />
+          <ul class="user-picker" *ngIf="addableUsersFor(w).length > 0" style="list-style: none;margin: 0;padding: 0;">
+            <li *ngFor="let u of addableUsersFor(w)" style="list-style: none;">
+              <div class="user-check row-justified">
+                <div class="row-left">
+                  <img [src]="u.logoUrl ? (url+u.logoUrl) : 'assets/images/icon/avatar.svg'" class="avatar" />
+                  <span>{{ u.fullname }}</span>
+                </div>
+                <button class="submit btn" (click)="addMemberToGroupWindow(w, u)">+ Thêm</button>
+              </div>
+            </li>
+          </ul>
+          <div *ngIf="addableUsersFor(w).length === 0" class="sub">Không có người dùng phù hợp.</div>
+        </div>
+
+        <div>
+          <div class="section-title" style="margin:10px 0 6px;">Thành viên hiện tại</div>
+          <ul class="user-picker" *ngIf="currentMembersFor(w).length > 0" style="list-style: none;margin: 0;padding: 0;">
+            <li *ngFor="let m of currentMembersFor(w)">
+              <div class="user-check row-justified">
+                <div class="row-left">
+                  <img [src]="m.logoUrl ? (url+m.logoUrl) : 'assets/images/icon/avatar.svg'" class="avatar" />
+                  <span>{{ m.fullname }}</span>
+                </div>
+                <button class="cancel-btn btn" (click)="removeMemberFromGroupWindow(w, m.id)">Xóa</button>
+              </div>
+            </li>
+          </ul>
+          <div *ngIf="currentMembersFor(w).length === 0" class="sub">Chưa có thành viên.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chat body -->
+    <div class="chat-body" *ngIf="!w.showMemberPanel" (mousedown)="$event.stopPropagation()">
+      <div *ngFor="let msg of (chatMessages[w.key] || []); trackBy: trackMessage" class="msg-wrap">
+        <div [ngClass]="msg.from === 'me' ? 'msg me' : 'msg other'">
+
+          <ng-container *ngIf="msg.from === 'other'">
+            <div class="msg-header">
+              <img [src]="msg.avatar ? (url + msg.avatar) : 'assets/images/icon/avatar.svg'" class="avatar" />
+              <span class="fullname">{{ msg.fullname }}</span>
+            </div>
+          </ng-container>
+
+          <div *ngIf="msg.text" class="msg-text">{{ msg.text }}</div>
+
+          <ng-container *ngIf="!msg.text && msg.fileUrl">
+            <div *ngIf="msg.isImage; else fileLink" class="file-image">
+              <img [src]="msg.fileUrl" alt="img" class="chat-img" />
+              <div class="file-name">{{ msg.fileName }}</div>
+            </div>
+            <ng-template #fileLink>
+              <a [href]="msg.fileUrl" download class="file-link">📎 {{ msg.fileName }}</a>
+            </ng-template>
+          </ng-container>
+
+          <div class="time">{{ msg.time | date : 'shortTime' }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="chat-footer" *ngIf="!w.showMemberPanel" (mousedown)="$event.stopPropagation()">
+      <div class="picked-file" *ngIf="w.selectedFile">
+        <span>📎 {{ w.selectedFile.name }}</span>
+        <button class="x" (click)="removeSelectedFileFor(w)">✕</button>
+      </div>
+
+      <input type="file" (change)="onFileSelectedFor($event, w)" hidden #fileInputWin />
+      <button class="icon-btn" title="Đính kèm" (click)="fileInputWin.click()">📎</button>
+
+      <textarea
+        [(ngModel)]="w.newMessage"
+        (keydown)="handleEnterToSendFor($event, w)"
+        placeholder="Nhập tin nhắn..."
+        rows="1"
+      ></textarea>
+
+      <button class="send-btn" (click)="sendMessageFor(w)">Gửi</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Modals ===== -->
+
+<!-- Rename Modal -->
+<div class="app-modal-backdrop" *ngIf="showRenameModal" (click)="showRenameModal=false">
+  <div class="app-modal" (click)="$event.stopPropagation()">
+    <h4>Đổi tên nhóm</h4>
+    <input class="group-input" [(ngModel)]="newGroupName" placeholder="Nhập tên nhóm mới" />
+    <div class="modal-actions">
+      <button class="cancel-btn" (click)="showRenameModal=false">Hủy</button>
+      <button class="submit" [disabled]="!newGroupName.trim()" (click)="saveRename()">Lưu</button>
+    </div>
+  </div>
+</div>
+
+<!-- Avatar Modal -->
+<div class="app-modal-backdrop" *ngIf="showAvatarModal" (click)="showAvatarModal=false">
+  <div class="app-modal" (click)="$event.stopPropagation()">
+    <h4>Đổi ảnh nhóm</h4>
+    <div class="avatar-preview">
+      <img [src]="avatarPreview || (activeGroup?.avatar || '')" class="avatar-lg" alt="preview" />
+    </div>
+    <input type="file" (change)="onAvatarFileSelected($event)" />
+    <div class="modal-actions">
+      <button class="cancel-btn" (click)="showAvatarModal=false">Hủy</button>
+      <button class="submit" [disabled]="!avatarPreview" (click)="saveAvatar()">Lưu</button>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Confirm -->
+<div class="app-modal-backdrop" *ngIf="showDeleteConfirm" (click)="showDeleteConfirm=false">
+  <div class="app-modal" (click)="$event.stopPropagation()">
+    <h4>Xóa nhóm</h4>
+    <p>Bạn chắc chắn muốn xóa nhóm này?</p>
+    <div class="modal-actions">
+      <!-- FIX: phải set false, không phải gọi biến -->
+      <button class="cancel-btn" (click)="showDeleteConfirm=false">Hủy</button>
+      <button class="submit danger" (click)="confirmDeleteGroup()">Xóa</button>
+    </div>
+  </div>
+</div>

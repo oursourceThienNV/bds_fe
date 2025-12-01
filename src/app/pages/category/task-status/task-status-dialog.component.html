@@ -1,0 +1,44 @@
+<form [formGroup]="dataForm" (ngSubmit)="save()">
+  <div class="modal-header">
+    <h3 class="modal-title"><b>{{ title }}</b></h3>
+    <button type="button" class="btn-close" (click)="modal.dismiss('cancel')"></button>
+  </div>
+
+  <div class="modal-body row">
+    <div class="col-md-6 mb-2">
+      <label>Mã trạng thái<span class="text-danger">*</span></label>
+      <input class="form-control" formControlName="code" type="text" disabled="true" [readOnly]="true" />
+    </div>
+
+    <div class="col-md-6 mb-2">
+      <label>Tên trạng thái</label>
+      <input class="form-control" formControlName="name" type="text" />
+    </div>
+
+    <!-- Select box cho chọn màu -->
+    <div class="col-md-6 mb-2">
+      <label>Chọn mã màu</label>
+      <select class="form-control" formControlName="color" (change)="onColorSelect($event)">
+        <option *ngFor="let color of colorOptions" [value]="color.value" [style.backgroundColor]="color.value">
+          {{ color.value }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Hiển thị màu nền của div -->
+    <div class="col-md-6 mb-2" >
+      <label></label>
+      <div [style.backgroundColor]="selectedColor" style="height: 30px;margin-top:10px"></div>
+    </div>
+
+    <div class="col-md-12 mb-2">
+      <label>Mô tả</label>
+      <textarea class="form-control" formControlName="description"></textarea>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-primary">Lưu</button>
+    <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Hủy</button>
+  </div>
+</form>

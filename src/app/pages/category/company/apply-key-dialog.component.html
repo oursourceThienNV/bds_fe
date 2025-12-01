@@ -1,0 +1,36 @@
+<app-full-page-loading [isLoading]="isLoading"></app-full-page-loading>
+<form [formGroup]="dataForm" (ngSubmit)="save()">
+  <div class="modal-header">
+    <h3 class="modal-title mt-0"><b>{{title}}</b></h3>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="mb-2">
+          <label for="code">Mã cửa hàng<span class="text-danger">*</span></label>
+          <input id="code" [readOnly]="inputData" type="text" class="form-control" placeholder="Mã công ty" disabled formControlName="code"  maxlength="50" trim>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="mb-2">
+          <label for="name">Tên công ty<span class="text-danger">*</span></label>
+          <input id="name" type="text" class="form-control" formControlName="name" maxlength="40" trim="blur">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-2">
+          <label for="name">Key Value<span class="text-danger">*</span></label>
+          <input id="name" type="text" class="form-control" formControlName="license" maxlength="40" trim="blur">
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-primary">Lưu</button>
+    <button type="button" class="btn btn-light"
+            (click)="modal.close('Close click')">Hủy</button>
+  </div>
+</form>

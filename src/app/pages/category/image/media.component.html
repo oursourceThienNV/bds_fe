@@ -1,0 +1,61 @@
+<div class="container-fluid">
+  <app-page-title title="Quản lý hình ảnh" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+  <div class="d-flex flex-wrap gap-2 mt-2 justify-content-center">
+    <button type="button" (click)="create()" class="ml-2 btn btn-success"><i class="bx bx-plus-medical"></i>{{'common.button.insert'|translate}}</button>
+    <!-- <button type="button" (click)="delete()" class="ml-2 btn btn-danger" [disabled]="deleteCheck(tables)"><i class="fas fa-trash"></i>{{'common.button.delete'|translate}}</button> -->
+  </div>
+  <div class="row">
+    <div class="card">
+      <div class="card-body">
+
+        <!-- Table -->
+        <div class="table-responsive">
+          <table id="basic-datatable"
+                 class="table table-bordered dt-responsive nowrap no-footer dtr-inline">
+            <thead>
+            <tr>
+              <th>STT</th>
+              <th>Hình ảnh</th>
+              <th>Ngày tạo</th>
+            </tr>
+            </thead>
+           <tbody *ngFor="let table of tables;let i=index">
+            <tr>
+              <td>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" [(ngModel)]="table.selected">
+                </div>
+              </td>
+              <td>
+<!--                <ngb-highlight [result]="i + 1 + ((page.pageNumber - 1) * page.size)"></ngb-highlight>-->
+              </td>
+              <td>
+<!--                <i class="fas fa-edit" style="cursor: pointer; color: #7d90ee" [ngbTooltip]="'Cập nhật thông tin người dùng'" (click)="edit(table)"></i>-->
+<!--                <i class="fas fa-key" style="cursor: pointer; color: #7d90ee" [ngbTooltip]="'Thay đổi mật khẩu'|translate" (click)="resetPassword(table)"></i>-->
+              </td>
+              <td style="max-width: 150px;">
+                <p class="class_nowrap_lims" >{{table.url}}</p>
+              </td>
+              <td>
+                {{table?.creatDt}}
+              </td>
+
+
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="row justify-content-md-between align-items-md-center mt-2">
+          <div class="col-sm-12 col-md-5">
+            <div class="pagination">
+              <button (click)="loadPage((currentPage-1))" [disabled]="currentPage === 0">Previous</button>
+              <span>Page {{ currentPage+1}} of {{ totalPages }}</span>
+              <button (click)="loadPage((currentPage+1))" [disabled]="currentPage >= totalPages - 1">Next</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,104 @@
+<!-- src/app/layouts/sidebar/sidebar.component.html -->
+<app-full-page-loading [isLoading]="isLoading"></app-full-page-loading>
+
+<button type="button" class="mobile-toggle-button" aria-label="Mở menu" (click)="toggleSidebar()">☰</button>
+
+<div class="sidebar-wrapper" [class.open]="isSidebarOpen">
+  <div class="sidebar-header">
+    <img src="./assets/images/icon/logo.svg" class="bx bx-bolt logo-icon" />
+    <span class="logo-text">Dashboard <small>v.01</small></span>
+  </div>
+
+  <!-- side-menu + sideMenu để MetisMenu nhận diện -->
+  <ul class="menu-list" #sideMenu id="side-menu">
+    <li
+      *ngFor="let item of menuItems"
+      [routerLinkActive]="['mm-active']"
+      [routerLinkActiveOptions]="{ exact: false }"
+      [ngClass]="{
+        'menu-title': item.isTitle,
+        'settings-title': item.isTitle && item.label === 'CÀI ĐẶT',
+        'settings-group': item.label === 'Danh mục chung',
+        'mm-active': isAnyChildActive(item)
+      }"
+    >
+      <!-- Caption / Heading -->
+      <ng-container *ngIf="item.isTitle">
+        <div class="menu-caption">{{ item.label }}</div>
+      </ng-container>
+
+      <!-- Item thường (không có subItems) -->
+      <ng-container *ngIf="!item.isTitle && !hasItems(item)">
+        <a
+          [routerLink]="item.link"
+          [queryParams]="item.queryParams"
+          class="menu-link side-nav-link-ref"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <img [src]="item.icon" />
+          <span>{{ item.label }}</span>
+        </a>
+      </ng-container>
+
+      <!-- Item có submenu (vd: Danh mục chung) -->
+      <ng-container *ngIf="hasItems(item)">
+        <a href="javascript:void(0)" class="menu-link has-arrow">
+          <img [src]="item.icon" />
+          <span>{{ item.label }}</span>
+          <i class="bx bx-chevron-right arrow-icon"></i>
+        </a>
+        <ul class="sub-menu" [class.mm-show]="isAnyChildActive(item)">
+          <li *ngFor="let child of item.subItems" routerLinkActive="mm-active">
+            <a
+              [routerLink]="child.link"
+              [queryParams]="child.queryParams"
+              class="side-nav-link-ref"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+            >
+              {{ child.label }}
+            </a>
+          </li>
+        </ul>
+      </ng-container>
+    </li>
+
+    <li *ngIf="workspace_code">
+      <span>{{ workspace_code }} - {{ workspace_name }}</span>
+    </li>
+    <li *ngIf="workspace_code">
+      <button class="btn-leave" (click)="removeWorkspace()">Thoát</button>
+    </li>
+  </ul>
+
+  <div class="sidebar-upgrade">
+    <p>Upgrade to <strong>PRO</strong> to get access all Features!</p>
+    <button class="btn-upgrade">Get Pro Now!</button>
+  </div>
+
+  <!-- Khu vực user
+  <div class="sidebar">
+    <div class="sidebar-bottom">
+      <div class="sidebar-user" (click)="toggleDropdown()">
+        <img [src]="urlAvatar ? avatar : 'assets/images/icon/avatar.svg'" alt="Avatar" />
+        <div>
+          <strong>{{ fullname }}</strong>
+          <p>{{ username }}</p>
+        </div>
+      </div>
+
+      <div class="user-dropdown" *ngIf="showDropdown">
+        <button (click)="updateProfile()">Cập nhật thông tin</button>
+        <button (click)="changePassWord()">Đổi mật khẩu</button>
+        <button (click)="logout()">Đăng xuất</button>
+      </div>
+    </div> -->
+  <!-- </div> -->
+</div>
+
+<div
+  class="sidebar-overlay"
+  [class.show]="isSidebarOpen"
+  (click)="toggleSidebar()"
+></div>

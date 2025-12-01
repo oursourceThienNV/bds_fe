@@ -1,0 +1,202 @@
+<style>
+  html,
+  body {
+    height: 100%;
+    margin: 0;
+  }
+
+  .container-fluid {
+    min-height: calc(100vh - 150px);
+    height: auto;
+  }
+
+
+
+  th {
+    white-space: nowrap;
+    color: #B5B7C0;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+  }
+
+  .table-bordered td {
+    background: white;
+  }
+
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    height: auto !important;
+    padding-bottom: 0;
+  }
+
+  .table-scroll {
+    flex: 1;
+  }
+
+  .table-scroll::-webkit-scrollbar {
+    height: 6px;
+    width: 6px;
+  }
+
+  .table-scroll::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 3px;
+  }
+
+  .pagination {
+    margin-top: 10px;
+    flex-shrink: 0;
+    background: #fff;
+    padding: 10px 0;
+    border-top: 1px solid #eee;
+  }
+
+
+  .table {
+    width: 100%;
+    min-width: 1000px;
+    table-layout: auto;
+  }
+
+  .card {
+    margin-bottom: 0;
+  }
+
+  .table tbody tr:hover {
+    background-color: #f5f9ff;
+    transition: background 0.2s ease;
+  }
+
+  @media (max-width: 1024px) {
+    .table {
+      min-width: 900px;
+    }
+
+    .card-body {
+      height: calc(100dvh - 320px);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .table {
+      min-width: 700px;
+    }
+
+    .card-body {
+      height: calc(100dvh - 350px);
+    }
+  }
+</style>
+
+<div class="container-fluid" style="margin-top: 32px;">
+  <app-full-page-loading [isLoading]="isLoading"></app-full-page-loading>
+  <app-page-title title="Quản lý đội nhóm"></app-page-title>
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <form [formGroup]="searchForm" (submit)="search()">
+            <div class="row align-items-end g-2">
+              <div class="col-md-2">
+                <label for="nameId" class="form-label">Mã nhóm</label>
+                <input id="nameId" name="code" type="text" class="form-control" formControlName="code"
+                  maxlength="500" />
+              </div>
+
+              <div class="col-md-2">
+                <label class="form-label">Tên</label>
+                <input id="phoneId" name="name" type="text" class="form-control" formControlName="name"
+                  maxlength="500" />
+              </div>
+
+              <div class="col-md-2">
+                <label for="statusId" class="form-label">Trạng thái</label>
+                <select id="statusId" class="form-control" formControlName="status">
+                  <option value="">Tất cả</option>
+                  <option [value]="COMMON_STATUS.INACTIVE">Tạm dừng hoạt động</option>
+                  <option [value]="COMMON_STATUS.ACTIVE">Đang hoạt động</option>
+                </select>
+              </div>
+
+<!--              <div class="col-md-3" *ngIf="role === ROLE.ADMIN">-->
+<!--                <label>Thuộc công ty<span class="text-danger">*</span></label>-->
+<!--                <ng-select [items]="listCompany" bindLabel="name" bindValue="id" formControlName="companyId"-->
+<!--                  placeholder="Chọn công ty" [searchFn]="customSearchFn">-->
+<!--                  <ng-template ng-label-tmp let-item="item">-->
+<!--                    {{ item.phone }} - {{ item.name }}-->
+<!--                  </ng-template>-->
+<!--                  <ng-template ng-option-tmp let-item="item">-->
+<!--                    _ {{ item.phone }} - {{ item.name }}-->
+<!--                  </ng-template>-->
+<!--                </ng-select>-->
+<!--              </div>-->
+
+              <div class="col-md-auto d-flex align-items-end gap-2">
+                <button type="submit" class="btn btn-primary">
+                  <i class="fas fa-search"></i> Tìm kiếm
+                </button>
+
+                <button type="button" *ngIf="role !== ROLE.NHAN_VIEN" (click)="create()" class="btn btn-success">
+                  <i class="bx bx-plus-medical"></i> Thêm mới
+                </button>
+              </div>
+            </div>
+          </form>
+
+          <div class="table-scroll mt-3">
+            <table class="table table-bordered mb-0">
+              <thead style="text-align: center; position: sticky; top: 0; background: #f8f9fa; z-index: 2;">
+                <tr>
+                  <th>STT</th>
+                  <th>Mã nhóm</th>
+                  <th>Tên nhóm</th>
+                  <th>Trạng thái</th>
+                  <th>Hành động</th>
+                </tr>
+              </thead>
+              <tbody style="text-align: center;">
+                <tr *ngIf="!isLoading && (!tables || tables.length === 0)">
+                  <td colspan="5">Không có kết quả trùng khớp</td>
+                </tr>
+                <tr *ngFor="let table of tables; let i = index">
+                  <td>{{ (currentPage * 10) + i + 1 }}</td>
+                  <td>{{ table.code }}</td>
+                  <td>{{ table.name }}</td>
+                  <td>{{ labelStatus[table?.status] || 'Không xác định' }}</td>
+                  <td>
+                    <button (click)="edit(table)"
+                      style="background: #0ECA9E; color: white; border-radius: 4px; border: 1px #0ECA9E solid; height: 28px; margin-right: 10px;">
+                      Cập nhật <img src="./assets/images/icon/edit.svg" />
+                    </button>
+                    <button (click)="viewTree(table)"
+                      style="background: #ca1a0e; color: white; border-radius: 4px; border: 1px #ca1a0e solid; height: 28px;">
+                      Xem sơ đồ tổ chức <img src="./assets/images/icon/eyes.svg" />
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="row justify-content-md-between align-items-md-center mt-2">
+            <div class="col-sm-12 col-md-5">
+              <div class="pagination d-flex align-items-center gap-2">
+                <button (click)="loadPage(currentPage - 1)" [disabled]="currentPage === 0"
+                  class="btn btn-outline-primary">
+                  Trước
+                </button>
+                <span>Trang {{ currentPage + 1 }} / {{ totalPages }}</span>
+                <button (click)="loadPage(currentPage + 1)" [disabled]="currentPage >= totalPages - 1"
+                  class="btn btn-outline-primary">
+                  Sau
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

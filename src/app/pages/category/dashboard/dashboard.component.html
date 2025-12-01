@@ -1,0 +1,217 @@
+<!-- Updated dashboard.component.html to match uploaded design -->
+ <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<div class="dashboard-container">
+  <!-- Header -->
+  <div class="header">
+    <div class="search-box">
+  <input type="text" placeholder="Nhập tìm kiếm" />
+  <img src="/assets/images/icon/search-icon.svg" alt="search icon" />
+</div>
+
+
+
+    <div class="header-actions">
+      <button class="add-btn" (click)="create()">+ Thêm KH</button>
+      <div class="noti-icon">
+        <img src="/assets/images/icon/noti.svg"/>
+        <span class="badge">1</span>
+      </div>
+      <button class="workspace-btn"> Không gian làm việc</button>
+    </div>
+  </div>
+
+  <!-- Cards Summary -->
+  <div class="cards-summary">
+    <div class="card">
+      <div class="card-icon">
+        <img src="/assets/images/logo_doanhso.svg"/>
+      </div>
+      <div class="card-content">
+        <h3>
+Doanh số / doanh số tổng</h3>
+        <p>$198k</p>
+        <small>
+          <span class="growth"><i class="fa fa-arrow-up"></i> 37.8%</span>
+          so với tháng trước
+        </small>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-icon">
+<img src="/assets/images/customer_contact.svg"/>
+      </div>
+      <div class="card-content">
+        <h3>
+Khách hàng liên hệ
+/ tổng data</h3>
+        <p>$198k</p>
+        <small>
+          <span class="growth"><i class="fa fa-arrow-up"></i> 37.8%</span>
+          so với tháng trước
+        </small>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-icon">
+        <img src="/assets/images/avg_bill.svg"/>
+      </div>
+      <div class="card-content">
+        <h3>
+Đơn chốt/ngày so với
+trung bình đơn/ngày</h3>
+        <p>$198k</p>
+        <small>
+          <span class="growth"><i class="fa fa-arrow-up"></i> 37.8%</span>
+          so với tháng trước
+        </small>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-icon">
+        <img src="/assets/images/marketing.svg"/>
+      </div>
+      <div class="card-content">
+        <h3>
+Chi phí Marketing
+/tổng lead</h3>
+        <p>$198k</p>
+        <small>
+          <span class="growth"><i class="fa fa-arrow-up"></i> 37.8%</span>
+          so với tháng trước
+        </small>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="dashboard-main">
+    <!-- Sticky Note -->
+    <div class="sticky-note">
+      <h4 style="margin:10px;color:#000000;font-size: 22px;">Stick note</h4>
+      <div *ngFor="let task of stickNotes" style="margin:10px;margin-bottom: 20px;margin-top: 20px;">
+        <input type="checkbox" [id]="task.id" style="width: 24px;height: 24px;"/>
+        <label [for]="task.id" style="color:#121212;font-size: 14px;">Công việc 1</label>
+      </div>
+      <button class="history-btn" style="background-color: #4C7FFF;border-radius: 3px;width: 110px;margin:10px;">
+        <img src="/assets/images/icon/history.svg"/> Lịch sử
+      </button>
+    </div>
+
+    <!-- Progress -->
+    <div class="progress-block">
+      <h4 style="margin:10px;color:#000000;font-size: 22px;">In progress:</h4>
+      <div class="task-card" *ngFor="let progress of progressItems" style="background-color: #F8F9FF;">
+        <div class="task-header" style="margin:10px;margin-bottom: 20px;margin-top: 20px;">
+          <b>{{ progress.title }}</b>
+          <span class="status" [class]="progress.status.toLowerCase()">{{ progress.status }}</span>
+        </div>
+        <div class="task-details" style="margin:10px;margin-bottom: 20px;margin-top: 20px;">
+          <span>Participant: {{ progress.participants }}</span>
+          <span>Date added: {{ progress.date }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Done -->
+    <div class="done-block">
+      <h4 style="margin:10px;color:#000000;font-size: 22px;">Done</h4>
+      <div class="task-card" *ngFor="let progress of progressItems" style="background-color: #F8F9FF;">
+        <div class="task-header" style="margin:10px;margin-bottom: 20px;margin-top: 20px;">
+          <b>{{ progress.title }}</b>
+          <span class="status" [class]="progress.status.toLowerCase()">{{ progress.status }}</span>
+        </div>
+        <div class="task-details" style="margin:10px;margin-bottom: 20px;margin-top: 20px;">
+          <span>Participant: {{ progress.participants }}</span>
+          <span>Date added: {{ progress.date }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Calendar -->
+   <div class="calendar-container">
+  <div class="calendar-header">
+    <div class="calendar-title">Lịch</div>
+    <div class="calendar-view-modes">
+  <button [class.active]="currentView === 'day'" (click)="setView('day')">Ngày</button>
+  <button [class.active]="currentView === 'week'" (click)="setView('week')">Tuần</button>
+  <button [class.active]="currentView === 'month'" (click)="setView('month')">Tháng</button>
+</div>
+  </div>
+
+  <div class="calendar-month-row">
+    <div class="month-text">{{ currentMonthYear }}</div>
+    <div class="nav-buttons">
+      <button class="nav-btn" (click)="prevMonth()">&lt;</button>
+      <button class="nav-btn" (click)="nextMonth()">&gt;</button>
+    </div>
+  </div>
+
+  <!-- Chế độ THÁNG -->
+<div *ngIf="currentView === 'month'">
+  <div class="calendar-grid header">
+    <div *ngFor="let d of ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN']">{{ d }}</div>
+  </div>
+
+  <div class="calendar-grid days">
+    <div
+      *ngFor="let day of calendarDays"
+      class="day"
+      [class.today]="day.isToday"
+    >
+      <span *ngIf="day.number !== null">{{ day.number }}</span>
+    </div>
+  </div>
+</div>
+
+<!-- Chế độ NGÀY -->
+<!-- Chế độ NGÀY -->
+<div *ngIf="currentView === 'day'" class="day-mode">
+  <div class="nav-line">
+    <button (click)="prevDate()">&lt;</button>
+    <div class="big-date">{{ getFormattedFullDate() }}</div>
+    <button (click)="nextDate()">&gt;</button>
+  </div>
+</div>
+
+
+<div *ngIf="currentView === 'week'" class="week-mode">
+  <div class="nav-line">
+    <button (click)="prevDate()">&lt;</button>
+    <div class="week-range">
+      Tuần của {{ getCurrentWeekDates()[0] | date:'dd/MM/yyyy' }} – {{ getCurrentWeekDates()[6] | date:'dd/MM/yyyy' }}
+    </div>
+    <button (click)="nextDate()">&gt;</button>
+  </div>
+
+  <div class="week-grid-simple">
+    <div *ngFor="let day of getCurrentWeekDates()" class="day-box">
+      <div class="day-name">{{ day | date:'EEE' }}</div>
+      <div class="day-number">{{ day | date:'dd/MM' }}</div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+    <!-- Notifications -->
+    <div class="notifications-wrapper">
+  <div class="notifications-header">
+    <h4>Thông báo</h4>
+    <a href="#">See all</a>
+  </div>
+
+  <div class="notif-item" *ngFor="let notif of notifications">
+    <div class="notif-left">
+      <img [src]="notif.avatar" alt="logo" class="notif-avatar" />
+      <span class="notif-title">{{ notif.title }}</span>
+    </div>
+
+    <div class="notif-icon-wrapper">
+      <img src="assets/images/icon/noti.svg" alt="bell" class="notif-icon-img" />
+      <span class="notif-badge" *ngIf="notif.badge">{{ notif.badge }}</span>
+    </div>
+  </div>
+</div>
+
+  </div>
+</div>

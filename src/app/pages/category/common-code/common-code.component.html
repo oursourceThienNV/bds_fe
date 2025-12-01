@@ -1,0 +1,99 @@
+<div class="container-fluid" style="margin-top: 32px;">
+  <app-full-page-loading [isLoading]="isLoading"></app-full-page-loading>
+  <app-page-title title="Danh mục dùng chung > {{title}} "></app-page-title>
+  <div class="row">
+    <div class="card">
+      <div class="card-body">
+        <form [formGroup]="searchForm" (submit)="search()">
+          <div class="card-body">
+            <form [formGroup]="searchForm" (submit)="search()">
+              <div class="d-flex align-items-center gap-2">
+                <!-- Ô nhập -->
+                <input id="nameId" name="code" type="text"
+                       class="form-control"
+                       formControlName="text"
+                       placeholder="Tìm kiếm mã/ tên"
+                       maxlength="500"
+                       style="width:500px;">
+
+                <!-- Nút tìm kiếm -->
+                <button type="submit" class="btn btn-primary">
+                  <i class="fas fa-search"></i> Tìm kiếm
+                </button>
+
+                <!-- Nút thêm mới -->
+                <button type="button" (click)="create()" class="btn btn-success">
+                  <i class="bx bx-plus-medical"></i> Thêm mới
+                </button>
+              </div>
+            </form>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <style>
+      th {
+        white-space: nowrap;
+        color: #B5B7C0;
+        font-size: 14px;
+        font-family: 'Inter';
+        font-weight: 500;
+      }
+      .table-bordered td{
+        background: white;
+      }
+      .container-fluid{height: 100vh}
+    </style>
+    <div class="card">
+      <div class="card-body">
+        <div class="table-responsive">
+          <div class="table-responsive">
+            <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>STT</th>
+                <th>Mã </th>
+                <th>Tên</th>
+                <th>Mô tả</th>
+                <th>Hành động</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let table of tables; let i = index">
+                <td>{{ i + 1 + (page.pageNumber * page.size) }}</td>
+                <td style="max-width: 150px;"><p class="class_nowrap_lims">{{ table.code }}</p></td>
+                <td style="max-width: 150px;"><p class="class_nowrap_lims">{{ table.name }}</p></td>
+                <td>{{ table.description }}</td>
+                <td>
+                  <button (click)="edit(table)" style="background: #0ECA9E;
+                                            color: white;
+                                            border-radius: 4px;
+                                            border: 1px #0ECA9E solid;
+                                            height: 28px; margin-right: 20px;">
+                                            Cập nhật <img src="./assets/images/icon/edit.svg"/>
+                  </button>
+
+                </td>
+              </tr>
+            </tbody>
+            </table>
+          </div>
+
+        <div class="row justify-content-md-between align-items-md-center mt-2">
+          <div class="col-sm-12 col-md-5">
+            <div class="pagination d-flex align-items-center gap-2">
+              <button (click)="loadPage(currentPage - 1)" [disabled]="currentPage === 0" class="btn btn-outline-primary">
+                Trước
+              </button>
+              <span>Page {{ currentPage + 1 }} of {{ totalPages }}</span>
+              <button (click)="loadPage(currentPage + 1)" [disabled]="currentPage >= totalPages - 1" class="btn btn-outline-primary">
+                Sau
+              </button>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+</div>

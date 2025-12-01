@@ -1,0 +1,1992 @@
+<style>
+  .page-wrap {
+    padding: 24px;
+    background: #fff;
+  }
+
+  .title {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0 0 16px;
+  }
+
+
+  .topbar {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .search {
+    flex: 1;
+    max-width: 520px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 10px 12px;
+  }
+
+  .btn {
+    border: 0;
+    border-radius: 8px;
+    padding: 10px 14px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+
+  .btn-outline {
+    background: #fff;
+    border: 1px solid #d0d0d0;
+  }
+          .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #56ab2f 0%, #a8e6cf 100%);
+            color: white;
+        }
+
+        .btn-success:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(86, 171, 47, 0.4);
+        }
+
+
+  .segmented {
+    display: flex;
+    gap: 8px;
+    margin: 14px 0;
+  }
+
+  .segmented .seg {
+    background: #f1f1f1;
+    border: 1px solid #d8d8d8;
+    border-radius: 6px;
+    padding: 10px 16px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .segmented .seg.active {
+    background: #e9ecef;
+  }
+
+
+  .table-toolbar {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 500;
+  }
+
+  .trash {
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    transition: all 0.2s ease;
+  }
+
+  .trash:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+  }
+
+
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    font-size: 14px;
+    color: #333;
+  }
+
+  .table thead th {
+    background: #f1f3f5;
+    font-weight: 600;
+    color: #495057;
+    padding: 12px 10px;
+    border-bottom: 1px solid #e9ecef;
+    border-right: 1px solid #e9ecef;
+    border-left: 1px solid #e9ecef;
+    text-align: left;
+  }
+
+  .table tbody td {
+    padding: 12px 10px;
+    border-bottom: 1px solid #e9ecef;
+    border-right: 1px solid #e9ecef;
+    border-left: 1px solid #e9ecef;
+    vertical-align: middle;
+  }
+
+  .table tbody tr {
+    background-color: #ffffff !important;
+  }
+
+  .table tbody td {
+    background-color: #ffffff !important;
+  }
+
+  /* popup chọn cột hiển thị */
+  .column-popup-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3000;
+  }
+
+  .column-popup {
+    background: white;
+    width: 1000px;
+    max-height: 90vh;
+    border-radius: 12px;
+    padding: 20px;
+    overflow-y: auto;
+    transform: scale(0.95);
+    opacity: 0;
+    transition: 0.25s ease;
+  }
+
+  .column-popup.show {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* Checkbox */
+  .table input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: #667eea;
+  }
+
+  /* Star */
+  .star {
+    font-size: 16px;
+    transition: all 0.2s ease;
+  }
+
+  .star.on {
+    color: #ffc107;
+  }
+
+  .star.muted {
+    color: #dee2e6;
+  }
+
+  /* modal */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+  }
+
+  .modal-content {
+    background: white;
+    padding: 24px;
+    border-radius: 12px;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+  }
+
+  .modal-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  .btn-danger {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    color: white;
+  }
+
+ /* Style chung cho nút */
+.preset-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.preset-create-section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.preset-input-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.preset-input-field {
+    flex: 1;
+    min-width: 280px;
+    padding: 11px 16px;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    background: white;
+}
+
+.preset-input-field:focus {
+    outline: none;
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.1);
+}
+
+.preset-input-field::placeholder {
+    color: #9ca3af;
+}
+
+.preset-display-section {
+    
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #e9ecef;
+}
+
+.preset-title {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 14px;
+    color: #495057;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.preset-title i {
+    color: #0d6efd;
+    font-size: 16px;
+}
+
+.preset-tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    min-height: 36px;
+    border-radius: 20px;
+}
+
+.preset-item {
+    background: white;
+    padding: 9px 16px;
+    border-radius: 20px;
+    border: 2px solid #dee2e6;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  
+    
+}
+
+.preset-btn {
+  background: white;
+    padding: 9px 16px;
+    border-radius: 20px;
+    border: 2px solid #dee2e6;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.preset-name {
+    cursor: pointer;
+    color: #495057;
+    font-weight: 500;
+    transition: color 0.2s ease;
+    user-select: none;
+}
+
+.preset-name:hover {
+    color: #0d6efd;
+}
+
+.preset-delete-btn {
+    cursor: pointer;
+    color: #dc3545;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    transition: all 0.2s ease;
+    opacity: 0.6;
+    line-height: 1;
+}
+
+.preset-delete-btn:hover {
+    opacity: 1;
+    transform: scale(1.2) rotate(90deg);
+}
+
+.preset-empty-message {
+    color: #adb5bd;
+    font-style: italic;
+    font-size: 13px;
+    padding: 8px 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.preset-empty-message i {
+    font-size: 16px;
+}
+
+.preset-actions-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding-top: 20px;
+    border-top: 2px solid #e9ecef;
+}
+
+
+
+
+
+
+
+.btn i {
+    font-size: 16px;
+    position: relative;
+    z-index: 1;
+}
+
+.btn span {
+    position: relative;
+    z-index: 1;
+}
+
+.btn-primary-save {
+    background: linear-gradient(135deg, #0d6efd 0%, #0b5ed7 100%);
+    color: white;
+    
+}
+
+
+
+
+
+.btn-outline {
+    background: white;
+    color: #6c757d;
+    border: 2px solid #dee2e6;
+}
+
+.btn-outline:hover {
+    background: #f8f9fa;
+    border-color: #adb5bd;
+    color: #495057;
+    transform: translateY(-2px);
+    
+}
+
+
+  /* list  */
+      .d-flex {
+      display: flex;
+    }
+
+    .justify-content-between {
+      justify-content: space-between;
+    }
+
+    .align-items-center {
+      align-items: center;
+    }
+
+    .mt-3 {
+      margin-top: 1rem;
+    }
+
+    .text-muted {
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 500;
+      background: rgba(255, 255, 255, 0.15);
+      padding: 10px 20px;
+      border-radius: 12px;
+      backdrop-filter: blur(10px);
+
+    }
+
+    .pagination {
+      display: flex;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      gap: 8px;
+    }
+
+    .mb-0 {
+      margin-bottom: 0;
+    }
+
+    .page-item {
+      display: inline-block;
+    }
+
+    .page-link {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 20px;
+      background: rgba(255, 255, 255, 0.95);
+      color: #667eea;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14px;
+
+      text-decoration: none;
+    }
+
+    .page-link:hover:not(:disabled) {
+      background: #ffffff;
+
+    }
+
+
+    .page-item.active .page-link {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #ffffff;
+      cursor: default;
+      font-weight: 700;
+    }
+
+    .page-item.disabled .page-link {
+      background: rgba(255, 255, 255, 0.4);
+      color: rgba(102, 126, 234, 0.5);
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .page-link i {
+      font-size: 12px;
+    }
+
+    .bi-chevron-left::before {
+      content: "‹";
+      font-style: normal;
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    .bi-chevron-right::before {
+      content: "›";
+      font-style: normal;
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    .pagination-container {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 20px;
+
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      max-width: 900px;
+      width: 100%;
+    }
+    .btn-expand{
+      border: none;
+    }
+    @media (max-width: 768px) {
+      .d-flex {
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .text-muted {
+        text-align: center;
+        width: 100%;
+      }
+
+      .pagination {
+        justify-content: center;
+      }
+    }
+    /* scroll bar */
+    /* 1. Wrapper tạo thanh cuộn */
+.table-responsive-wrapper {
+  width: 100%;
+  overflow-x: auto; /* Hiện thanh cuộn ngang khi cần */
+  border: 1px solid #eee;
+  position: relative; /* Để context cho sticky */
+}
+
+/* 2. Ngăn xuống dòng để bảng dài ra */
+.table th,
+.table td {
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+/* 3. CỐ ĐỊNH CỘT TRÁI (CHECKBOX) */
+.sticky-left {
+  position: sticky;
+  left: 0;
+  background-color: #fff; /* Màu nền để che nội dung trôi qua */
+  z-index: 2;
+  border-right: 1px solid #eee;
+}
+
+/* 4. CỐ ĐỊNH CỘT PHẢI (ACTION) */
+.sticky-right {
+  position: sticky;
+  right: 0;
+  background-color: #fff;
+  z-index: 2;
+  border-left: 1px solid #eee;
+}
+
+/* 5. Fix màu nền Header khi sticky */
+/* Header cần z-index cao hơn body để khi cuộn dọc nó đè lên */
+thead th.sticky-left,
+thead th.sticky-right {
+  background-color: #f8f9fa; /* Màu xám nhạt của header */
+  z-index: 5;
+}
+  /* kaban */
+  .kanban-board {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    padding: 10px;
+    overflow-x: auto; /* Enable horizontal scrolling */
+    overflow-y: hidden;
+    min-height: calc(100vh - 280px); /* Adjust based on your header height */
+    padding-bottom: 20px;
+  }
+
+  /* Custom scrollbar for kanban board */
+  .kanban-board::-webkit-scrollbar {
+    height: 10px;
+  }
+
+  .kanban-board::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+
+  .kanban-board::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+  }
+
+  .kanban-board::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
+  .kanban-column {
+    min-width: 280px; /* Changed from width to min-width */
+    max-width: 320px; /* Maximum width for better readability */
+    flex-shrink: 0; /* Prevent columns from shrinking */
+    background: #f7f7f7;
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100vh - 280px); /* Limit column height */
+  }
+
+  .kanban-header {
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    color: #333;
+    margin-bottom: 12px;
+  }
+
+  .kanban-list {
+    flex: 1; /* Take remaining space */
+    background: white;
+    padding: 10px;
+    border-radius: 8px;
+    overflow-y: auto; /* Enable vertical scrolling for long lists */
+    overflow-x: hidden;
+    min-height: 200px;
+    max-height: calc(100vh - 400px); /* Prevent lists from growing too tall */
+  }
+
+  /* Custom scrollbar for kanban lists */
+  .kanban-list::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .kanban-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+  }
+
+  .kanban-list::-webkit-scrollbar-thumb {
+    background: #cbd5e0;
+    border-radius: 3px;
+  }
+
+  .kanban-list::-webkit-scrollbar-thumb:hover {
+    background: #a0aec0;
+  }
+
+  .kanban-card {
+    background: white;
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 12px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+    border: 1px solid #eee;
+    cursor: grab;
+    transition: .2s;
+  }
+
+  .kanban-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  }
+
+  .card-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .card-title {
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .card-code {
+    font-size: 12px;
+    color: #888;
+    margin-top: 4px;
+    font-weight: 500;
+  }
+
+  .favorite-star {
+    font-size: 20px;
+    color: #ccc;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  .favorite-star.on {
+    color: gold;
+  }
+
+  .card-phone {
+    font-size: 13px;
+    color: #666;
+    margin-top: 4px;
+  }
+
+  .badge-status {
+    display: inline-block;
+    padding: 3px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    border-radius: 14px;
+    margin-top: 8px;
+    color: #333;
+  }
+
+  .birthday {
+    font-size: 12px;
+    color: #555;
+    margin-top: 6px;
+  }
+
+
+  /* Pill status */
+  .pill {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    text-transform: uppercase;
+  }
+
+  .pill-new {
+    background: #38a169;
+    color: #fff;
+  }
+
+  .pill-consider {
+    background: #dd6b20;
+    color: #fff;
+  }
+
+  .pill-bought {
+    background: #3182ce;
+    color: #fff;
+  }
+
+  .pill-cancel {
+    background: #e53e3e;
+    color: #fff;
+  }
+
+  /* popup */
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s;
+  }
+
+  .overlay.show {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .customer-detail-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 90%;
+    max-width: 950px;
+    max-height: 90vh;
+    transform: translate(-50%, -50%) scale(0.95);
+    opacity: 0;
+    visibility: hidden;
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    overflow-y: auto;
+    transition: 0.3s ease;
+  }
+
+  .customer-detail-popup.show {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* Scrollbar */
+  .customer-detail-popup::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .customer-detail-popup::-webkit-scrollbar-thumb {
+    background: #cbd5e0;
+    border-radius: 3px;
+  }
+
+  /* calendar */
+  .calendar-wrapper {
+    margin-top: 16px;
+    padding: 20px;
+    background: #f8fafc;
+    border-radius: 12px;
+  }
+
+  .calendar-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  .calendar-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1f3c88;
+  }
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0;
+  border-left: 1px solid #dee2e6;
+  border-top: 1px solid #dee2e6;
+}
+
+  .day-name {
+    font-weight: 600;
+    background: #e2e8f0;
+    padding: 8px 0;
+    border-radius: 6px;
+    text-align: center;
+  }
+
+.day-cell {
+  border-right: 1px solid #dee2e6;
+  border-bottom: 1px solid #dee2e6;
+  padding: 2px 0;
+  min-height: 100px;
+}
+
+
+
+  .day-cell.today {
+    background: #e0f2fe;
+    border: 2px solid #0284c7;
+  }
+
+.date-number {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  font-weight: 600;
+  font-size: 13px;
+  color: #555;
+  z-index: 5;
+}
+
+  /* Event pill */
+
+.event {
+  height: 22px;
+  font-size: 11px;
+  color: white;
+  background-color: #3b82f6;
+  cursor: pointer;
+
+  /* Căn giữa chữ */
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+
+  /* Xử lý chữ dài */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  /* Bo tròn 4 góc (hình viên thuốc) */
+  border-radius: 12px;
+
+  /* Tạo khoảng cách thoáng */
+  margin-bottom: 2px;
+
+  transition: 0.2s;
+}
+
+.event:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}
+
+  /* event popup */
+.event-overlay {
+  position: fixed; /* Bắt buộc phải là fixed để phủ toàn màn hình */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* Màu nền tối */
+  z-index: 0; /* Số phải thật lớn */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+  .event-popup {
+    background: white;
+    width: 850px;
+    max-height: 90vh;
+    border-radius: 8px;
+    padding: 20px;
+    overflow-y: auto;
+  }
+
+  /* Event detail popup */
+  .event-detail-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  }
+
+  .event-detail-popup {
+    background: #fff;
+    width: 360px;
+    border-radius: 10px;
+    padding: 20px;
+    animation: fadeIn 0.25s;
+  }
+  .popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+
+}
+
+  /* Fade animation */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+
+  /* responsive*/
+  @media (max-width: 768px) {
+    .kanban-board {
+      padding: 5px;
+      gap: 10px;
+    }
+
+    .kanban-column {
+      min-width: 240px;
+      max-width: 280px;
+    }
+
+    .page-wrap {
+      padding: 10px;
+    }
+
+    .table {
+      font-size: 12px;
+    }
+  }
+  .list-group-container {
+  max-height: 400px;
+  overflow-y: auto;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #fff;
+  margin-top: 10px;
+}
+
+/* 2. Từng dòng Item */
+.group-item {
+  padding: 12px 16px;
+  border-bottom: 1px solid #f5f5f5;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none; /* Ngăn bôi đen text khi click nhanh */
+}
+
+/* Hiệu ứng khi di chuột vào */
+.group-item:hover {
+  background-color: #f8f9fa;
+}
+
+/* 3. TRẠNG THÁI ĐƯỢC CHỌN (ACTIVE) */
+.group-item.active-item {
+  background-color: #eef2ff; /* Nền xanh nhạt */
+  border-left: 4px solid #4f46e5; /* Viền điểm nhấn bên trái */
+}
+
+/* Đổi màu chữ khi chọn */
+.group-item.active-item .group-name {
+  color: #4f46e5;
+  font-weight: 600;
+}
+
+/* Style cho tên và mã */
+.group-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+
+.group-code {
+  font-size: 11px;
+  margin-top: 2px;
+}
+
+/* Icon dấu tích */
+.check-icon {
+  color: #4f46e5;
+  font-size: 18px;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+/* Empty State */
+.empty-state {
+  padding: 40px 0;
+  color: #999;
+}
+
+/* Animation nhẹ */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+
+  @media (max-width: 480px) {
+    .kanban-column {
+      min-width: 220px;
+      max-width: 260px;
+    }
+  }
+
+</style>
+
+<div class="page-wrap">
+  <h2 class="title">Quản lý khách hàng</h2>
+
+  <!-- Top search + actions -->
+ <div class="d-flex justify-content-between align-items-center mb-3">
+  
+  <div style="width: 400px; position: relative;">
+    <input type="text" 
+           class="form-control"
+           placeholder="Tìm mã/ tiêu đề /SDT/địa chỉ..."
+           [(ngModel)]="keyword" 
+           (keyup.enter)="search()" 
+           style="padding-right: 30px;" />
+           
+    <i class="bi bi-search" 
+       (click)="search()"
+       style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #888;">
+    </i>
+  </div>
+
+  <div class="d-flex gap-2">
+    <button class="btn btn-primary" (click)="addCustomer()">
+      <i class="bi bi-plus-lg"></i> Thêm Khách hàng  
+    </button>
+    
+    <button class="btn btn-success">
+      <i class="bi bi-file-earmark-spreadsheet"></i> Nhập từ CSV
+    </button>
+  </div>
+
+</div>
+
+  <!-- Segmented controls -->
+  <div class="segmented">
+    <button class="seg" [class.active]="currentView === 'list'" (click)="setView('list')">Danh sách</button>
+    <button class="seg" [class.active]="currentView === 'kaban'" (click)="setView('kaban')">Kaban</button>
+    <button class="seg" [class.active]="currentView === 'calendar'" (click)="setView('calendar')">Calendar</button>
+    <button class="btn btn-outline" style="margin-left:8px" (click)="openColumnMenu()">Chọn cột hiển thị</button>
+    <div class="d-flex align-items-center gap-2 ms-2">
+
+      <div *ngFor="let p of visiblePresets">
+          
+          <div *ngIf="p.name" 
+              class="btn rounded-pill px-3 py-1"
+              [ngClass]="currentPresetName === p.name ? 'btn-primary' : 'btn-light border'"
+              (click)="onSelectPreset(p.name)"
+              style="cursor: pointer; font-weight: 500; font-size: 14px; transition: all 0.2s;">
+              
+              {{ p.name }}
+
+          </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Chọn cột hiển thị -->
+  <div *ngIf="isShowColumnMenu" class="column-popup-overlay" (click)="closeColumnMenu()">
+
+    <div class="column-popup show" (click)="$event.stopPropagation()">
+
+      <h5 class="fw-bold">Chọn cột hiển thị</h5>
+      <p class="text-muted" style="font-size:13px">
+        Tick để bật/tắt cột, có thể lưu thành chế độ xem cá nhân.
+      </p>
+
+      <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:12px;">
+        <label *ngFor="let col of allColumns">
+          <input type="checkbox" [checked]="tempColumns.includes(col.key)" (change)="toggleColumn(col.key)" />
+          {{ col.label }}
+        </label>
+      </div>
+
+      <div style="display:flex; gap:8px; margin-top:10px;">
+
+        <button class="btn btn-outline" (click)="toggleAll()">Chọn tất cả</button>
+      </div>
+
+      <hr style="margin:16px 0" />
+
+      <div style=" flex-wrap:wrap; gap:10px; align-items:center;">
+        <div style="display:flex; gap:8px; align-items:center; margin-bottom: 12px;">
+            <input type="text" 
+                  placeholder="Đặt tên cho chế độ xem (VD: KH Tiềm năng)..." 
+                  [(ngModel)]="presetName" 
+                  class="form-control"
+                  style="padding:8px; border:1px solid #ccc; border-radius:6px; flex: 1;" /> 
+            <button class="btn btn-primary-save" (click)="savePreset()">
+                    Lưu chế độ xem
+            </button>
+        </div>
+
+        <div class="preset-display-section">
+                <div class="preset-title">
+                 
+                  <span>Preset hiện có : </span> 
+                </div>
+            
+                <div class="preset-tags-container">
+                  <div *ngFor="let name of presetNames" 
+                       class="preset-item">
+                    
+                    <span (click)="onSelectPreset(name)" 
+                          class="preset-name"  
+                          style="cursor: pointer; color: #333;"
+                          title="Áp dụng chế độ này">
+                        {{ name }}
+                    </span>
+
+                    <i class="bi bi-x" 
+                      (click)="deletePreset(name)" 
+                      style="cursor: pointer; color: #dc3545; font-size: 16px; display: flex; align-items: center;" 
+                      title="Xóa">
+                    </i>
+                  </div>
+
+                  <span *ngIf="presetNames.length === 0" style="color: #999; font-style: italic; font-size: 13px;">
+                    Chưa có chế độ xem nào được lưu.
+                  </span>
+                </div>
+        </div>
+        
+      </div>
+<div class="preset-actions-footer">
+    <button class="btn btn-outline" (click)="closeColumnMenu()">Hủy</button>
+    <button class="btn btn-primary" (click)="applyColumns(); closeColumnMenu()">Áp dụng</button>
+   </div>
+    </div>
+  </div>
+
+
+  <!-- list view -->
+<div *ngIf="currentView === 'list'" class="table-card">
+  <div class="table-toolbar" *ngIf="selectedCount > 0">
+    <div>{{ selectedCount }} mục đã chọn</div>
+    <div class="trash" title="Xoá" (click)="deleteSelected()">
+      <i class="bi bi-trash"></i>
+    </div>
+  </div>
+  <div class="table-responsive-wrapper">
+    <div class="d-flex align-items-center justify-content-between mb-2">
+  
+    <div class="d-flex align-items-center gap-2">
+      <span class="text-muted" style="font-size: 14px;">Hiển thị:</span>
+      
+        <select class="form-select form-select-sm" 
+                style="width: auto;" 
+                [(ngModel)]="pageSize" 
+                (change)="onPageSizeChange()">
+
+          <option *ngFor="let size of pageSizes" [ngValue]="size">
+            {{ size }} / Trang
+          </option>
+
+        </select>
+    </div>
+
+  </div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th style="width: 70px; position: relative;">
+
+            <div class="d-flex align-items-center gap-1">
+              <input type="checkbox"
+                    [checked]="allSelected"
+                    [indeterminate]="selectedCount > 0 && !allSelected"
+                    (change)="toggleSelectAll($event)" />
+
+              <button class="btn-expand" *ngIf="tables && tables.length > 0">
+                <i class="bi bi-caret-down-fill text-secondary p-1"
+                  style="cursor: pointer; font-size: 12px;"
+                  (click)="onToggleBulkMenu($event)">
+                </i>
+              </button>
+            </div>
+
+            <div class="dropdown-menu show"
+                *ngIf="isBulkMenuVisible"
+                style="position: absolute; top: 100%; left: 0; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+
+              <button class="dropdown-item" (click)="onMenuSelectAll()">
+                <i class="bi bi-check-all me-2"></i> Chọn tất cả
+              </button>
+
+              <button class="dropdown-item" (click)="onMenuDeselectAll()">
+                <i class="bi bi-x-square me-2"></i> Bỏ chọn
+              </button>
+              <button class="dropdown-item" (click)="onMenuSelectStarred()">
+                <i class="bi bi-star-fill text-warning me-2"></i> Chọn có gắn sao
+              </button>
+
+              <button class="dropdown-item" (click)="onMenuSelectUnstarred()">
+                <i class="bi bi-star me-2"></i> Chọn không gắn sao
+              </button>
+              <div class="dropdown-divider"></div>
+
+              <!-- <button class="dropdown-item text-danger" (click)="deleteSelected()">
+                <i class="bi bi-trash me-2"></i> Xoá đã chọn
+              </button> -->
+            </div>
+
+            <div *ngIf="isBulkMenuVisible"
+                (click)="isBulkMenuVisible = false"
+                style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 999;">
+            </div>
+
+          </th>
+
+          <th style="width: 60px; text-align: center;">STT</th>
+
+          <th *ngFor="let col of displayedColumns">
+            {{ getColumnLabel(col) }}
+          </th>
+
+          <th style="width:160px"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let row of tables; let i = index">
+          <td>
+            <div style="display:flex;align-items:center;gap:8px">
+              <input type="checkbox" [checked]="row.selected" (change)="toggleSelectRow(row)" />
+              <span class="star" [ngClass]="{ 'on': row.favorite, 'muted': !row.favorite }"
+                (click)="row.favorite = !row.favorite" style="cursor:pointer">
+                <i class="bi" [ngClass]="row.favorite ? 'bi-star-fill' : 'bi-star'"></i>
+              </span>
+            </div>
+          </td>
+
+          <td style="text-align: center;">
+              {{ currentPage * pageSize + i + 1 }}
+          </td>
+
+          <td *ngFor="let col of displayedColumns">
+            <ng-container *ngIf="!isHtmlColumn(col); else htmlCell">
+              {{ getDisplayValue(row, col) }}
+            </ng-container>
+            <ng-template #htmlCell>
+              <div [innerHTML]="getDisplayValue(row, col)"></div>
+            </ng-template>
+          </td>
+
+          <td class="action">
+            <button class="btn btn-primary me-2" (click)="edit(row)">Sửa</button>
+            <button class="btn btn-success" (click)="detail(row)">Xem</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="d-flex justify-content-between align-items-center mt-3 p-3" *ngIf="totalElements > 0" style="border-top: 1px solid #eee;">
+    <nav aria-label="Page navigation">
+      <ul class="pagination mb-0">
+
+        <li class="page-item" [class.disabled]="currentPage === 0">
+          <button class="page-link" (click)="loadPage(currentPage - 1)" [disabled]="currentPage === 0">
+            <i class="bi bi-chevron-left"></i>
+          </button>
+        </li>
+
+        <li class="page-item active">
+          <span class="page-link">Trang {{ currentPage + 1 }} / {{ totalPages }}</span>
+        </li>
+
+        <li class="page-item" [class.disabled]="currentPage >= totalPages - 1">
+          <button class="page-link" (click)="loadPage(currentPage + 1)" [disabled]="currentPage >= totalPages - 1">
+            <i class="bi bi-chevron-right"></i>
+          </button>
+        </li>
+
+      </ul>
+    </nav>
+  </div>
+
+</div>
+
+  <!-- Modal xác nhận xóa -->
+  <div class="modal-overlay" *ngIf="showDeleteModal">
+    <div class="modal-content">
+      <h5>Xác nhận xóa</h5>
+      <p>{{ deleteMessage }}</p>
+      <div class="modal-buttons">
+        <button class="btn btn-danger" (click)="confirmDelete()">Xóa</button>
+        <button class="btn btn-secondary" (click)="closeDeleteModal()">Hủy</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- kaban view -->
+  <div *ngIf="currentView === 'kaban'" class="kanban-board" cdkDropListGroup>
+
+    <div class="kanban-column" *ngFor="let col of kanbanColumns">
+
+      <div class="kanban-header" [style.background]="getStatusHeaderColor(col.key)">
+        {{ col.title }} ({{ col.items.length }})
+      </div>
+
+
+      <div class="kanban-list" cdkDropList #dropListRef="cdkDropList" [cdkDropListData]="col.items"
+        [cdkDropListConnectedTo]="dropListRefs" (cdkDropListDropped)="dropKanban($event, col)">
+        <div class="kanban-card" *ngFor="let cus of col.items" cdkDrag (click)="openEditBox(cus)">
+
+          <div class="card-header-row">
+            <div class="card-title">{{ cus.hoTen }}</div>
+            <div class="favorite-star" [class.on]="cus.favorite" (click)="toggleFavorite(cus, $event)">
+              ★
+            </div>
+          </div>
+
+          <!-- Customer Code -->
+          <div class="card-code" style="font-size: 12px; color: #888; margin-top: 4px;">
+            Mã: {{ cus.code }}
+          </div>
+
+          <!-- Phone -->
+          <div class="card-phone" *ngIf="cus.sdt">
+            <i class="mdi mdi-phone" style="margin-right: 4px;"></i>{{ cus.sdt }}
+          </div>
+
+          <!-- Status Badge -->
+          <div class="badge-status" [style.background]="getStatusBadgeColor(col.key)">
+            {{ col.title }}
+          </div>
+
+          <!-- Birthday -->
+          <div class="birthday" *ngIf="cus.ngaySinh">
+            <i class="mdi mdi-cake-variant" style="margin-right: 4px;"></i>
+            Sinh nhật: {{ cus.ngaySinh | date: 'dd/MM/yyyy' }}
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <!-- popup chỉnh sửa khách hàng -->
+  <div class="overlay" [class.show]="showEditBox" (click)="closeEditBox()">
+
+  </div>
+
+  <div class="customer-detail-popup"
+       [class.show]="showEditBox"
+         (click)="$event.stopPropagation()">
+    <div class="popup-header d-flex justify-content-between align-items-center mb-3">
+      <h5 class="fw-bold m-0">Thông tin khách hàng</h5>
+      <button class="btn btn-outline-secondary btn-sm" (click)="closeEditBox()">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <div class="row">
+      <!-- Cột trái -->
+      <div class="col-md-8">
+        <div class="card shadow-sm border-0 p-3" style="border-radius: 10px;">
+          <h6 class="fw-bold mb-3 text-primary">Thông tin chung</h6>
+
+          <form [formGroup]="editForm" class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Họ tên</label>
+              <input type="text" class="form-control" formControlName="hoTen" />
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Giới tính</label>
+              <select class="form-select" formControlName="gioiTinh">
+                <option value="">-- Chọn --</option>
+                <option value="Nam">Nam</option>
+                <option value="Nữ">Nữ</option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Ngày sinh</label>
+              <input type="date" class="form-control" formControlName="ngaySinh" />
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Ngành nghề</label>
+              <input type="text" class="form-control" formControlName="nganhNghe" />
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Thu nhập</label>
+              <input type="text" class="form-control" formControlName="thuNhap" />
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Trạng thái giao dịch</label>
+              <input type="text" class="form-control" formControlName="tinhTrangMuaHang" />
+            </div>
+
+            <div class="col-12">
+              <label class="form-label">Yêu cầu / Ghi chú</label>
+              <textarea rows="3" class="form-control" formControlName="yeuCau"></textarea>
+            </div>
+          </form>
+
+          <div class="mt-3 text-end">
+            <button class="btn btn-outline-secondary me-2" (click)="closeEditBox()">Đóng</button>
+            <button class="btn btn-primary" (click)="saveEditBox()">Lưu</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cột phải -->
+      <div class="col-md-4">
+        <div class="card shadow-sm border-0 p-3" style="border-radius: 10px;">
+          <h6 class="fw-bold mb-3 text-primary">Thông tin nhanh</h6>
+          <div class="mb-2">
+            <label class="text-muted small">Kênh liên hệ</label>
+            <div class="fw-semibold">{{ editForm.value.kenhLienHe || 'Zalo' }}</div>
+          </div>
+          <div class="mb-2">
+            <label class="text-muted small">Ngày đóng phí kế tiếp</label>
+            <div class="fw-semibold">{{ editForm.value.ngayDongPhiKeTiep || '2025-10-01' }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--calendar -->
+<div *ngIf="currentView === 'calendar'" class="calendar-wrapper">
+
+  <div class="calendar-toolbar">
+    <button class="btn btn-primary" (click)="openAddEvent(null)">
+       + Thêm sự kiện
+    </button>
+
+    <button class="btn btn-outline" (click)="prevMonth()">Tháng trước</button>
+    <h4 class="calendar-title">
+      {{ getMonthName() | titlecase }} {{ currentYear }}
+    </h4>
+    <button class="btn btn-outline" (click)="nextMonth()">Tháng sau</button>
+  </div>
+
+  <div class="calendar-grid">
+    <div class="day-name" *ngFor="let d of ['CN','T2','T3','T4','T5','T6','T7']">{{ d }}</div>
+
+    <div *ngFor="let day of daysInMonth"
+         class="day-cell"
+         [class.today]="day.isToday"
+         (click)="openAddEvent(day.date)"
+         style="cursor: pointer;">
+
+      <div class="date-number">{{ day.date.getDate() }}</div>
+
+     <div class="events">
+    <div *ngFor="let event of getEventsForDate(day.date)"
+         class="event"
+         (click)="openEventDetail(event); $event.stopPropagation()">
+
+         {{ event.tenSuKien || event.title }}
+
+    </div>
+  </div>
+    </div>
+  </div>
+</div>
+
+
+
+  <!-- popup  thêm / sửa  sự kiện -->
+  <div class="event-overlay" *ngIf="showEventPopup">
+    <div class="event-popup">
+      <div class="popup-header">
+        <h5>Thêm / Sửa sự kiện</h5>
+
+      </div>
+
+      <div class="popup-body">
+        <div class="row mb-3">
+          <div class="col-md-8">
+            <label>Tiêu đề</label>
+            <input type="text" class="form-control"
+                    [(ngModel)]="newEvent.tenSuKien"
+                    [class.is-invalid]="isSubmitted && !newEvent.tenSuKien"
+                    placeholder="Nhập tiêu đề..." />
+          </div>
+          <div class="col-md-4">
+            <label>Loại <span class="text-danger">*</span></label>
+            <select class="form-select"
+                    [(ngModel)]="newEvent.loaiSuKien"
+                    [class.is-invalid] = "!newEvent.loaiSuKien && isSubmitted"
+                    >
+              <option value="" disabled selected>-- Chọn loại --</option>
+              <option value="Sinh nhật">Sinh nhật</option>
+              <option value="Gặp mặt">Gặp mặt</option>
+              <option value="Kỷ niệm">Kỷ niệm</option>
+              <option value="Khác">Khác</option>
+            </select>
+
+            <div class="mt-2">
+              <label class="form-check-inline">
+                <input type="radio" name="repeat" value="once" [(ngModel)]="newEvent.nhacLai" /> Một lần
+              </label>
+              <label class="form-check-inline ms-3">
+                <input type="radio" name="repeat" value="yearly" [(ngModel)]="newEvent.nhacLai" /> Hàng năm
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+
+          <div class="col-md-6">
+            <label class="form-label fw-bold">Bắt đầu</label>
+
+            <div class="d-flex gap-2">
+               <input
+                type="text"
+                class="form-control"
+                bsDatepicker
+                [(ngModel)]="newEvent.ngayBatDau"
+                [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+                style="width: 100%;"
+              />
+
+              <input
+                type="time"
+                class="form-control"
+                [(ngModel)]="newEvent.gioBatDau"
+                style="flex: 1;"
+              />
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label fw-bold">Kết thúc</label>
+
+            <div class="d-flex gap-2">
+             <input
+                type="text"
+                class="form-control"
+                bsDatepicker
+                [(ngModel)]="newEvent.ngayKetThuc"
+                [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+                style="width: 100%;"
+              />
+
+              <input
+                type="time"
+                class="form-control"
+                [(ngModel)]="newEvent.gioKetThuc"
+                style="flex: 1;"
+              />
+            </div>
+          </div>
+
+        </div>
+
+        <div class="mb-3">
+          <label>Mô tả</label>
+          <textarea class="form-control" rows="3" [(ngModel)]="newEvent.moTa"></textarea>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-6">
+            <label>Thêm người nhận</label>
+            <div class="input-group mb-2 cursor-pointer" (click)="openSelectCustomerPopup()">
+             <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
+             <input type="text" class="form-control bg-white border-start-0 ps-0" 
+                    placeholder="Tìm KH để thêm (mã, tên, mail, sđt)..." readonly />
+          </div>
+
+          <div class="d-flex flex-wrap gap-2 mb-2" *ngIf="newEvent.selectedCustomers && newEvent.selectedCustomers.length > 0">
+             <div *ngFor="let c of newEvent.selectedCustomers; let i = index" 
+                  class="badge bg-light text-dark border d-flex align-items-center px-2 py-1 rounded-pill">
+                <span class="me-2">{{ c.name }}</span>
+                <span class="text-danger fw-bold" 
+                      style="cursor: pointer" 
+                      (click)="removeCustomerChip(i)">
+                  ×
+                </span>
+             </div>
+          </div>
+            <div class="mt-2">
+              <button class="btn btn-primary btn-sm me-2" (click)="openSelectCustomerPopup()">Chọn từ danh sách</button>
+              <button class="btn btn-primary btn-sm me-2">Nhập CSV</button>
+              <button class="btn btn-danger btn-sm" 
+                      type="button"
+                      (click)="removeAllCustomers()"
+                      *ngIf="newEvent.selectedCustomers && newEvent.selectedCustomers.length > 0">
+                Xoá hết
+              </button>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label fw-bold">Nhóm khách</label>
+
+            <div class="input-group mb-2 cursor-pointer" (click)="openGroupManagerPopup()">
+              
+             <input type="text" 
+                      class="form-control bg-white border-end-0" 
+                      [(ngModel)]="selectedGroupName"  [ngModelOptions]="{standalone: true}" 
+                      placeholder="-- Chọn nhóm khách hàng --" 
+                      readonly 
+                      style="cursor: pointer;" />
+                                    
+            
+            </div>
+
+           <button class="btn btn-primary btn-sm me-2" (click)="openGroupManagerPopup()">Chọn nhóm khách hàng</button>
+          </div>
+        </div>
+
+
+        <div class="row mb-3">
+          <!-- <div class="col-md-6">
+            <label>Chọn kịch bản CSKH tự động</label>
+            <div class="d-flex">
+              <select class="form-select me-2">
+                <option>Kịch bản 1</option>
+                <option>Kịch bản 2</option>
+              </select>
+              <button class="btn btn-primary btn-sm me-2">Thêm mới kịch bản</button>
+              <button class="btn btn-primary btn-sm">Quản lý kịch bản</button>
+            </div>
+          </div> -->
+
+            <div class="col-md-6">
+              <label>Nhắc trước</label>
+              <div class="d-flex align-items-center flex-wrap">
+                <div class="reminder-chip" *ngFor="let r of newEvent.nhacTruoc; let i = index">
+                  {{ r }}
+                  <span class="remove-chip" (click)="newEvent.nhacTruoc.splice(i,1)">×</span>
+                </div>
+
+                <select class="form-select form-select-sm w-auto me-2 mt-2" #remindSel>
+                  <option value="1h">1h</option>
+                  <option value="3h">3h</option>
+                  <option value="1d">1 ngày</option>
+                </select>
+                <button class="btn btn-sm btn-outline-secondary mt-2"
+                  (click)="addReminder(remindSel.value)">+</button> </div>
+            </div>
+        </div>
+      </div>
+
+      <div class="popup-footer text-end">
+        <button class="btn btn-secondary me-2" (click)="resetEventForm()">Làm mới</button>
+        <button class="btn btn-primary" (click)="saveEvent()">Lưu & Gửi kịch bản</button>
+        <button class="btn btn-secondary ms-2" (click)="closeEventPopup()">Đóng</button>
+      </div>
+    </div>
+  </div>
+
+ <style>
+  .reminder-chip {
+  background: #eef6ff;
+  color: #0b5ed7;
+  border: 1px solid #cfe2ff;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  margin: 3px;
+}
+
+.remove-chip {
+  cursor: pointer;
+  font-weight: bold;
+  margin-left: 8px;
+  color: #0b5ed7;
+}
+
+.remove-chip:hover {
+  color: #dc3545;
+}
+
+.d-flex.gap-2 {
+  gap: 0.4rem;
+}
+
+ </style>
+  <!-- Popup chọn từ danh sách -->
+<div class="event-overlay" *ngIf="showSelectCustomerPopup">
+  <div class="event-popup" style="width: 700px; display: flex; flex-direction: column; max-height: 90vh;">
+    
+    <div class="popup-header">
+      <h5 class="fw-bold">Chọn khách hàng</h5>
+      <button class="btn-close" (click)="closeSelectCustomerPopup()"></button>
+    </div>
+
+    <div class="popup-body" style="overflow: hidden; display: flex; flex-direction: column;">
+      
+      <div class="d-flex mb-3 align-items-center gap-2">
+        <div class="flex-grow-1 position-relative">
+            <input type="text" class="form-control" 
+                   placeholder="Tìm tên, mã, sđt, email..." 
+                   [(ngModel)]="popupCustomerSearchText" 
+                   (keyup.enter)="searchCustomerPopup()" />
+           
+        </div>
+               
+        <button class="btn btn-primary" (click)="searchCustomerPopup()">
+            <i class="bi bi-search"></i> Tìm
+        </button>
+        
+        <button class="btn btn-secondary" (click)="clearSelectionCustomer()" title="Bỏ chọn tất cả">
+            Bỏ chọn
+        </button>
+        
+        <button class="btn btn-success" (click)="addSelectedCustomers()">
+          Thêm
+        </button>
+      </div>
+
+      <div class="table-responsive border rounded" style="overflow-y: auto; flex: 1;">
+          <table class="table table-hover table-bordered align-middle mb-0">
+            <thead class="table-light" style="position: sticky; top: 0; z-index: 1;">
+              <tr>
+                <th style="width:40px" class="text-center">
+                    <input type="checkbox" (change)="toggleAllInPopup($event)" />
+                </th>
+                <th>Mã KH</th>
+                <th>Tên Khách hàng</th>
+                <th>SĐT</th>
+                <th>Email</th>
+              </tr>
+            </thead>
+        
+            <tbody>
+              <tr *ngFor="let c of customerList">
+                <td class="text-center">
+                  <input type="checkbox" [(ngModel)]="c.selected" />
+                </td>
+                
+                <td class="fw-bold text-primary">{{ c.code }}</td>
+                
+                <td>{{ c.hoTen || c.name }}</td>
+                
+                <td>{{ c.sdt || c.phone }}</td>
+                
+                <td>{{ c.email }}</td>
+              </tr>
+        
+              <tr *ngIf="customerList.length === 0">
+                 <td colspan="5" class="text-center text-muted py-5">
+                    <div class="d-flex flex-column align-items-center">
+                        <i class="bi bi-inbox fs-1 mb-2 opacity-50"></i>
+                        <span>Không tìm thấy khách hàng nào</span>
+                    </div>
+                 </td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+
+    </div>
+
+    <div class="popup-footer text-end pt-3 border-top">
+      <button class="btn btn-secondary px-4" (click)="closeSelectCustomerPopup()">Đóng</button>
+    </div>
+
+  </div>
+</div>
+
+  <!-- Popup quản lý nhóm khách hàng -->
+  <div class="event-overlay" *ngIf="showGroupManagerPopup">
+    <div class="event-popup" style="width: 500px;">
+      <div class="popup-header">
+        <h5>Quản lý nhóm khách hàng</h5>
+        <button class="btn-close" (click)="closeGroupManagerPopup()"></button>
+      </div>
+
+      <div class="popup-body">
+        <div class="d-flex mb-3 align-items-center">
+          <input type="text" class="form-control me-2"
+                 [(ngModel)]="popupSearchText"
+                 (keyup.enter)="searchPopup()"
+                 placeholder="Tìm kiếm mã/ tên nhóm..." />
+          <button class="btn btn-primary btn-sm me-2" (click)="searchPopup()">Tìm</button>
+          <button class="btn btn-primary btn-sm">+</button>
+        </div>
+
+        <div class="list-group-container custom-scrollbar">
+          
+          <div *ngFor="let g of customerGroups" 
+              class="group-item d-flex align-items-center justify-content-between"
+              [class.active-item]="g.selected"
+              (click)="selectGroup(g)">
+            
+            <div class="d-flex flex-column">
+              <span class="group-name">{{ g.name }}</span>
+            </div>
+
+            <div class="check-icon" *ngIf="g.selected">
+              <i class="bi bi-check-circle-fill"></i>
+            </div>
+
+          </div>
+
+          <div *ngIf="customerGroups.length === 0" class="empty-state text-center">
+            <i class="bi bi-inbox fs-1 d-block mb-2 opacity-50"></i>
+            <span>Không tìm thấy nhóm nào</span>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="popup-footer text-end">
+        <!-- <button class="btn btn-primary me-2" (click)="openGroupDetailPopup()">Mở rộng</button> -->
+        <button class="btn btn-primary" (click)="saveGroups()">Chọn</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Popup điều hướng nút mở rộng chi tiết nhóm khách hàng
+  <div class="event-overlay" *ngIf="showGroupDetailPopup">
+    <div class="event-popup" style="width: 650px;">
+      <div class="popup-header">
+        <h5>
+          Nhóm: {{ selectedGroup?.name }} ({{ selectedGroup?.count || groupCustomers.length }})
+        </h5>
+        <button class="btn-close" (click)="closeGroupDetailPopup()"></button>
+      </div>
+
+      <div class="popup-body">
+        <div class="mb-3 d-flex justify-content-end gap-2">
+          <button class="btn btn-primary btn-sm" (click)="renameGroup()">Đổi tên</button>
+          <button class="btn btn-danger btn-sm" (click)="deleteGroup()">Xóa nhóm</button>
+          <button class="btn btn-primary btn-sm" (click)="exportCSV()">Xuất CSV</button>
+        </div>
+
+        <table class="table table-bordered align-middle">
+          <thead class="table-light">
+            <tr>
+              <th style="width:40px"></th>
+              <th>Mã</th>
+              <th>Tên KH</th>
+              <th>SĐT</th>
+              <th>Mail</th>
+              <th style="width:40px"></th>
+            </tr>
+          </thead>
+          <tbody>
+           <tr *ngFor="let c of groupCustomers">
+          <td><input type="checkbox" [(ngModel)]="c.selected" /></td>
+          
+          <td>{{ c.code }}</td>
+          
+          <td>{{ c.hoTen || c.name }}</td> 
+          
+          <td>{{ c.sdt || c.phone }}</td>
+          
+          <td>{{ c.email }}</td>
+          
+          <td>
+            <button class="btn btn-sm btn-link text-danger p-0" (click)="deleteCustomerInGroup(c)">
+              <i class="bi bi-trash"></i>
+            </button>
+          </td>
+        </tr>
+
+        <tr *ngIf="groupCustomers.length === 0">
+            <td colspan="6" class="text-center text-muted py-3">Nhóm này chưa có thành viên nào</td>
+        </tr>
+          </tbody>
+        </table>
+
+        <div class="text-end">
+          <button class="btn btn-primary btn-sm" (click)="openAddCustomerToGroupPopup()">+</button>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+  <!--popup dấu cộng nhóm quản lí khách hàng-->
+  <!-- <div class="event-overlay" *ngIf="showAddCustomerToGroupPopup">
+    <div class="event-popup" style="width: 550px;">
+      <div class="popup-header">
+        <h5>Chọn khách hàng</h5>
+        <button class="btn-close" (click)="closeAddCustomerToGroupPopup()"></button>
+      </div>
+
+      <div class="popup-body">
+        <div class="d-flex mb-3 align-items-center">
+          <input type="text" class="form-control me-2" placeholder="Tìm tên khách để thêm" />
+          <button class="btn btn-primary btn-sm me-2" (click)="addCustomersToGroup()">Thêm vào nhóm</button>
+          <button class="btn btn-primary btn-sm" (click)="importCSV()">Nhập CSV</button>
+        </div>
+
+        <table class="table table-bordered align-middle">
+          <thead class="table-light">
+            <tr>
+              <th style="width: 40px;"></th>
+              <th>Mã</th>
+              <th>Tên KH</th>
+              <th>SĐT</th>
+              <th>Mail</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let c of availableCustomers">
+              <td><input type="checkbox" [(ngModel)]="c.selected" /></td>
+              <td>{{ c.code }}</td>
+              <td>{{ c.name }}</td>
+              <td>{{ c.phone }}</td>
+              <td>{{ c.email }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div> -->
+
+
+  <!-- POPUP CHI TIẾT SỰ KIỆN
+  <div class="event-detail-overlay" *ngIf="isEventDetailVisible">
+    <div class="event-detail-popup">
+      <div class="popup-header">
+        <h5>Chi tiết sự kiện</h5>
+        <button class="btn-close" (click)="closeEventDetail()">×</button>
+      </div>
+
+      <div class="popup-body">
+        <p><strong>Tiêu đề:</strong> {{ selectedEvent?.title }}</p>
+        <p><strong>Loại:</strong> {{ selectedEvent?.type }}</p>
+        <p><strong>Ngày bắt đầu:</strong> {{ selectedEvent?.start | date:'dd/MM/yyyy, HH:mm' }}</p>
+        <p><strong>Ngày kết thúc:</strong> {{ selectedEvent?.end | date:'dd/MM/yyyy, HH:mm' }}</p>
+        <p><strong>Mô tả:</strong> {{ selectedEvent?.description }}</p>
+        <p><strong>Nhóm/người nhận:</strong> {{ selectedEvent?.group }}</p>
+        <p><strong>Nhắc trước:</strong> {{ selectedEvent?.remindBefore?.join(', ') }}</p>
+      </div>
+    </div>
+  </div> -->
+
+
+</div>

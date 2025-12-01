@@ -1,0 +1,153 @@
+<div class="container-fluid">
+  <app-full-page-loading [isLoading]="isLoading"></app-full-page-loading>
+  <app-page-title title="Quản lý công ty"></app-page-title>
+  <div class="row">
+    <div class="card" style="margin-bottom: 8px;">
+      <div class="card-body" style="padding: 12px;">
+        <form [formGroup]="searchForm" (submit)="search()">
+          <div class="row align-items-end g-2">
+            <div class="col-md-4">
+              <label for="nameId" class="form-label mb-1" style="font-size: 13px;">Tên công ty</label>
+              <input id="nameId" name="name" type="text" class="form-control form-control-sm" formControlName="name" maxlength="500">
+            </div>
+
+            <div class="col-md-4">
+              <label for="phoneId" class="form-label mb-1" style="font-size: 13px;">Số điện thoại</label>
+              <input id="phoneId" name="phone" type="text" class="form-control form-control-sm" formControlName="phone"
+                maxlength="500">
+            </div>
+
+            <div class="col-md-4">
+              <button type="submit" class="btn btn-primary btn-sm me-2">
+                <i class="fas fa-search"></i> Tìm kiếm
+              </button>
+              <button type="button" *ngIf="role === ROLE.ADMIN" (click)="create()" class="btn btn-success btn-sm">
+                <i class="bx bx-plus-medical"></i> Thêm mới
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <style>
+      th {
+        white-space: nowrap;
+        color: #B5B7C0;
+        font-size: 13px;
+        font-family: 'Inter';
+        font-weight: 500;
+        padding: 8px !important;
+      }
+
+      .table-bordered td {
+        background: white;
+        padding: 6px 8px !important;
+        font-size: 13px;
+      }
+
+      .table-bordered {
+        border: 2px solid #dee2e6;
+        margin-bottom: 0;
+      }
+
+      .table-bordered th,
+      .table-bordered td {
+        border: 1px solid #dee2e6;
+        vertical-align: middle;
+      }
+
+      .table-bordered thead th {
+        background-color: #f8f9fa;
+        font-weight: 600;
+        border-bottom: 2px solid #dee2e6;
+      }
+
+      .table-bordered tbody tr {
+        height: 45px;
+      }
+
+      .btn-sm {
+        padding: 4px 10px;
+        font-size: 13px;
+      }
+    </style>
+    <div class="card" style="margin-bottom: 0;">
+      <div class="card-body" style="padding: 12px;">
+        <div style="overflow-x: auto;">
+          <table class="table table-bordered table-sm">
+            <thead>
+              <tr>
+                <th style="width: 50px;">STT</th>
+                <th style="width: 100px;">Mã công ty</th>
+                <th style="min-width: 180px;">Tên công ty</th>
+                <th style="width: 70px;">Logo</th>
+                <th style="width: 120px;">Số điện thoại</th>
+                <th style="min-width: 200px;">Thời hạn sử dụng</th>
+                <th style="width: 120px;">Trạng thái</th>
+                <th style="min-width: 180px;">Hành động</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="!isLoading && (!tables || tables.length === 0)">
+                <td colspan="8" class="text-center" style="font-size: 13px; color: #6c757d; padding: 12px;">
+                  Không có kết quả trùng khớp
+                </td>
+              </tr>
+              <tr *ngFor="let table of tables; let i = index">
+                <td>{{ (currentPage * 10) + i + 1 }}</td>
+                <td>{{ table.id }}</td>
+                <td>
+                  <div style="max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" [title]="table.name">
+                    {{ table.name }}
+                  </div>
+                </td>
+                <td class="text-center">
+                  <img *ngIf="table.logoUrl" [src]="url + table.logoUrl" alt="Logo"
+                    style="width: 35px; height: 35px; object-fit: cover; border-radius: 4px;" />
+                  <span *ngIf="!table.logoUrl">-</span>
+                </td>
+                <td>{{ table.phone || '-' }}</td>
+                <td [style.color]="isExpired(table.expriedTime) ? 'red' : (table.license === null ? 'red' : 'black')">
+                  <span *ngIf="table.expriedTime" style="font-size: 12px;">{{ formatDate(table.expriedTime) }}<br>{{ getRemainingTime(table.expriedTime) }}</span>
+                  <span *ngIf="!table.expriedTime">-</span>
+                </td>
+                <td>{{ labelStatus[table?.status] || 'Không xác định' }}</td>
+                <td style="white-space: nowrap;">
+                  <button (click)="edit(table)" class="btn btn-sm" style="background: #0ECA9E;
+    color: white;
+    border-radius: 4px;
+    border: 1px #0ECA9E solid;
+    margin-right: 4px;
+    padding: 3px 6px;
+    font-size: 12px;">Cập nhật <img src="./assets/images/icon/edit.svg" style="width: 12px;" /></button>
+                  <button class="btn btn-sm" style="background: #2845FF;
+    color: white;
+    border-radius: 4px;
+    border: 1px #2845FF solid;
+    padding: 3px 6px;
+    font-size: 12px;" (click)="updateLicense(table)">License <img
+                      src="./assets/images/icon/license.svg" style="width: 12px;" /></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center" style="padding-top: 8px; border-top: 1px solid #dee2e6;">
+          <div class="pagination d-flex align-items-center gap-2">
+            <button (click)="loadPage(currentPage - 1)" [disabled]="currentPage === 0"
+              class="btn btn-outline-primary btn-sm">
+              Previous
+            </button>
+            <span style="font-size: 13px;">Page {{ currentPage + 1 }} of {{ totalPages }}</span>
+            <button (click)="loadPage(currentPage + 1)" [disabled]="currentPage >= totalPages - 1"
+              class="btn btn-outline-primary btn-sm">
+              Next
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

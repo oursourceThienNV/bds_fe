@@ -1,0 +1,85 @@
+<app-full-page-loading [isLoading]="isLoading"></app-full-page-loading>
+<form [formGroup]="dataForm" (ngSubmit)="onSubmit()">
+  <div class="modal-header">
+    <h3 class="modal-title mt-0"><b>Cập nhật thông tin tài khoản</b></h3>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-md-12">
+
+
+        <!-- Hiển thị ảnh xem trước -->
+        <div *ngIf="previewUrl" class="mt-2">
+          <img [src]="previewUrl"   alt="Ảnh xem trước" class="rounded-circle img-thumbnail avatar-md" style="margin-left: 40%;
+    width: 200px;
+    height: 200px;" />
+        </div>
+        <div class="mb-2">
+          <label for="url">Avatar <span class="text-danger">*</span></label>
+          <input id="url"  type="file" class="form-control" (change)="onFileSelected($event)" />
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 mb-2">
+        <label>Tên đăng nhập:</label>
+        <input type="text" class="form-control" formControlName="username" readonly />
+      </div>
+
+      <div class="col-md-6 mb-2">
+        <label>Họ tên:</label>
+        <input type="text" class="form-control" formControlName="fullname" />
+      </div>
+
+<!--      <div class="col-md-6 mb-2">-->
+<!--        <label>Loại tài khoản:</label>-->
+<!--        <select class="form-select" formControlName="accountType">-->
+<!--          <option *ngFor="let key of accountTypeKeys" [value]="key">{{labelAccountType[key]}}</option>-->
+<!--        </select>-->
+<!--      </div>-->
+
+<!--      <div class="col-md-6 mb-2">-->
+<!--        <label>Vai trò:</label>-->
+<!--        <select class="form-select" formControlName="role">-->
+<!--          <option *ngFor="let key of roleKeys" [value]="key">{{labelRole[key]}}</option>-->
+<!--        </select>-->
+<!--      </div>-->
+
+      <div class="col-md-6 mb-2">
+        <label>SĐT:</label>
+        <input type="text" class="form-control" formControlName="phone" />
+      </div>
+
+      <div class="col-md-6 mb-2">
+        <label>Email:</label>
+        <input type="email" class="form-control" formControlName="email" />
+      </div>
+
+      <div class="col-md-6 mb-2">
+        <label>Công ty:</label>
+        <input type="text" class="form-control" formControlName="companyName"  readonly/>
+      </div>
+
+      <div class="col-md-6 mb-2">
+        <label>Thuộc nhóm:</label>
+        <input type="text" class="form-control" formControlName="groupName" readonly/>
+      </div>
+
+      <div class="col-md-12 mb-2">
+        <label>Địa chỉ:</label>
+        <textarea class="form-control" rows="2" formControlName="address"></textarea>
+      </div>
+      <div class="col-md-12 mb-2">
+        <label>Mô tả:</label>
+        <textarea class="form-control" rows="3" formControlName="description"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Hủy</button>
+    <button type="submit" class="btn btn-primary" [disabled]="dataForm.invalid">Lưu</button>
+  </div>
+</form>

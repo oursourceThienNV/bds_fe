@@ -1,0 +1,89 @@
+:host {
+  display: block;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background: #f8fafc;
+}
+
+.app-container {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 320px; /* trái: graph, phải: sidebar cố định */
+  gap: 16px;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+/* ---- giữa: graph ---- */
+.graph-panel {
+  display: flex;
+  flex-direction: column;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,.06);
+  overflow: hidden;
+  height: 100%; /* fill full chiều cao */
+}
+
+.toolbar {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 10px 12px;
+  border-bottom: 1px solid #f1f5f9;
+
+  input {
+    flex: 1;
+    height: 40px;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 0 12px;
+    outline: none;
+  }
+  button { height: 40px; padding: 0 12px; border-radius: 12px; border: 1px solid #e5e7eb; background: #fff; }
+  .primary { background: #059669; color: #fff; border-color: #059669; }
+  .icon { width: 40px; }
+}
+
+/* KHÔNG CHỪA KHOẢNG TRẮNG + chừa top 100 / left-right 100 */
+.graph-viewport {
+  position: relative;
+  flex: 1;                 /* chiếm toàn bộ phần còn lại */
+  overflow: hidden;
+  padding: 100px 100px 0;  /* top 100px, left/right 100px */
+  box-sizing: border-box;
+}
+.graph-viewport > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  border-radius: 0 0 16px 16px;
+}
+
+/* ---- phải: danh sách ---- */
+.list-panel {
+  height: 100%;          /* luôn full màn hình */
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0,0,0,.06);
+  padding: 12px;
+  overflow-y: auto;      /* cuộn nếu dài */
+}
+
+.list-title { font-size: 12px; color: #64748b; margin-bottom: 8px; }
+.list-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 8px; margin-bottom: 8px; border: 1px solid #e5e7eb;
+  border-radius: 12px; cursor: pointer; background: #fff;
+}
+.list-item.active { background: #eff6ff; border-color: #93c5fd; }
+.list-item img { width: 36px; height: 36px; border-radius: 999px; object-fit: cover; }
+.info { flex: 1; min-width: 0; }
+.name { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.phone { font-size: 12px; color: #64748b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.badge { font-size: 11px; padding: 2px 8px; border-radius: 999px; border: 1px solid; }
+.badge.buy    { background: #ecfdf5; color: #047857; border-color: #a7f3d0; }
+.badge.notbuy { background: #fffbeb; color: #b45309; border-color: #fde68a; }

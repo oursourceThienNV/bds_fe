@@ -1,0 +1,76 @@
+<form [formGroup]="dataForm" (ngSubmit)="save()">
+  <app-full-page-loading [isLoading]="isLoading"></app-full-page-loading>
+  <div class="modal-header">
+    <h3 class="modal-title mt-0"><b>{{title}}</b></h3>
+    <button type="button" class="btn-close" aria-hidden="true" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="mb-2">
+          <label for="code">KeyValue<span class="text-danger">*</span></label>
+          <input id="code" [readOnly]="inputData" type="text" class="form-control" placeholder="Tên mã cửa hàng tự sinh" disabled formControlName="keyValue"  maxlength="50" trim>
+        </div>
+      </div>
+
+<!--      <div class="col-md-6" *ngIf="checkAction">-->
+<!--        <div class="mb-2">-->
+<!--          <label>Trạng thái<span class="text-danger">*</span></label>-->
+<!--          <select formControlName="status" class="form-control">-->
+<!--            &lt;!&ndash; <option value="00">Chưa duyệt</option> &ndash;&gt;-->
+<!--            <option [value]="COMMON_STATUS.ACTIVE">Hoạt động</option>-->
+<!--            <option [value]="COMMON_STATUS.INACTIVE">Vô hiệu hóa </option>-->
+<!--          </select>-->
+<!--        </div>-->
+<!--      </div>-->
+        <div class="col-md-6">
+          <div class="mb-6">
+            <label>Đơn vị được cấp License<span class="text-danger">*</span></label>
+            <ng-select
+              [items]="listStore"
+              bindLabel="name"
+              bindValue="id"
+              [formControlName]="'companyId'"
+              placeholder="Chọn công ty">
+              <ng-template ng-label-tmp let-item="item">
+                {{ item.code }} - {{ item.name }}
+              </ng-template>
+              <ng-template ng-option-tmp let-item="item">
+                {{ item.code }} - {{ item.name }}
+              </ng-template>
+            </ng-select>
+          </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-3">
+          <label class="form-label d-block">Giá (VNĐ) <span class="text-danger">*</span></label>
+          <input id="price"
+                 type="text"
+                 class="form-control"
+                 formControlName="price"
+                 maxlength="40"
+                 (input)="formatCurrency()"
+                 (blur)="onBlurFormatCurrency()" />
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-3">
+          <label>Thời hạn<span class="text-danger">*</span></label>
+          <select class="form-control" formControlName="type">
+            <option value="{{LICENSE_TYPE.ONE_MONTH}}">1 tháng</option>
+            <option value="{{LICENSE_TYPE.THREE_MONTHS}}">3 tháng</option>
+            <option value="{{LICENSE_TYPE.SIX_MONTHS}}">6 tháng</option>
+            <option value="{{LICENSE_TYPE.ONE_YEAR}}">12 tháng</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-primary" *ngIf="inputData?.status!==LICENSE_STATUS.USED" >Lưu</button>
+    <button type="button" (click)="sendCustomer()" *ngIf="checkAction==='S'" class="btn btn-primary">Gửi cho khách</button>
+    <button type="button" class="btn btn-light"
+            (click)="modal.close('Close click')">Hủy</button>
+  </div>
+</form>
