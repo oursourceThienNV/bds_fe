@@ -1,0 +1,166 @@
+<!-- Header Component -->
+<app-client-header></app-client-header>
+
+<div class="company-container">
+  <div class="container-fluid">
+    <div class="row g-4">
+
+      <!-- Left Sidebar -->
+      <div class="col-lg-3 d-none d-lg-block">
+        <app-left-sidebar></app-left-sidebar>
+      </div>
+
+      <!-- Main Content -->
+      <div class="col-lg-6">
+        <div class="card company-card">
+          <div class="card-body p-0">
+
+            <!-- Header Section -->
+            <div class="company-header">
+              <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 class="mb-0 fw-bold">Chỉnh sửa hồ sơ doanh nghiệp</h5>
+                <div class="header-actions">
+                  <button class="btn btn-outline-secondary btn-sm me-2" (click)="onCancel()">
+                    Hủy
+                  </button>
+                  <button class="btn btn-primary btn-sm" (click)="onSubmit()" [disabled]="loading">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
+                    Lưu
+                  </button>
+                </div>
+              </div>
+
+              <!-- Logo Section -->
+              <div class="company-logo-section mb-4">
+                <h6 class="fw-semibold mb-3">Ảnh đại diện doanh nghiệp</h6>
+
+                <div class="d-flex align-items-center gap-3">
+                  <div class="company-logo-preview">
+                    <div class="logo-circle" [style.background-color]="logoPreview ? 'transparent' : '#e9ecef'">
+                      <img *ngIf="logoPreview" [src]="logoPreview" alt="Logo" class="rounded-circle">
+                      <span *ngIf="!logoPreview" class="logo-placeholder">D</span>
+                    </div>
+                  </div>
+                  <div class="flex-grow-1">
+                    <input type="file"
+                           #logoInput
+                           (change)="onLogoSelect($event)"
+                           accept="image/*"
+                           style="display: none;">
+                    <button class="btn btn-outline-secondary btn-sm me-2" (click)="logoInput.click()">
+                      Tải ảnh lên
+                    </button>
+                    <button class="btn btn-outline-secondary btn-sm" *ngIf="logoPreview">
+                      Xóa
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Cover Photo Section -->
+              <div class="company-cover-section mb-4">
+                <h6 class="fw-semibold mb-3">Ảnh bìa doanh nghiệp</h6>
+                <div class="cover-photo-container mb-3">
+                  <div class="cover-photo">
+                    <img [src]="coverPreview || 'https://via.placeholder.com/800x200/e5e7eb/6b7280?text=Chưa có ảnh'"
+                         alt="Cover Photo">
+                  </div>
+                </div>
+                <div>
+                  <input type="file"
+                         #coverInput
+                         (change)="onCoverSelect($event)"
+                         accept="image/*"
+                         style="display: none;">
+                  <button class="btn btn-outline-secondary btn-sm me-2" (click)="coverInput.click()">
+                    Tải ảnh lên
+                  </button>
+                  <button class="btn btn-outline-secondary btn-sm" *ngIf="coverPreview">
+                    Xóa
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Form Section -->
+            <div class="company-form">
+              <h6 class="fw-semibold mb-4">Thông tin cơ bản</h6>
+
+              <form [formGroup]="companyForm">
+                <div class="row g-3">
+
+                  <!-- Company Name -->
+                  <div class="col-12">
+                    <label class="form-label">Tên doanh nghiệp</label>
+                    <input type="text"
+                           class="form-control"
+                           formControlName="companyName"
+                           placeholder="Công ty / TNHH / ABC">
+                  </div>
+
+                  <!-- Industry/Type -->
+                  <div class="col-12">
+                    <label class="form-label">Slogan/Mô tả ngắn về công ty và lĩnh vực hoạt động</label>
+                    <input type="text"
+                           class="form-control"
+                           formControlName="slogan"
+                           placeholder="Slogan hoặc mô tả ngắn về lĩnh vực hoạt động nghiệp">
+                  </div>
+
+                  <!-- Representative Info Header -->
+                  <div class="col-12 mt-4">
+                    <h6 class="fw-semibold mb-3">Tên doanh nghiệp</h6>
+                  </div>
+
+                  <!-- Địa chỉ and Phone -->
+                  <div class="col-md-6">
+                    <label class="form-label">Địa chỉ</label>
+                    <input type="text"
+                           class="form-control"
+                           formControlName="address"
+                           placeholder="Địa chỉ kinh doanh">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Số điện thoại liên hệ</label>
+                    <input type="text"
+                           class="form-control"
+                           formControlName="phoneNumber"
+                           placeholder="Số điện thoại doanh nghiệp">
+                  </div>
+
+                  <!-- Email -->
+                  <div class="col-12">
+                    <label class="form-label">Email liên hệ</label>
+                    <input type="email"
+                           class="form-control"
+                           formControlName="email"
+                           placeholder="email.doanhnghiep@example.com">
+                  </div>
+
+                  <!-- Company Introduction -->
+                  <div class="col-12 mt-4">
+                    <h6 class="fw-semibold mb-3">Giới thiệu công ty</h6>
+                  </div>
+                  <div class="col-12">
+                    <textarea class="form-control"
+                              rows="6"
+                              formControlName="introduction"
+                              placeholder="Viết giới thiệu về công ty..."></textarea>
+                  </div>
+
+                </div>
+              </form>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Sidebar -->
+      <div class="col-lg-3 d-none d-lg-block">
+        <app-right-sidebar></app-right-sidebar>
+      </div>
+
+    </div>
+  </div>
+</div>

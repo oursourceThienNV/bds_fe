@@ -25,4 +25,12 @@ export class CommonCodeServices {
     });
 
   }
+
+  public listAllByType(body?: any): Observable<any> {
+
+    return this.http.post<any>(`${this.api.getCatalogApi()}/api/common-code/list-all-by-type`, body, {
+      observe: 'response'
+    });
+
+  }
 }

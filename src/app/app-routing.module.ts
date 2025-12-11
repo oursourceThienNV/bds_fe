@@ -7,9 +7,11 @@ import { Page404Component } from './extrapages/page404/page404.component';
 import { AppComponent } from './app.component';
 const routes: Routes = [
   { path: 'account', loadChildren: () => import('./account/account.module').then(m => m.AccountModule) },
+  { path: 'public', loadChildren: () => import('./public/public.module').then(m => m.PublicModule) },
+  { path: 'client', loadChildren: () => import('./client/client.module').then(m => m.ClientModule), canActivate: [AuthGuard] },
   // tslint:disable-next-line: max-line-length
   { path: 'pages', component: LayoutComponent, loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule), canActivate: [AuthGuard] },
-  { path: '', redirectTo: 'pages', pathMatch: 'full' },
+  { path: '', redirectTo: 'client/home', pathMatch: 'full' },
   { path: '**', component: Page404Component },
 ];
 

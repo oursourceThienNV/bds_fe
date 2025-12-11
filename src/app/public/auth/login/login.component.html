@@ -1,0 +1,124 @@
+<div class="account-pages min-vh-100 d-flex align-items-stretch">
+  <div class="container-fluid p-0">
+    <div class="row g-0 min-vh-100">
+      <!-- Left Column: Background Image -->
+      <div class="col-lg-6 d-none d-lg-block position-relative">
+        <div class="login-image-bg h-100 w-100"
+             style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDXTmCJCmfwSmKxgi7_yByDo-cX1wxaqxBSSqx4dOQylSLWezdEK-S6gkBDBAIYgXvQEZVTiAa6NOzSoCOWzIppruKKUolQTFf1Htw_gJYJD3nZPRlH_dxQV-IapT7BCjRPwXQlJCPH_UhNVrntXe1dcWlcol8hUD6BFq2wrCKx8jZXOmAMlH8DcCeBNJHSPrH_gs3iVPdwhBwcDjD0q_XEhGt2JsZntj6bp8fqUqPE8qRJT5s8FA2nU-cqR92In7HNUsOngeJzgog');
+             background-size: cover;
+             background-position: center;">
+        </div>
+      </div>
+
+      <!-- Right Column: Login Form -->
+      <div class="col-lg-6 d-flex align-items-center justify-content-center bg-white">
+        <div class="login-form-wrapper w-100 px-4 px-sm-5 py-5">
+          <div class="mx-auto" style="max-width: 440px;">
+
+            <!-- Logo -->
+            <div class="text-center mb-4">
+              <svg class="text-primary" width="48" height="48" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"></path>
+                <path d="M12 12.25c-1.24 0-2.25-1.01-2.25-2.25S10.76 7.75 12 7.75s2.25 1.01 2.25 2.25-1.01 2.25-2.25 2.25zm0 2.5c2.33 0 7 1.17 7 3.5V20H5v-1.75c0-2.33 4.67-3.5 7-3.5z"></path>
+              </svg>
+            </div>
+
+            <!-- Page Heading -->
+            <div class="text-center mb-4">
+              <h2 class="fw-bold mb-0">Đăng nhập vào tài khoản</h2>
+            </div>
+
+            <!-- Login Form -->
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+              <!-- Email/Phone Field -->
+              <div class="mb-3">
+                <label for="email" class="form-label fw-medium">Email doanh nghiệp hoặc Số điện thoại</label>
+                <input
+                  type="text"
+                  class="form-control form-control-lg"
+                  id="email"
+                  formControlName="email"
+                  placeholder="Nhập email hoặc số điện thoại của bạn"
+                  [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+                <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                  <span *ngIf="f.email.errors.required">Email hoặc số điện thoại là bắt buộc</span>
+                </div>
+              </div>
+
+              <!-- Password Field -->
+              <div class="mb-3">
+                <label for="password" class="form-label fw-medium">Mật khẩu</label>
+                <div class="input-group">
+                  <input
+                    [type]="passwordVisible ? 'text' : 'password'"
+                    class="form-control form-control-lg border-end-0"
+                    id="password"
+                    formControlName="password"
+                    placeholder="Nhập mật khẩu của bạn"
+                    [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+                  <span class="input-group-text bg-white cursor-pointer" (click)="togglePasswordVisibility()">
+                    <i class="mdi" [ngClass]="passwordVisible ? 'mdi-eye-off' : 'mdi-eye'" style="font-size: 20px;"></i>
+                  </span>
+                  <div *ngIf="submitted && f.password.errors" class="invalid-feedback d-block">
+                    <span *ngIf="f.password.errors.required">Mật khẩu là bắt buộc</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Forgot Password Link -->
+              <div class="text-end mb-3">
+                <a href="javascript:void(0);" class="text-primary text-decoration-none" (click)="goToForgotPassword()">Quên mật khẩu?</a>
+              </div>
+
+              <!-- Login Button -->
+              <div class="mb-4">
+                <button type="submit" class="btn btn-primary btn-lg w-100 fw-medium" [disabled]="loading">
+                  <span *ngIf="loading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                  <span>{{ loading ? 'Đang đăng nhập...' : 'Đăng nhập' }}</span>
+                </button>
+              </div>
+
+            </form>
+
+            <!-- Separator -->
+            <div class="position-relative mb-4">
+              <hr class="text-muted">
+              <span class="position-absolute top-50 start-50 translate-middle bg-white px-3 text-muted small">HOẶC</span>
+            </div>
+
+            <!-- Social Logins -->
+            <div class="d-grid gap-3 mb-4">
+              <button type="button" class="btn btn-outline-secondary btn-lg d-flex align-items-center justify-content-center gap-2" (click)="loginWithGoogle()">
+                <img src="https://cdn.viecoi.vn/public/images/devicon_google.svg"
+                     alt="Google logo"
+                     class="rounded"
+                     width="24"
+                     height="24">
+                <span>Đăng nhập bằng Google</span>
+              </button>
+
+              <button type="button" class="btn btn-outline-secondary btn-lg d-flex align-items-center justify-content-center gap-2" (click)="loginWithLinkedIn()">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCswknyV_vgEAWqRcjwAb_dC2QLq64KtwOErS-cz-1p1u4MPveZ0oSyOnbabv8RRZKKxQeR5nTyOaoivWOHBmrgMHljyFCadUsEfR-1aCc6utq-fNak83WuWSdOpWq_cucG88NyfA03A4cafX_J_lQg1MIex7NWEaakqOrvpx7qoQX8JgWz294KnoHBMt5lAXPPvIaTbnr2TnYMm5To_ArlAhXyK65ZIUdwrwSUXi1X469cs5FEyfZ4IzFygx_FJk-Sf2r7_NPokIc"
+                     alt="LinkedIn logo"
+                     class="rounded"
+                     width="24"
+                     height="24">
+                <span>Đăng nhập bằng LinkedIn</span>
+              </button>
+            </div>
+
+            <!-- Sign Up Link -->
+            <div class="text-center">
+              <p class="text-muted mb-0">
+                Chưa có tài khoản?
+                <a href="javascript:void(0);" class="text-primary fw-bold text-decoration-none" (click)="goToSignup()">Đăng ký</a>
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

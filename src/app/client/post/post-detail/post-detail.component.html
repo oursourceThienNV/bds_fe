@@ -1,0 +1,169 @@
+<!-- Header Component -->
+<app-client-header></app-client-header>
+
+<div class="post-detail-container">
+  <div class="container-fluid">
+    <div class="row g-4">
+
+      <!-- Left Sidebar -->
+      <div class="col-lg-3 d-none d-lg-block">
+        <app-left-sidebar></app-left-sidebar>
+      </div>
+
+      <!-- Main Content -->
+      <div class="col-lg-6">
+        <!-- Back Button -->
+        <div class="back-button-container mb-3">
+          <button class="btn btn-link back-btn" (click)="goBack()">
+            <i class="mdi mdi-arrow-left"></i> Quay lại
+          </button>
+        </div>
+
+        <!-- Loading State -->
+        <div *ngIf="loading" class="text-center py-5">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+
+        <!-- Post Detail Card -->
+        <div *ngIf="!loading && postData" class="card post-detail-card">
+          <div class="card-body">
+
+            <!-- Post Title -->
+            <h1 class="post-title">{{ postData.tieuDe }}</h1>
+            <p class="post-subtitle text-muted" *ngIf="postData.tieuDePhu">{{ postData.tieuDePhu }}</p>
+
+            <!-- Images Gallery -->
+            <div class="images-gallery">
+              <!-- Main Image -->
+              <div class="main-image mb-2" *ngIf="mainImage">
+                <img [src]="getImageUrl(mainImage)" [alt]="postData.tieuDe" class="img-fluid rounded">
+              </div>
+
+              <!-- Additional Images Grid -->
+              <div class="additional-images row g-2" *ngIf="images.length > 0">
+                <div class="col-4" *ngFor="let image of images">
+                  <img [src]="getImageUrl(image)" [alt]="postData.tieuDe" class="img-fluid rounded">
+                </div>
+              </div>
+            </div>
+
+            <!-- Price and Key Info Section -->
+            <div class="key-info-section mt-4">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <div class="info-label">Giá nhượng quyền</div>
+                  <div class="info-value price">{{ formatCurrency(postData.giaNhuongQuyen) }}</div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <div class="info-label">Thời gian hoàn vốn</div>
+                  <div class="info-value">{{ postData.thoiGianHoanVon }} tháng</div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <div class="info-label">Số chi nhánh</div>
+                  <div class="info-value">{{ postData.soChiNhanh }}</div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <div class="info-label">Tỷ lệ lợi nhuận</div>
+                  <div class="info-value">{{ postData.tiLeLoiNhuan }}%/năm</div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <div class="info-label">Diện tích yêu cầu</div>
+                  <div class="info-value">{{ postData.dienTichYeuCau }} m²</div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <div class="info-label">Nhân sự</div>
+                  <div class="info-value">{{ postData.soLuongNhanSu }} người</div>
+                </div>
+              </div>
+
+              <div class="row" *ngIf="postData.diaDiemMongMuon || postData.truSoChinh">
+                <div class="col-md-6 mb-3" *ngIf="postData.diaDiemMongMuon">
+                  <div class="info-label">Địa điểm mong muốn</div>
+                  <div class="info-value">{{ postData.diaDiemMongMuon }}</div>
+                </div>
+                <div class="col-md-6 mb-3" *ngIf="postData.truSoChinh">
+                  <div class="info-label">Trụ sở chính</div>
+                  <div class="info-value">{{ postData.truSoChinh }}</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Divider -->
+            <hr class="my-4">
+
+            <!-- Mô tả chi tiết -->
+            <div class="content-section">
+              <h4 class="section-title">Mô tả chi tiết</h4>
+              <div class="section-content" [innerHTML]="postData.noiDung"></div>
+            </div>
+
+            <!-- Quy trình nhượng quyền -->
+            <div class="content-section" *ngIf="quyTrinhNhuongQuyen.length > 0">
+              <h4 class="section-title">Quy trình nhượng quyền</h4>
+              <div class="section-content">
+                <ol class="process-list">
+                  <li *ngFor="let step of quyTrinhNhuongQuyen; let i = index">
+                    {{ step }}
+                  </li>
+                </ol>
+              </div>
+            </div>
+
+            <!-- Hỗ trợ từ thương hiệu -->
+            <div class="content-section" *ngIf="hoTroThuongHieu.length > 0">
+              <h4 class="section-title">Hỗ trợ từ thương hiệu</h4>
+              <div class="section-content">
+                <ul class="support-list">
+                  <li *ngFor="let support of hoTroThuongHieu">
+                    <i class="mdi mdi-check-circle text-success me-2"></i>{{ support }}
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Câu hỏi thường gặp -->
+            <div class="content-section" *ngIf="cauHoiThuongGap.length > 0">
+              <h4 class="section-title">Hỏi đáp</h4>
+              <div class="faq-section">
+                <div class="faq-item" *ngFor="let faq of cauHoiThuongGap; let i = index">
+                  <div class="faq-question" (click)="toggleFaq(i)">
+                    <span>{{ faq.question }}</span>
+                    <i class="mdi" [ngClass]="expandedFaqIndex === i ? 'mdi-chevron-up' : 'mdi-chevron-down'"></i>
+                  </div>
+                  <div class="faq-answer" [ngClass]="{'expanded': expandedFaqIndex === i}">
+                    {{ faq.answer }}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Error State -->
+        <div *ngIf="!loading && !postData" class="card">
+          <div class="card-body text-center py-5">
+            <i class="mdi mdi-alert-circle-outline text-danger" style="font-size: 48px;"></i>
+            <h4 class="mt-3">Không tìm thấy bài đăng</h4>
+            <button class="btn btn-primary mt-3" (click)="goBack()">Quay lại</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right Sidebar -->
+      <div class="col-lg-3 d-none d-lg-block">
+        <app-right-sidebar></app-right-sidebar>
+      </div>
+
+    </div>
+  </div>
+</div>

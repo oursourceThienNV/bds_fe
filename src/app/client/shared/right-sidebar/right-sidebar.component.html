@@ -1,0 +1,42 @@
+<!-- Trending Brands -->
+<div class="card sidebar-card mb-4">
+  <div class="card-body">
+    <h6 class="fw-bold mb-3">Thương hiệu nổi bật</h6>
+    <div class="trending-list">
+      <div class="trending-item" *ngFor="let brand of trendingBrands">
+        <div class="d-flex align-items-center gap-2">
+          <img [src]="brand.avatar" [alt]="brand.name" class="rounded-circle" width="40" height="40">
+          <span class="fw-medium">{{ brand.name }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Guides -->
+<div class="card sidebar-card mb-4">
+  <div class="card-body">
+    <h6 class="fw-bold mb-3">Hướng dẫn</h6>
+    <div class="guide-list">
+      <a href="javascript:void(0);" class="guide-item" *ngFor="let guide of guides">
+        <i class="mdi" [ngClass]="guide.icon"></i>
+        <span>{{ guide.title }}</span>
+        <i class="mdi mdi-chevron-right ms-auto"></i>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Support Topics -->
+<div class="card sidebar-card">
+  <div class="card-body">
+    <h6 class="fw-bold mb-3">Hỗ trợ nhà đầu tư</h6>
+    <div class="guide-list">
+      <a href="javascript:void(0);" class="guide-item" *ngFor="let topic of supportTopics">
+        <i class="mdi" [ngClass]="topic.icon"></i>
+        <span>{{ topic.title }}</span>
+        <i class="mdi mdi-chevron-right ms-auto"></i>
+      </a>
+    </div>
+  </div>
+</div>

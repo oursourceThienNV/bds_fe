@@ -30,4 +30,16 @@ export class CompanyService {
     });
 
   }
+
+  public getListCompanyByUserId(body?: any): Observable<any> {
+    return this.http.post<any>(`${this.api.getCatalogApi()}/api/company/get-list-company-by-userId`, body, {
+      observe: 'response'
+    });
+  }
+
+  public getCompanyById(body?: any): Observable<any> {
+    return this.http.post<any>(`${this.api.getCatalogApi()}/api/company/get-company-by-id`, body, {
+      observe: 'response'
+    });
+  }
 }

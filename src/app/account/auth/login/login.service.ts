@@ -8,6 +8,7 @@ import {Login} from "./login.model";
 import {Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
 import {ApiUrl} from "../../../shared/constant/ApiUrl.constant";
+import Swal from 'sweetalert2';
 interface JwtToken {
   jwt: string; // hoặc access_token nếu backend dùng tên này
   role:string;
@@ -31,7 +32,11 @@ export class LoginService {
     if(response.jwt!=null) {
       localStorage.setItem('authData', response?.jwt);
     }else {
-      alert("Tài khoản và mật khẩu không đúng, vui lòng thử lại sau");
+      Swal.fire({
+        icon: 'error',
+        title: 'Đăng nhập thất bại',
+        text: 'Tài khoản và mật khẩu không đúng, vui lòng thử lại sau'
+      });
     }
   }
 
@@ -44,6 +49,10 @@ export class LoginService {
     return new Observable(observer => {
       localStorage.removeItem('authData');
       sessionStorage.removeItem('authData');
+      localStorage.removeItem('userName');
+      sessionStorage.removeItem('userName');
+      localStorage.removeItem('userAvatar');
+      sessionStorage.removeItem('userAvatar');
       localStorage.removeItem('role');
       sessionStorage.removeItem('role');
       localStorage.removeItem('storeId');
