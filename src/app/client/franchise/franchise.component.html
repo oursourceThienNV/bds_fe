@@ -1,0 +1,330 @@
+<!-- Header Component -->
+<app-client-header></app-client-header>
+
+<div class="franchise-container">
+  <div class="container-fluid">
+    <div class="row g-4">
+
+      <!-- Left Sidebar -->
+      <div class="col-lg-3 d-none d-lg-block">
+        <app-left-sidebar></app-left-sidebar>
+      </div>
+
+      <!-- Main Content -->
+      <div class="col-lg-6">
+        <div class="card franchise-card">
+          <div class="card-body p-4">
+
+            <!-- Header -->
+            <div class="franchise-header mb-4">
+              <h4 class="fw-bold mb-0">Đăng có hội nhượng quyền</h4>
+            </div>
+
+            <form [formGroup]="franchiseForm">
+
+              <!-- I. Thông tin thương hiệu -->
+              <div class="form-section mb-4">
+                <h6 class="section-title">I. Thông tin thương hiệu</h6>
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label">Tên thương hiệu <span class="text-danger">*</span></label>
+                    <input type="text"
+                           class="form-control"
+                           formControlName="tenThuongHieu"
+                           placeholder="Tên thương hiệu">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Ngành nghề</label>
+                    <select class="form-select" formControlName="nganhNghe">
+                      <option value="">Chọn ngành nghề</option>
+                      <option *ngFor="let industry of industries" [value]="industry.code">
+                        {{ industry.name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <!-- II. Thông tin bài đăng -->
+              <div class="form-section mb-4">
+                <h6 class="section-title">II. Thông tin bài đăng</h6>
+                <div class="row g-3">
+                  <div class="col-12">
+                    <label class="form-label">Tiêu đề bài đăng <span class="text-danger">*</span></label>
+                    <input type="text"
+                           class="form-control"
+                           formControlName="tieuDe"
+                           placeholder="Tiêu đề">
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label">Tiêu đề phụ</label>
+                    <input type="text"
+                           class="form-control"
+                           formControlName="tieuDePhu"
+                           placeholder="Mô tả ngắn">
+                  </div>
+                </div>
+              </div>
+
+              <!-- III. Hình ảnh dự án -->
+              <div class="form-section mb-4">
+                <h6 class="section-title">III. Hình ảnh dự án</h6>
+                <div class="row g-3">
+                  <div class="col-12">
+                    <label class="form-label">Ảnh đại diện (1 ảnh bắt buộc) <span class="text-danger">*</span></label>
+                    <div class="file-upload-wrapper">
+                      <input type="file"
+                             #representativeInput
+                             accept="image/*"
+                             (change)="onRepresentativeImageSelect($event)"
+                             class="file-input"
+                             id="representativeInput">
+                      <label for="representativeInput" class="file-upload-label">
+                        <i class="mdi mdi-upload me-1"></i>
+                        <span *ngIf="!uploadingRepresentative && !representativeImage">Choose File</span>
+                        <span *ngIf="uploadingRepresentative">
+                          <span class="spinner-border spinner-border-sm me-1"></span> Uploading...
+                        </span>
+                        <span *ngIf="!uploadingRepresentative && representativeImage">{{ representativeImage.name }}</span>
+                      </label>
+                      <span class="file-name-display" *ngIf="!representativeImage && !uploadingRepresentative">No file chosen</span>
+                    </div>
+
+                    <!-- Preview representative image -->
+                    <div *ngIf="representativeImagePreview" class="image-preview-container mt-3">
+                      <div class="image-preview-item">
+                        <img [src]="representativeImagePreview" alt="Representative image">
+                        <button type="button"
+                                class="btn-remove-image"
+                                (click)="removeRepresentativeImage()"
+                                [disabled]="uploadingRepresentative">
+                          <i class="mdi mdi-close"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label">Ảnh phụ (Tối đa 10 ảnh)</label>
+                    <div class="file-upload-wrapper">
+                      <input type="file"
+                             #otherImagesInput
+                             accept="image/*"
+                             multiple
+                             (change)="onOtherImagesSelect($event)"
+                             class="file-input"
+                             id="otherImagesInput">
+                      <label for="otherImagesInput" class="file-upload-label">
+                        <i class="mdi mdi-upload me-1"></i>
+                        <span *ngIf="!uploadingOther">Choose Files</span>
+                        <span *ngIf="uploadingOther">
+                          <span class="spinner-border spinner-border-sm me-1"></span> Uploading...
+                        </span>
+                      </label>
+                      <span class="file-name-display">
+                        <span *ngIf="otherImages.length === 0">No file chosen</span>
+                        <span *ngIf="otherImages.length > 0">{{ otherImages.length }} file(s) selected</span>
+                      </span>
+                    </div>
+
+                    <!-- Preview other images -->
+                    <div *ngIf="otherImages.length > 0" class="image-preview-container mt-3">
+                      <div *ngFor="let image of otherImages; let i = index" class="image-preview-item">
+                        <img [src]="image.preview" [alt]="image.name">
+                        <button type="button"
+                                class="btn-remove-image"
+                                (click)="removeOtherImage(i)"
+                                [disabled]="uploadingOther">
+                          <i class="mdi mdi-close"></i>
+                        </button>
+                        <div class="image-name">{{ image.name }}</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- IV. Thông tin tài chính -->
+              <div class="form-section mb-4">
+                <h6 class="section-title">IV. Thông tin tài chính</h6>
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label">Giá nhượng quyền <span class="text-danger">*</span></label>
+                    <input type="text"
+                           class="form-control"
+                           formControlName="giaNhuongQuyen"
+                           placeholder="VNĐ">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Số chi nhánh</label>
+                    <input type="text"
+                           class="form-control"
+                           formControlName="soChiNhanh">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Tỷ lệ lợi nhuận (%)</label>
+                    <input type="text"
+                           class="form-control"
+                           formControlName="tiLeLoiNhuan">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Thời gian hoàn vốn (tháng)</label>
+                    <input type="text"
+                           class="form-control"
+                           formControlName="thoiGianHoanVon">
+                  </div>
+                </div>
+              </div>
+
+              <!-- V. Thông tin mô hình -->
+              <div class="form-section mb-4">
+                <h6 class="section-title">V. Thông tin mô hình</h6>
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label">Diện tích yêu cầu</label>
+                    <input type="text"
+                           class="form-control"
+                           formControlName="dienTichYeuCau"
+                           placeholder="m²">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Số lượng nhân sự</label>
+                    <input type="text"
+                           class="form-control"
+                           formControlName="soLuongNhanSu">
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label">Địa điểm mong muốn</label>
+                    <select class="form-select" formControlName="diaDiemMongMuon">
+                      <option value="">Chọn tỉnh/thành phố</option>
+                      <option *ngFor="let province of provinces" [value]="province.name">
+                        {{ province.name }}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label">Trụ sở chính</label>
+                    <select class="form-select" formControlName="truSoChinh">
+                      <option value="">Chọn tỉnh/thành phố</option>
+                      <option *ngFor="let province of provinces" [value]="province.name">
+                        {{ province.name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <!-- VI. Mô tả chi tiết -->
+              <div class="form-section mb-4">
+                <h6 class="section-title">VI. Mô tả chi tiết</h6>
+                <ckeditor [editor]="Editor"
+                          [config]="editorConfig"
+                          formControlName="noiDung">
+                </ckeditor>
+              </div>
+
+              <!-- VII. Quy trình nhượng quyền -->
+              <div class="form-section mb-4">
+                <h6 class="section-title">VII. Quy trình nhượng quyền</h6>
+                <div *ngFor="let step of franchiseSteps; let i = index" class="mb-3">
+                  <div class="d-flex gap-2">
+                    <input type="text"
+                           class="form-control"
+                           [(ngModel)]="step.description"
+                           [ngModelOptions]="{standalone: true}"
+                           [placeholder]="'Bước ' + (i + 1)">
+                    <button type="button"
+                            class="btn btn-danger btn-sm"
+                            (click)="removeFranchiseStep(i)"
+                            *ngIf="franchiseSteps.length > 1">
+                      <i class="mdi mdi-delete"></i>
+                    </button>
+                  </div>
+                </div>
+                <button type="button" class="btn btn-link text-primary" (click)="addFranchiseStep()">
+                  <i class="mdi mdi-plus-circle-outline"></i> Thêm bước
+                </button>
+              </div>
+
+              <!-- VIII. Hỗ trợ từ thương hiệu -->
+              <div class="form-section mb-4">
+                <h6 class="section-title">VIII. Hỗ trợ từ thương hiệu</h6>
+                <div *ngFor="let item of supportItems; let i = index" class="mb-3">
+                  <div class="d-flex gap-2">
+                    <input type="text"
+                           class="form-control"
+                           [(ngModel)]="item.description"
+                           [ngModelOptions]="{standalone: true}"
+                           placeholder="Mục hỗ trợ">
+                    <button type="button"
+                            class="btn btn-danger btn-sm"
+                            (click)="removeSupportItem(i)"
+                            *ngIf="supportItems.length > 1">
+                      <i class="mdi mdi-delete"></i>
+                    </button>
+                  </div>
+                </div>
+                <button type="button" class="btn btn-link text-primary" (click)="addSupportItem()">
+                  <i class="mdi mdi-plus-circle-outline"></i> Thêm hỗ trợ
+                </button>
+              </div>
+
+              <!-- IX. Câu hỏi thường gặp -->
+              <div class="form-section mb-4">
+                <h6 class="section-title">IX. Câu hỏi thường gặp</h6>
+                <div *ngFor="let faq of faqs; let i = index" class="mb-3">
+                  <div class="faq-item">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                      <label class="form-label mb-0">Câu hỏi {{ i + 1 }}</label>
+                      <button type="button"
+                              class="btn btn-danger btn-sm"
+                              (click)="removeFaq(i)"
+                              *ngIf="faqs.length > 1">
+                        <i class="mdi mdi-delete"></i>
+                      </button>
+                    </div>
+                    <input type="text"
+                           class="form-control mb-2"
+                           [(ngModel)]="faq.question"
+                           [ngModelOptions]="{standalone: true}"
+                           placeholder="Câu hỏi">
+                    <textarea class="form-control"
+                              rows="2"
+                              [(ngModel)]="faq.answer"
+                              [ngModelOptions]="{standalone: true}"
+                              placeholder="Câu trả lời"></textarea>
+                  </div>
+                </div>
+                <button type="button" class="btn btn-link text-primary" (click)="addFaq()">
+                  <i class="mdi mdi-plus-circle-outline"></i> Thêm câu hỏi
+                </button>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="form-actions">
+                <button type="button" class="btn btn-outline-secondary" (click)="onCancel()">
+                  Hủy
+                </button>
+                <button type="button" class="btn btn-outline-primary" (click)="onSaveDraft()" [disabled]="loading">
+                  <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
+                  Đăng tại trang chủ và marketplace
+                </button>
+                <button type="submit" class="btn btn-primary" (click)="onSubmit()" [disabled]="loading">
+                  <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
+                  Đăng tin
+                </button>
+              </div>
+
+            </form>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Sidebar -->
+      <div class="col-lg-3 d-none d-lg-block">
+        <app-right-sidebar></app-right-sidebar>
+      </div>
+
+    </div>
+  </div>
+</div>

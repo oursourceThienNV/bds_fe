@@ -1,0 +1,104 @@
+<header class="client-header">
+  <div class="container-fluid">
+    <div class="row align-items-center">
+
+      <!-- Logo -->
+      <div class="col-auto">
+        <div class="logo-container">
+          <div class="logo-icon">
+            <span>S</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <div class="col-auto d-none d-md-block">
+        <nav class="header-nav">
+          <a href="/" class="nav-tab active">
+            <span>Trang chủ</span>
+          </a>
+          <a href="/client/marketplace" class="nav-tab">
+            <span>Marketplace</span>
+          </a>
+          <a href="javascript:void(0);" class="nav-tab">
+            <span>Tin tức</span>
+          </a>
+        </nav>
+      </div>
+
+      <!-- Search Bar -->
+      <div class="col">
+        <div class="search-container">
+          <i class="mdi mdi-magnify search-icon"></i>
+          <input
+            type="text"
+            class="form-control search-input"
+            placeholder="Tìm ngành, thương hiệu hoặc địa điểm..."
+            [(ngModel)]="searchQuery"
+            (keyup.enter)="onSearch()">
+        </div>
+      </div>
+
+      <!-- Right Side Actions -->
+      <div class="col-auto">
+        <div class="header-actions">
+          <button class="btn btn-primary btn-login" (click)="goToFranchise()">
+            Đăng tin
+          </button>
+          <button class="btn btn-icon-action" (click)="openNotifications()">
+            <i class="mdi mdi-message-text-outline"></i>
+          </button>
+          <div class="profile-dropdown-wrapper">
+            <button class="btn btn-icon-action">
+              <i class="mdi mdi-account-circle"></i>
+            </button>
+
+            <!-- Profile Popup -->
+            <div class="profile-popup">
+              <div class="profile-info" (click)="goToUserProfile()" style="cursor: pointer;">
+                <img [src]="userAvatar"
+                     [alt]="userName"
+                     class="profile-avatar">
+                <span class="profile-name">{{ userName }}</span>
+              </div>
+
+              <div class="popup-divider"></div>
+
+              <button class="popup-menu-item" (click)="goToCreateCompany()">
+                <i class="mdi mdi-plus-circle-outline"></i>
+                <span>Tạo trang công ty</span>
+              </button>
+
+              <!-- Company List -->
+              <div *ngIf="companies && companies.length > 0">
+                <div class="popup-divider"></div>
+                <div class="company-list-header">
+                  <span>Trang công ty của bạn</span>
+                </div>
+                <button class="popup-menu-item company-item"
+                        *ngFor="let company of companies"
+                        (click)="goToEditCompany(company.id)">
+                  <div class="company-avatar" *ngIf="company.logoUrl">
+                    <img [src]="company.logoUrl" alt="Company Logo">
+                  </div>
+                  <div class="company-avatar company-placeholder" *ngIf="!company.logoUrl">
+                    <span>{{ company.name.charAt(0) }}</span>
+                  </div>
+                  <span>{{ company.name }}</span>
+                </button>
+              </div>
+
+              <div class="popup-divider"></div>
+
+              <button class="popup-menu-item" (click)="goToProfile()">
+                <i class="mdi mdi-book-open-outline"></i>
+                <span>Đăng Xuất</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</header>

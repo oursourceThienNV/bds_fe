@@ -1,0 +1,158 @@
+<!-- Header Component -->
+<app-client-header></app-client-header>
+
+<div class="update-user-container">
+  <div class="container-fluid">
+    <div class="row g-4">
+
+      <!-- Left Sidebar -->
+      <div class="col-lg-3 d-none d-lg-block">
+        <app-left-sidebar></app-left-sidebar>
+      </div>
+
+      <!-- Main Content -->
+      <div class="col-lg-6">
+        <div class="card profile-card">
+          <div class="card-body p-0">
+
+            <!-- Header Section -->
+            <div class="profile-header">
+              <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 class="mb-0 fw-bold">Chỉnh sửa hồ sơ cá nhân</h5>
+                <div class="header-actions">
+                  <button class="btn btn-outline-secondary btn-sm me-2" (click)="onCancel()">Hủy</button>
+                  <button class="btn btn-primary btn-sm" (click)="onSubmit()" [disabled]="loading">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
+                    Lưu
+                  </button>
+                </div>
+              </div>
+
+              <!-- Profile Picture Section -->
+              <div class="profile-pictures mb-4">
+                <h6 class="fw-semibold mb-3">Ảnh đại diện cá nhân</h6>
+
+                <div class="d-flex align-items-center gap-3 mb-4">
+                  <div class="profile-avatar-large">
+                    <img [src]="profileImagePreview || 'https://ui-avatars.com/api/?name=User&background=4f46e5&color=fff&size=100'"
+                         alt="Profile"
+                         class="rounded-circle">
+                  </div>
+                  <div class="flex-grow-1">
+                    <input type="file"
+                           #profileInput
+                           (change)="onProfileImageSelect($event)"
+                           accept="image/*"
+                           style="display: none;">
+                    <button class="btn btn-outline-secondary btn-sm me-2"
+                            (click)="profileInput.click()"
+                            [disabled]="uploadingProfile">
+                      <span *ngIf="uploadingProfile" class="spinner-border spinner-border-sm me-1"></span>
+                      {{ uploadingProfile ? 'Đang tải...' : 'Tải ảnh lên' }}
+                    </button>
+                    <button class="btn btn-outline-danger btn-sm" *ngIf="profileImagePreview">
+                      Xóa
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Cover Photo Section -->
+                <h6 class="fw-semibold mb-3">Ảnh bìa cá nhân</h6>
+                <div class="cover-photo-container mb-3">
+                  <div class="cover-photo">
+                    <img [src]="coverImagePreview || 'https://via.placeholder.com/800x200/e5e7eb/6b7280?text=Chưa có ảnh'"
+                         alt="Cover Photo">
+                  </div>
+                </div>
+                <div>
+                  <input type="file"
+                         #coverInput
+                         (change)="onCoverImageSelect($event)"
+                         accept="image/*"
+                         style="display: none;">
+                  <button class="btn btn-outline-secondary btn-sm me-2"
+                          (click)="coverInput.click()"
+                          [disabled]="uploadingCover">
+                    <span *ngIf="uploadingCover" class="spinner-border spinner-border-sm me-1"></span>
+                    {{ uploadingCover ? 'Đang tải...' : 'Tải ảnh lên' }}
+                  </button>
+                  <button class="btn btn-outline-danger btn-sm" *ngIf="coverImagePreview">
+                    Xóa
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Form Section -->
+            <div class="profile-form">
+              <h6 class="fw-semibold mb-4">Thông tin cơ bản</h6>
+
+              <form [formGroup]="userForm">
+                <div class="row g-3">
+
+                  <!-- Full Name and Username -->
+                  <div class="col-md-6">
+                    <label class="form-label">Họ và tên</label>
+                    <input type="text"
+                           class="form-control"
+                           formControlName="fullname"
+                           placeholder="Nguyễn Văn A">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Tiêu đề (Headline)</label>
+                    <input type="text"
+                           class="form-control"
+                           formControlName="username"
+                           placeholder="Vi du: Ky su phan mem">
+                  </div>
+
+                  <!-- City and Phone -->
+                  <div class="col-md-6">
+                    <label class="form-label">Thành phố</label>
+                    <input type="text"
+                           class="form-control"
+                           formControlName="city"
+                           placeholder="Hồ Chí Minh">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Số điện thoại</label>
+                    <input type="text"
+                           class="form-control"
+                           formControlName="phone"
+                           placeholder="0987654321">
+                  </div>
+
+                  <!-- Email -->
+                  <div class="col-12">
+                    <label class="form-label">Email</label>
+                    <input type="email"
+                           class="form-control"
+                           formControlName="email"
+                           placeholder="nguyenvana@email.com">
+                  </div>
+
+                  <!-- Introduction -->
+                  <div class="col-12">
+                    <label class="form-label">Giới thiệu bản thân</label>
+                    <textarea class="form-control"
+                              rows="4"
+                              formControlName="description"
+                              placeholder="Viết giới thiệu ngắn gọn về bản thân..."></textarea>
+                  </div>
+
+                </div>
+              </form>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Sidebar -->
+      <div class="col-lg-3 d-none d-lg-block">
+        <app-right-sidebar></app-right-sidebar>
+      </div>
+
+    </div>
+  </div>
+</div>

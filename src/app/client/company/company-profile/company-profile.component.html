@@ -1,0 +1,273 @@
+<!-- Header Component -->
+<app-client-header></app-client-header>
+
+<!-- Company Profile Page -->
+<div class="company-profile-page">
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="text-center py-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading">
+    <!-- Cover Photo Section -->
+    <div class="cover-photo-section">
+      <div class="cover-photo">
+        <img [src]="company.coverPhoto" [alt]="company.name + ' cover'" *ngIf="company.coverPhoto">
+      </div>
+    </div>
+
+  <!-- Company Header Section -->
+  <div class="company-header">
+    <div class="container">
+      <div class="header-content">
+        <div class="company-logo">
+          <img [src]="company.logo" [alt]="company.name">
+        </div>
+        <div class="company-info">
+          <h1 class="company-name">{{ company.name }}</h1>
+          <p class="company-tagline">{{ company.tagline }}</p>
+          <div class="company-meta">
+            <span class="meta-item">
+              <i class="bx bx-map"></i> {{ company.location }}
+            </span>
+            <span class="meta-separator">•</span>
+            <span class="meta-item">{{ company.size }}</span>
+          </div>
+        </div>
+        <div class="header-actions">
+          <button class="btn btn-primary btn-follow" (click)="followCompany()">
+            <i class="bx bx-plus"></i> Theo dõi
+          </button>
+          <button class="btn btn-outline-secondary btn-share" *ngIf="company.website">
+            <i class="bx bx-share-alt"></i> Xem trang web
+          </button>
+          <div class="position-relative">
+            <button class="btn btn-icon" (click)="toggleEditPopup()">
+              <i class="bx bx-dots-horizontal-rounded"></i>
+            </button>
+            <!-- Edit Popup -->
+            <div class="edit-popup" *ngIf="showEditPopup">
+              <button class="popup-menu-item" (click)="goToEditCompany()">
+                <i class="bx bx-edit-alt"></i>
+                <span>Chỉnh sửa trang công ty</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="home-container">
+    <div class="container-fluid">
+      <div class="row g-4">
+
+        <!-- Left Sidebar -->
+        <div class="col-lg-3 d-none d-lg-block">
+          <app-left-sidebar></app-left-sidebar>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-lg-6">
+          <div class="profile-content">
+
+      <!-- Company Information -->
+      <section class="profile-section">
+        <h2 class="section-title">Thông tin công ty</h2>
+        <div class="section-content">
+          <p class="company-description">{{ company.description }}</p>
+        </div>
+      </section>
+
+      <!-- Team Members -->
+      <section class="profile-section">
+        <div class="section-header">
+          <h2 class="section-title">Đội ngũ & Đối tác <span class="badge">(Demo)</span></h2>
+          <button class="btn-text" (click)="viewAllMembers()">Tham đỏi</button>
+        </div>
+        <div class="team-grid">
+          <div class="team-card" *ngFor="let member of teamMembers">
+            <div class="card-body">
+              <div class="member-avatar">
+                <img [src]="member.avatar" [alt]="member.name">
+              </div>
+              <h3 class="member-name">{{ member.name }}</h3>
+              <p class="member-position">{{ member.position }}</p>
+              <p class="member-description">{{ member.description }}</p>
+              <a [href]="member.link" class="btn btn-primary btn-block">Theo dõi</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Partner Companies -->
+      <section class="profile-section partners-section">
+        <div class="partners-grid">
+          <div class="partner-card" *ngFor="let partner of partners">
+            <div class="card-body">
+              <div class="partner-logo">
+                <img [src]="partner.logo" [alt]="partner.name">
+              </div>
+              <h3 class="partner-name">{{ partner.name }}</h3>
+              <p class="partner-description">{{ partner.description }}</p>
+              <a [href]="partner.link" class="btn btn-primary btn-block">Theo dõi</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Reviews Section -->
+      <section class="profile-section">
+        <div class="section-header">
+          <h2 class="section-title">Đánh giá & Phản hồi <span class="badge">(Demo)</span></h2>
+          <a href="javascript:void(0)" class="link-text" (click)="viewAllReviews()">Xem tất cả đánh giá</a>
+        </div>
+
+        <div class="reviews-summary">
+          <div class="rating-overview">
+            <div class="average-rating">
+              <span class="rating-number">{{ averageRating }}</span>
+              <div class="stars">
+                <i class="bx bxs-star" *ngFor="let star of getStarArray(5)"></i>
+              </div>
+            </div>
+            <div class="rating-bars">
+              <div class="rating-bar" *ngFor="let dist of ratingDistribution">
+                <span class="star-label">{{ dist.stars }} <i class="bx bxs-star"></i></span>
+                <div class="bar-container">
+                  <div class="bar-fill" [style.width.%]="dist.percentage"></div>
+                </div>
+                <span class="bar-count">{{ dist.count }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="review-actions">
+            <span class="total-reviews">{{ totalReviews }} đánh giá</span>
+            <a href="javascript:void(0)" class="link-inline" (click)="viewAllReviews()">Gặp xếp theo</a>
+            <a href="javascript:void(0)" class="link-inline" (click)="writeReview()">Viết đánh giá</a>
+          </div>
+        </div>
+
+        <div class="reviews-list">
+          <div class="review-item" *ngFor="let review of reviews">
+            <div class="review-header">
+              <img [src]="review.avatar" [alt]="review.author" class="review-avatar">
+              <div class="review-info">
+                <h4 class="review-author">{{ review.author }}</h4>
+                <div class="review-meta">
+                  <div class="stars">
+                    <i class="bx bxs-star" *ngFor="let star of getStarArray(review.rating)"></i>
+                  </div>
+                  <span class="review-date">{{ review.date }}</span>
+                </div>
+              </div>
+            </div>
+            <p class="review-comment">{{ review.comment }}</p>
+          </div>
+        </div>
+
+        <div class="text-center mt-3">
+          <a href="javascript:void(0)" class="link-primary" (click)="viewAllReviews()">Xem tất cả đánh giá</a>
+        </div>
+      </section>
+
+      <!-- Contact Information -->
+      <section class="profile-section">
+        <h2 class="section-title">Liên hệ & Mạng xã hội</h2>
+        <div class="contact-info">
+          <div class="contact-item">
+            <i class="bx bx-phone"></i>
+            <span>{{ contactInfo.phone }}</span>
+          </div>
+          <div class="contact-item">
+            <i class="bx bx-envelope"></i>
+            <a [href]="'mailto:' + contactInfo.email">{{ contactInfo.email }}</a>
+          </div>
+          <div class="social-links">
+            <a [href]="'https://' + contactInfo.linkedin" target="_blank" class="social-icon">
+              <i class="bx bxl-linkedin"></i>
+            </a>
+            <a [href]="'https://' + contactInfo.facebook" target="_blank" class="social-icon">
+              <i class="bx bxl-facebook"></i>
+            </a>
+            <a [href]="'https://' + contactInfo.instagram" target="_blank" class="social-icon">
+              <i class="bx bxl-instagram"></i>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Projects -->
+      <section class="profile-section">
+        <h2 class="section-title">Dự án chính & Cột mốc</h2>
+        <div class="projects-list">
+          <div class="project-item" *ngFor="let project of projects">
+            <div class="project-icon">
+              <i class="bx bx-briefcase"></i>
+            </div>
+            <div class="project-content">
+              <h3 class="project-title">{{ project.title }}</h3>
+              <p class="project-date">{{ project.date }}</p>
+              <p class="project-description">{{ project.description }}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Skills & Expertise -->
+      <section class="profile-section">
+        <h2 class="section-title">Năng lực & Lĩ lổi</h2>
+        <div class="skills-container">
+          <span class="skill-tag" *ngFor="let skill of skills">{{ skill }}</span>
+        </div>
+      </section>
+
+      <!-- Awards & Certifications -->
+      <section class="profile-section">
+        <h2 class="section-title">Giải thưởng & Chứng nhận</h2>
+        <div class="awards-list">
+          <div class="award-item" *ngFor="let award of awards">
+            <h3 class="award-title">{{ award.title }}</h3>
+            <p class="award-org">{{ award.organization }}</p>
+            <p class="award-date">{{ award.date }}</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Gallery -->
+      <section class="profile-section">
+        <div class="section-header">
+          <h2 class="section-title">Đã lưu</h2>
+          <div class="gallery-actions">
+            <span class="gallery-info">Chỉ mình bạn có thể xem mục mình đã lưu</span>
+            <a href="javascript:void(0)" class="link-primary" (click)="viewAllGallery()">Bộ sưu tập mới</a>
+          </div>
+        </div>
+        <div class="gallery-grid">
+          <div class="gallery-item" *ngFor="let item of gallery">
+            <div class="gallery-placeholder">
+              <i class="bx bx-image"></i>
+            </div>
+            <h4 class="gallery-title">{{ item.title }}</h4>
+          </div>
+        </div>
+      </section>
+
+          </div>
+        </div>
+
+        <!-- Right Sidebar -->
+        <div class="col-lg-3 d-none d-lg-block">
+          <app-right-sidebar></app-right-sidebar>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  </div>
+
+</div>

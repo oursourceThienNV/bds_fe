@@ -1,0 +1,177 @@
+.company-container {
+  background-color: #f5f7fa;
+  min-height: calc(100vh - 65px);
+  padding: 20px 0;
+}
+
+.company-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  border: none;
+
+  .company-header {
+    padding: 30px 30px 0;
+    border-bottom: 1px solid #e9ecef;
+
+    .header-actions {
+      .btn {
+        border-radius: 20px;
+        padding: 6px 20px;
+        font-weight: 500;
+      }
+    }
+  }
+
+  .company-logo-section {
+    .company-logo-preview {
+      width: 100px;
+      height: 100px;
+      flex-shrink: 0;
+
+      .logo-circle {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 2px solid #e9ecef;
+        overflow: hidden;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
+        .logo-placeholder {
+          font-size: 40px;
+          font-weight: 600;
+          color: #6b7280;
+        }
+      }
+    }
+  }
+
+  .company-cover-section {
+    .cover-photo-container {
+      .cover-photo {
+        width: 100%;
+        height: 200px;
+        border-radius: 8px;
+        overflow: hidden;
+        background-color: #f3f4f6;
+        border: 2px dashed #d1d5db;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+    }
+  }
+
+  .company-form {
+    padding: 30px;
+
+    .form-label {
+      font-weight: 500;
+      color: #374151;
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+    }
+
+    .form-control {
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+
+      &:focus {
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        outline: none;
+      }
+
+      &::placeholder {
+        color: #9ca3af;
+      }
+    }
+
+    textarea.form-control {
+      resize: vertical;
+      min-height: 120px;
+    }
+  }
+}
+
+.btn-outline-secondary {
+  color: #6b7280;
+  border-color: #d1d5db;
+
+  &:hover {
+    background-color: #f3f4f6;
+    border-color: #d1d5db;
+    color: #374151;
+  }
+}
+
+.btn-primary {
+  background-color: #3b82f6;
+  border-color: #3b82f6;
+
+  &:hover {
+    background-color: #2563eb;
+    border-color: #2563eb;
+  }
+
+  &:disabled {
+    background-color: #93c5fd;
+    border-color: #93c5fd;
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 991.98px) {
+  .company-container {
+    padding: 10px 0;
+  }
+
+  .company-card {
+    .company-header,
+    .company-form {
+      padding: 20px;
+    }
+  }
+}
+
+@media (max-width: 767.98px) {
+  .company-card {
+    .company-header {
+      .header-actions {
+        width: 100%;
+        margin-top: 15px;
+
+        .btn {
+          flex: 1;
+        }
+      }
+    }
+
+    .company-logo-section {
+      .company-logo-preview {
+        width: 80px;
+        height: 80px;
+      }
+    }
+
+    .company-cover-section {
+      .cover-photo-container .cover-photo {
+        height: 150px;
+      }
+    }
+  }
+}

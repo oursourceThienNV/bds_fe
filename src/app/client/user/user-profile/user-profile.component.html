@@ -1,0 +1,167 @@
+<!-- Header Component -->
+<app-client-header></app-client-header>
+
+<!-- User Profile Page -->
+<div class="user-profile-page">
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="text-center py-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <div *ngIf="!isLoading">
+    <!-- Cover Photo Section -->
+    <div class="cover-photo-section">
+      <div class="cover-photo">
+        <img [src]="user.coverPhoto" [alt]="user.fullname + ' cover'" *ngIf="user.coverPhoto">
+      </div>
+    </div>
+
+    <!-- User Header Section -->
+    <div class="user-header">
+      <div class="container">
+        <div class="header-content">
+          <div class="user-avatar">
+            <img [src]="user.logo" [alt]="user.fullname">
+          </div>
+          <div class="user-info">
+            <h1 class="user-name">{{ user.fullname }}</h1>
+            <p class="user-tagline">{{ user.tagline }}</p>
+            <p class="user-followers">{{ user.followers }}</p>
+          </div>
+          <div class="header-actions">
+            <button class="btn btn-primary btn-follow" (click)="followUser()">
+              Theo dõi
+            </button>
+            <button class="btn btn-outline-secondary btn-message" (click)="sendMessage()">
+              Nhắn tin
+            </button>
+            <button class="btn btn-icon">
+              <i class="bx bx-dots-horizontal-rounded"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="home-container">
+      <div class="container-fluid">
+        <div class="row g-4">
+
+          <!-- Left Sidebar -->
+          <div class="col-lg-3 d-none d-lg-block">
+            <app-left-sidebar></app-left-sidebar>
+          </div>
+
+          <!-- Main Content -->
+          <div class="col-lg-6">
+            <div class="profile-content">
+
+              <!-- User Introduction -->
+              <section class="profile-section">
+                <h2 class="section-title">Giới thiệu bản thân</h2>
+                <div class="section-content">
+                  <p class="user-description">{{ user.description }}</p>
+                </div>
+              </section>
+
+              <!-- Followers / Following -->
+              <section class="profile-section">
+                <div class="section-header">
+                  <h2 class="section-title">Theo dõi</h2>
+                  <button class="btn-text" (click)="viewAllFollowers()">Xem tất cả</button>
+                </div>
+                <div class="followers-grid">
+                  <div class="follower-card" *ngFor="let follower of followers">
+                    <div class="card-body">
+                      <div class="follower-avatar">
+                        <img [src]="follower.avatar" [alt]="follower.name">
+                      </div>
+                      <h3 class="follower-name">{{ follower.name }}</h3>
+                      <p class="follower-position">{{ follower.position }}</p>
+                      <p class="follower-description">{{ follower.description }}</p>
+                      <a [href]="follower.link" class="btn btn-primary btn-block">Theo dõi</a>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <!-- Companies / Partners -->
+              <section class="profile-section companies-section">
+                <div class="companies-grid">
+                  <div class="company-card" *ngFor="let company of companies">
+                    <div class="card-body">
+                      <div class="company-logo">
+                        <img [src]="company.logo" [alt]="company.name">
+                      </div>
+                      <h3 class="company-name">{{ company.name }}</h3>
+                      <p class="company-description">{{ company.description }}</p>
+                      <a [href]="company.link" class="btn btn-primary btn-block">Theo dõi</a>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <!-- Work Experience / Skills -->
+              <section class="profile-section">
+                <h2 class="section-title">Lĩnh vực quan tâm</h2>
+                <div class="skills-container">
+                  <span class="skill-tag" *ngFor="let skill of skills">{{ skill }}</span>
+                </div>
+              </section>
+
+              <!-- Contact Information -->
+              <section class="profile-section">
+                <h2 class="section-title">Liên hệ & Mạng xã hội</h2>
+                <div class="contact-info">
+                  <div class="contact-item">
+                    <i class="bx bx-envelope"></i>
+                    <a [href]="'mailto:' + contactInfo.email">{{ contactInfo.email }}</a>
+                  </div>
+                  <div class="contact-item">
+                    <i class="bx bxl-linkedin"></i>
+                    <a [href]="'https://' + contactInfo.linkedin" target="_blank">{{ contactInfo.linkedin }}</a>
+                  </div>
+                  <div class="contact-item">
+                    <i class="bx bxl-twitter"></i>
+                    <a [href]="'https://twitter.com/' + contactInfo.twitter.substring(1)" target="_blank">{{ contactInfo.twitter }}</a>
+                  </div>
+                </div>
+              </section>
+
+              <!-- Gallery -->
+              <section class="profile-section">
+                <div class="section-header">
+                  <h2 class="section-title">Đã lưu</h2>
+                  <div class="gallery-actions">
+                    <span class="gallery-info">Chỉ mình bạn có thể xem mục mình đã lưu</span>
+                    <a href="javascript:void(0)" class="link-primary" (click)="viewAllGallery()">Bỏ sưu tập mới</a>
+                  </div>
+                </div>
+                <div class="gallery-grid">
+                  <div class="gallery-item" *ngFor="let item of gallery">
+                    <div class="gallery-placeholder">
+                      <i class="bx bx-image"></i>
+                    </div>
+                    <h4 class="gallery-title">{{ item.title }}</h4>
+                  </div>
+                </div>
+              </section>
+
+            </div>
+          </div>
+
+          <!-- Right Sidebar -->
+          <div class="col-lg-3 d-none d-lg-block">
+            <app-right-sidebar></app-right-sidebar>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
