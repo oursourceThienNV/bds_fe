@@ -6,7 +6,7 @@ export const environment = {
   production: true,
   defaultauth: 'fackbackend',
   apiUrl: 'http://160.22.123.39:8084',
-  domain: 'http://160.22.123.39:4100',
+  domain: 'http://160.22.123.39:3000',
   //apiUrl: 'http://localhost:8081',
   //domain: 'http://localhost:4100',
    firebaseConfig: {
