@@ -67,6 +67,35 @@
   ::ng-deep .ck-editor__editable {
     border-radius: 8px;
     font-size: 0.95rem;
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 10px 0;
+      border-radius: 8px;
+    }
+
+    .image {
+      display: table;
+      clear: both;
+      text-align: center;
+      margin: 10px auto;
+
+      img {
+        display: block;
+      }
+    }
+
+    .image-style-align-left {
+      float: left;
+      margin-right: 15px;
+    }
+
+    .image-style-align-right {
+      float: right;
+      margin-left: 15px;
+    }
   }
 
   ::ng-deep .ck-toolbar {

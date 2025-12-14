@@ -3,11 +3,13 @@ import { Router } from '@angular/router';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { PostService } from '../../core/services/services-app/post.service';
 import { UserProfileService } from '../../core/services/user.service';
+import { MediaService } from '../../core/services/services-app/media.service';
 import { ToastrService } from 'ngx-toastr';
 import { jwtDecode } from 'jwt-decode';
 import Swal from 'sweetalert2';
 import { environment } from '../../../environments/environment';
 import { forkJoin } from 'rxjs';
+import { UploadAdapterPlugin } from '../../core/utils/ckeditor-upload-adapter';
 
 interface Post {
   id: number;
@@ -32,8 +34,27 @@ interface Post {
 })
 export class HomeComponent implements OnInit {
   public Editor = ClassicEditor;
-  public editorConfig = {
-    toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', '|', 'blockQuote', 'undo', 'redo']
+  public editorConfig: any = {
+    toolbar: [
+      'heading', '|',
+      'bold', 'italic', 'link', '|',
+      'bulletedList', 'numberedList', '|',
+      'imageUpload', 'blockQuote', '|',
+      'undo', 'redo'
+    ],
+    image: {
+      toolbar: [
+        'imageTextAlternative', '|',
+        'imageStyle:alignLeft',
+        'imageStyle:full',
+        'imageStyle:alignRight'
+      ],
+      styles: [
+        'full',
+        'alignLeft',
+        'alignRight'
+      ]
+    }
   };
   newPostContent: string = '';
   isEditorFocused: boolean = false;
@@ -57,6 +78,7 @@ export class HomeComponent implements OnInit {
   constructor(
     private postService: PostService,
     private userProfileService: UserProfileService,
+    private mediaService: MediaService,
     private toastr: ToastrService,
     private router: Router
   ) { }
@@ -72,6 +94,10 @@ export class HomeComponent implements OnInit {
       }
     }
     this.loadPosts();
+  }
+
+  onReady(editor: any): void {
+    UploadAdapterPlugin(editor, this.mediaService);
   }
 
   loadPosts(): void {

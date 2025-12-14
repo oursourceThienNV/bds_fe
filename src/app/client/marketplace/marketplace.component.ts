@@ -5,11 +5,13 @@ import { PostService } from '../../core/services/services-app/post.service';
 import { UserProfileService } from '../../core/services/user.service';
 import { CommonCodeServices } from '../../core/services/services-app/common-code.service';
 import { LocationServices } from '../../core/services/services-app/location.service';
+import { MediaService } from '../../core/services/services-app/media.service';
 import { ToastrService } from 'ngx-toastr';
 import { jwtDecode } from 'jwt-decode';
 import Swal from 'sweetalert2';
 import { environment } from '../../../environments/environment';
 import { forkJoin } from 'rxjs';
+import { UploadAdapterPlugin } from '../../core/utils/ckeditor-upload-adapter';
 
 interface Post {
   id: number;
@@ -34,8 +36,27 @@ interface Post {
 })
 export class MarketplaceComponent implements OnInit {
   public Editor = ClassicEditor;
-  public editorConfig = {
-    toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', '|', 'blockQuote', 'undo', 'redo']
+  public editorConfig: any = {
+    toolbar: [
+      'heading', '|',
+      'bold', 'italic', 'link', '|',
+      'bulletedList', 'numberedList', '|',
+      'imageUpload', 'blockQuote', '|',
+      'undo', 'redo'
+    ],
+    image: {
+      toolbar: [
+        'imageTextAlternative', '|',
+        'imageStyle:alignLeft',
+        'imageStyle:full',
+        'imageStyle:alignRight'
+      ],
+      styles: [
+        'full',
+        'alignLeft',
+        'alignRight'
+      ]
+    }
   };
   newPostContent: string = '';
   isEditorFocused: boolean = false;
@@ -84,6 +105,7 @@ export class MarketplaceComponent implements OnInit {
     private userProfileService: UserProfileService,
     private commonCodeServices: CommonCodeServices,
     private locationServices: LocationServices,
+    private mediaService: MediaService,
     private toastr: ToastrService,
     private router: Router
   ) { }
@@ -100,6 +122,10 @@ export class MarketplaceComponent implements OnInit {
     }
     this.loadFilterOptions();
     this.loadPosts();
+  }
+
+  onReady(editor: any): void {
+    UploadAdapterPlugin(editor, this.mediaService);
   }
 
   loadFilterOptions(): void {
