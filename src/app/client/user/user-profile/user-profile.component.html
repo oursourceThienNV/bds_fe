@@ -38,9 +38,16 @@
             <button class="btn btn-outline-secondary btn-message" (click)="sendMessage()">
               Nhắn tin
             </button>
-            <button class="btn btn-icon">
-              <i class="bx bx-dots-horizontal-rounded"></i>
-            </button>
+            <div class="position-relative">
+              <button class="btn btn-icon" (click)="toggleOptionsMenu()">
+                <i class="bx bx-dots-horizontal-rounded"></i>
+              </button>
+              <div class="dropdown-menu" [class.show]="showOptionsMenu" style="position: absolute; right: 0; top: 100%; margin-top: 8px; min-width: 200px;">
+                <button class="dropdown-item" (click)="editProfile()">
+                  <i class="bx bx-edit-alt me-2"></i>Chỉnh sửa profile
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>

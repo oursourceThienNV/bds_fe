@@ -57,6 +57,7 @@ export class LoginService {
       sessionStorage.removeItem('role');
       localStorage.removeItem('storeId');
       sessionStorage.removeItem('storeId');
+      observer.next();
       observer.complete();
     });
   }

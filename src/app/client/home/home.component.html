@@ -124,7 +124,7 @@
                   <i class="mdi mdi-thumb-up-outline"></i>
                   <span>Like</span>
                 </button>
-                <button class="btn btn-action">
+                <button class="btn btn-action" (click)="toggleCommentInput(post)">
                   <i class="mdi mdi-comment-outline"></i>
                   <span>Comment</span>
                 </button>
@@ -136,6 +136,57 @@
                   <i class="mdi mdi-bookmark-outline"></i>
                   <span>Save</span>
                 </button>
+              </div>
+
+              <!-- Comment Section -->
+              <div class="comment-section mt-3" *ngIf="showCommentInput[post.id]">
+                <!-- Comments List -->
+                <div class="comments-list mb-3" *ngIf="postComments[post.id] && postComments[post.id].length > 0">
+                  <div class="comment-item" *ngFor="let comment of postComments[post.id]">
+                    <div class="d-flex gap-2">
+                      <div class="comment-avatar">
+                        <img [src]="getAvatarUrl(comment.accLogo)" [alt]="comment.accName" class="rounded-circle" style="width: 32px; height: 32px; object-fit: cover;">
+                      </div>
+                      <div class="flex-grow-1">
+                        <div class="comment-bubble">
+                          <h6 class="comment-author mb-1">{{ comment.accName }}</h6>
+                          <p class="comment-text mb-0">{{ comment.content }}</p>
+                        </div>
+                        <div class="comment-meta">
+                          <span class="text-muted small">{{ getTimeAgo(comment.createDt) }}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Loading State -->
+                <div class="text-center py-2" *ngIf="loadingComments[post.id]">
+                  <div class="spinner-border spinner-border-sm text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </div>
+
+                <!-- Comment Input -->
+                <div class="comment-input-section">
+                  <div class="d-flex gap-2">
+                    <div class="avatar-circle avatar-sm">
+                      <i class="mdi mdi-account text-white"></i>
+                    </div>
+                    <div class="flex-grow-1">
+                      <textarea
+                        class="form-control comment-textarea"
+                        rows="2"
+                        placeholder="Viết bình luận..."
+                        [(ngModel)]="commentTexts[post.id]"
+                        (keydown.enter)="$event.ctrlKey && submitComment(post)"></textarea>
+                      <div class="d-flex justify-content-end gap-2 mt-2">
+                        <button class="btn btn-sm btn-secondary" (click)="toggleCommentInput(post)">Hủy</button>
+                        <button class="btn btn-sm btn-primary" (click)="submitComment(post)">Gửi</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

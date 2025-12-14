@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, HostListener } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserProfileService } from 'src/app/core/services/user.service';
 import { environment } from 'src/environments/environment';
 
@@ -12,6 +12,16 @@ export class UserProfileComponent implements OnInit {
   userId: string;
   apiUrl = environment.apiUrl;
   isLoading = false;
+  showOptionsMenu = false;
+
+  @HostListener('document:click', ['$event'])
+  clickOutside(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    const clickedInside = target.closest('.position-relative');
+    if (!clickedInside && this.showOptionsMenu) {
+      this.showOptionsMenu = false;
+    }
+  }
 
   // User data
   user: any = {
@@ -92,6 +102,7 @@ export class UserProfileComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private userService: UserProfileService
   ) { }
 
@@ -108,9 +119,10 @@ export class UserProfileComponent implements OnInit {
       next: (response) => {
         if (response.body && response.body.responseCode === '200') {
           const data = response.body.body;
+          console.log('User data:', data);
           this.user = {
-            logo: data.logoUrl ? `${this.apiUrl}${data.logoUrl}` : 'https://randomuser.me/api/portraits/women/65.jpg',
-            coverPhoto: data.coverPhotoUrl ? `${this.apiUrl}${data.coverPhotoUrl}` : 'https://images.unsplash.com/photo-1557683316-973673baf926?w=1200&h=400&fit=crop',
+            logo: data.logoUrl ? (data.logoUrl.startsWith("/uploads") ? this.apiUrl : "") + data.logoUrl : 'https://randomuser.me/api/portraits/women/65.jpg',
+            coverPhoto: data.coverPhotoUrl ? (data.coverPhotoUrl.startsWith("/uploads") ? this.apiUrl : "") + data.coverPhotoUrl : 'https://images.unsplash.com/photo-1557683316-973673baf926?w=1200&h=400&fit=crop',
             fullname: data.fullname || 'User Name',
             username: data.username || '',
             tagline: 'Nhà đầu tư thiên thần — Hà Nội',
@@ -150,5 +162,14 @@ export class UserProfileComponent implements OnInit {
   viewAllGallery(): void {
     // TODO: Navigate to gallery page
     console.log('View all gallery');
+  }
+
+  toggleOptionsMenu(): void {
+    this.showOptionsMenu = !this.showOptionsMenu;
+  }
+
+  editProfile(): void {
+    this.showOptionsMenu = false;
+    this.router.navigate(['/client/update-user']);
   }
 }

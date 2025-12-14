@@ -23,4 +23,16 @@ export class PostService {
       observe: 'response'
     });
   }
+
+  public listComment(body?: any): Observable<any> {
+    return this.http.post<any>(`${this.api.getCatalogApi()}/api/post/list-comment`, body, {
+      observe: 'response'
+    });
+  }
+
+  public createComment(body?: any): Observable<any> {
+    return this.http.post<any>(`${this.api.getCatalogApi()}/api/post/create-comment`, body, {
+      observe: 'response'
+    });
+  }
 }

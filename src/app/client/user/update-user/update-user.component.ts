@@ -116,15 +116,15 @@ export class UpdateUserComponent implements OnInit {
           });
 
           if (data.logoUrl) {
-            this.profileImagePreview = environment.apiUrl + data.logoUrl;
-            this.uploadedLogoUrl = environment.apiUrl + data.logoUrl;
+            this.profileImagePreview = (data.logoUrl.startsWith("/uploads") ? environment.apiUrl : "") + data.logoUrl;
+            this.uploadedLogoUrl = (data.logoUrl.startsWith("/uploads") ? environment.apiUrl : "") + data.logoUrl;
           }
           if (data.logoId) {
             this.uploadedLogoId = data.logoId;
           }
           if (data.coverPhotoUrl) {
-            this.coverImagePreview = environment.apiUrl + data.coverPhotoUrl;
-            this.uploadedCoverPhotoUrl = environment.apiUrl + data.coverPhotoUrl;
+            this.coverImagePreview = (data.coverPhotoUrl.startsWith("/uploads") ? environment.apiUrl : "") + data.coverPhotoUrl;
+            this.uploadedCoverPhotoUrl = (data.coverPhotoUrl.startsWith("/uploads") ? environment.apiUrl : "") + data.coverPhotoUrl;
           }
           if (data.coverPhotoId) {
             this.uploadedCoverPhotoId = data.coverPhotoId;

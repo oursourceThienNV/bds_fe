@@ -4,6 +4,7 @@ import { CompanyService } from '../../../core/services/services-app/company.serv
 import { UserProfileService } from '../../../core/services/user.service';
 import { jwtDecode } from 'jwt-decode';
 import { environment } from 'src/environments/environment';
+import { LoginService } from 'src/app/account/auth/login/login.service';
 
 @Component({
   selector: 'app-client-header',
@@ -20,7 +21,8 @@ export class HeaderComponent implements OnInit {
   constructor(
     private router: Router,
     private companyService: CompanyService,
-    private userService: UserProfileService
+    private userService: UserProfileService,
+    private loginService: LoginService
   ) { }
 
   ngOnInit(): void {
@@ -42,16 +44,8 @@ export class HeaderComponent implements OnInit {
   }
 
   loadUserProfile(): void {
-    // Check if name and avatar exist in localStorage
-    const storedName = localStorage.getItem('userName');
-    const storedAvatar = localStorage.getItem('userAvatar');
-
-    if (storedName && storedAvatar) {
-      // Use cached data from localStorage
-      this.userName = storedName;
-      this.userAvatar = storedAvatar;
-    } else if (this.userId) {
-      // Fetch from API if not in localStorage
+    if (this.userId) {
+      // Always fetch from API
       this.userService.getUserById({ id: this.userId }).subscribe({
         next: (response: any) => {
           if (response?.body?.responseCode === '200') {
@@ -68,10 +62,6 @@ export class HeaderComponent implements OnInit {
               const nameForAvatar = encodeURIComponent(this.userName);
               this.userAvatar = `https://ui-avatars.com/api/?name=${nameForAvatar}&background=4f46e5&color=fff&size=48`;
             }
-
-            // Save to localStorage for future use
-            localStorage.setItem('userName', this.userName);
-            localStorage.setItem('userAvatar', this.userAvatar);
           }
         },
         error: (error) => {
@@ -111,6 +101,14 @@ export class HeaderComponent implements OnInit {
 
   goToFranchise(): void {
     this.router.navigate(['/client/franchise']);
+  }
+
+  logout(): void {
+    this.loginService.logout().subscribe(() => {
+      this.router.navigate(['/public/login']);
+      console.log('User logged outfdsfdsf');
+    });
+    console.log('User logged out');
   }
 
   openNotifications(): void {
