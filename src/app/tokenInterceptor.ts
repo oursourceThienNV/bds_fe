@@ -67,7 +67,13 @@ if (!shouldExclude) {
           sessionStorage.removeItem('role');
           localStorage.removeItem('storeId');
           sessionStorage.removeItem('storeId');
-          this.router.navigate(['/account/login']);
+          localStorage.removeItem('userId');
+          sessionStorage.removeItem('userId');
+          localStorage.removeItem('userName');
+          sessionStorage.removeItem('userName');
+          localStorage.removeItem('userAvatar');
+          sessionStorage.removeItem('userAvatar');
+          this.router.navigate(['/public/login']);
         }
         return throwError(() => error);
       })

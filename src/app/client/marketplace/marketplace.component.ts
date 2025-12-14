@@ -50,6 +50,12 @@ export class MarketplaceComponent implements OnInit {
   posts: Post[] = [];
   domain: string = environment.apiUrl;
 
+  // Comment tracking
+  showCommentInput: { [postId: number]: boolean } = {};
+  commentTexts: { [postId: number]: string } = {};
+  postComments: { [postId: number]: any[] } = {};
+  loadingComments: { [postId: number]: boolean } = {};
+
   // Filters
   selectedNganhNghe: string = '';
   selectedDiaDiem: string = '';
@@ -322,6 +328,78 @@ export class MarketplaceComponent implements OnInit {
 
   viewPostDetail(post: Post): void {
     this.router.navigate(['/client/post', post.id]);
+  }
+
+  toggleCommentInput(post: Post): void {
+    this.showCommentInput[post.id] = !this.showCommentInput[post.id];
+    if (!this.showCommentInput[post.id]) {
+      this.commentTexts[post.id] = '';
+    } else {
+      // Load comments when opening comment section
+      this.loadComments(post);
+    }
+  }
+
+  loadComments(post: Post): void {
+    if (this.loadingComments[post.id]) return;
+
+    this.loadingComments[post.id] = true;
+    const body = { postId: post.id };
+
+    this.postService.listComment(body).subscribe(
+      (response) => {
+        if (response.body && response.body.body) {
+          this.postComments[post.id] = response.body.body;
+        } else {
+          this.postComments[post.id] = [];
+        }
+        this.loadingComments[post.id] = false;
+      },
+      (error) => {
+        console.error('Error loading comments:', error);
+        this.postComments[post.id] = [];
+        this.loadingComments[post.id] = false;
+      }
+    );
+  }
+
+  submitComment(post: Post): void {
+    const commentText = this.commentTexts[post.id]?.trim();
+
+    if (!commentText) {
+      this.toastr.warning('Vui lòng nhập nội dung bình luận', 'Thông báo');
+      return;
+    }
+
+    if (!this.authData || !this.authData.userId) {
+      this.toastr.error('Vui lòng đăng nhập để bình luận', 'Lỗi');
+      return;
+    }
+
+    const body = {
+      userId: this.authData.userId,
+      type: 'CN',
+      content: commentText,
+      postId: post.id,
+      userCreate: this.authData.userId
+    };
+
+    this.postService.createComment(body).subscribe(
+      (response) => {
+        if (response.status === 200) {
+          this.toastr.success('Bình luận thành công', 'Thành công');
+          this.commentTexts[post.id] = '';
+          // Increment comment count
+          post.countComment = (post.countComment || 0) + 1;
+          // Reload comments to show the new one
+          this.loadComments(post);
+        }
+      },
+      (error) => {
+        console.error('Error creating comment:', error);
+        this.toastr.error('Có lỗi xảy ra khi bình luận', 'Lỗi');
+      }
+    );
   }
 
   // Filter methods
