@@ -91,20 +91,28 @@
 
                   <!-- Company Name -->
                   <div class="col-12">
-                    <label class="form-label">Tên doanh nghiệp</label>
+                    <label class="form-label">Tên doanh nghiệp <span class="text-danger">*</span></label>
                     <input type="text"
                            class="form-control"
+                           [class.is-invalid]="companyForm.get('companyName')?.invalid && companyForm.get('companyName')?.touched"
                            formControlName="companyName"
                            placeholder="Công ty / TNHH / ABC">
+                    <div class="invalid-feedback" *ngIf="companyForm.get('companyName')?.invalid && companyForm.get('companyName')?.touched">
+                      Vui lòng nhập tên doanh nghiệp
+                    </div>
                   </div>
 
                   <!-- Industry/Type -->
                   <div class="col-12">
-                    <label class="form-label">Slogan/Mô tả ngắn về công ty và lĩnh vực hoạt động</label>
+                    <label class="form-label">Slogan/Mô tả ngắn về công ty và lĩnh vực hoạt động <span class="text-danger">*</span></label>
                     <input type="text"
                            class="form-control"
+                           [class.is-invalid]="companyForm.get('slogan')?.invalid && companyForm.get('slogan')?.touched"
                            formControlName="slogan"
                            placeholder="Slogan hoặc mô tả ngắn về lĩnh vực hoạt động nghiệp">
+                    <div class="invalid-feedback" *ngIf="companyForm.get('slogan')?.invalid && companyForm.get('slogan')?.touched">
+                      Vui lòng nhập slogan hoặc mô tả
+                    </div>
                   </div>
 
                   <!-- Representative Info Header -->
@@ -114,27 +122,40 @@
 
                   <!-- Địa chỉ and Phone -->
                   <div class="col-md-6">
-                    <label class="form-label">Địa chỉ</label>
+                    <label class="form-label">Địa chỉ <span class="text-danger">*</span></label>
                     <input type="text"
                            class="form-control"
+                           [class.is-invalid]="companyForm.get('address')?.invalid && companyForm.get('address')?.touched"
                            formControlName="address"
                            placeholder="Địa chỉ kinh doanh">
+                    <div class="invalid-feedback" *ngIf="companyForm.get('address')?.invalid && companyForm.get('address')?.touched">
+                      Vui lòng nhập địa chỉ
+                    </div>
                   </div>
                   <div class="col-md-6">
-                    <label class="form-label">Số điện thoại liên hệ</label>
+                    <label class="form-label">Số điện thoại liên hệ <span class="text-danger">*</span></label>
                     <input type="text"
                            class="form-control"
+                           [class.is-invalid]="companyForm.get('phoneNumber')?.invalid && companyForm.get('phoneNumber')?.touched"
                            formControlName="phoneNumber"
                            placeholder="Số điện thoại doanh nghiệp">
+                    <div class="invalid-feedback" *ngIf="companyForm.get('phoneNumber')?.invalid && companyForm.get('phoneNumber')?.touched">
+                      Vui lòng nhập số điện thoại
+                    </div>
                   </div>
 
                   <!-- Email -->
                   <div class="col-12">
-                    <label class="form-label">Email liên hệ</label>
+                    <label class="form-label">Email liên hệ <span class="text-danger">*</span></label>
                     <input type="email"
                            class="form-control"
+                           [class.is-invalid]="companyForm.get('email')?.invalid && companyForm.get('email')?.touched"
                            formControlName="email"
                            placeholder="email.doanhnghiep@example.com">
+                    <div class="invalid-feedback" *ngIf="companyForm.get('email')?.invalid && companyForm.get('email')?.touched">
+                      <span *ngIf="companyForm.get('email')?.errors?.['required']">Vui lòng nhập email</span>
+                      <span *ngIf="companyForm.get('email')?.errors?.['email']">Email không hợp lệ</span>
+                    </div>
                   </div>
 
                   <!-- Company Introduction -->

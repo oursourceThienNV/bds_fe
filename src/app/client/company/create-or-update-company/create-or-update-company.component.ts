@@ -216,6 +216,12 @@ export class CreateOrUpdateCompanyComponent implements OnInit {
       Object.keys(this.companyForm.controls).forEach(key => {
         this.companyForm.get(key)?.markAsTouched();
       });
+
+      Swal.fire({
+        icon: 'warning',
+        title: 'Thông tin chưa đầy đủ',
+        text: 'Vui lòng điền đầy đủ thông tin bắt buộc'
+      });
       return;
     }
 
@@ -257,11 +263,12 @@ export class CreateOrUpdateCompanyComponent implements OnInit {
       },
       (error) => {
         this.loading = false;
-        console.error('Error creating company:', error);
+        console.error('Error creating/updating company:', error);
+        const message = this.isEditMode ? 'Cập nhật trang công ty thất bại' : 'Tạo trang công ty thất bại';
         Swal.fire({
           icon: 'error',
           title: 'Lỗi',
-          text: 'Tạo trang công ty thất bại'
+          text: message
         });
       }
     );
