@@ -132,4 +132,8 @@ export class HeaderComponent implements OnInit {
   goToProfile(): void {
     this.router.navigate(['/client/update-user']);
   }
+
+  goToHome(): void {
+    this.router.navigate(['/']);
+  }
 }
