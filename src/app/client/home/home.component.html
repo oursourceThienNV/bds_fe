@@ -25,6 +25,7 @@
                     [editor]="Editor"
                     [config]="editorConfig"
                     [(ngModel)]="newPostContent"
+                    (ready)="onReady($event)"
                     (focus)="onEditorFocus()"
                     (blur)="onEditorBlur()"
                     placeholder="Bạn đang nghĩ gì?"></ckeditor>
