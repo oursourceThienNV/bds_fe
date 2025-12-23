@@ -298,3 +298,84 @@
     </div>
   </div>
 </div>
+
+<!-- Share Link Modal -->
+<div class="modal-overlay" *ngIf="showShareModal" (click)="closeShareModal()">
+  <div class="modal-content share-modal" (click)="$event.stopPropagation()">
+    <h5 class="modal-title">Sao chép liên kết</h5>
+    <div class="share-url-container">
+      <input type="text" class="form-control" [value]="shareUrl" readonly>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" (click)="closeShareModal()">Đóng</button>
+      <button class="btn btn-primary" (click)="copyLink()">Sao chép liên kết</button>
+    </div>
+  </div>
+</div>
+
+<!-- Save to Collection Modal -->
+<div class="modal-overlay" *ngIf="showSaveModal" (click)="closeSaveModal()">
+  <div class="modal-content save-modal" (click)="$event.stopPropagation()">
+    <div class="save-modal-header">
+      <div class="save-tabs">
+        <button class="save-tab active">Đã lưu</button>
+        <button class="save-tab">Bộ sưu tập</button>
+      </div>
+      <button class="btn-close" (click)="closeSaveModal()">
+        <i class="mdi mdi-close"></i>
+      </button>
+    </div>
+    <div class="save-modal-body">
+      <h6 class="section-title">Bộ sưu tập</h6>
+      <div class="collection-list">
+        <div class="collection-item" *ngFor="let collection of savedCollections">
+          <div class="collection-info">
+            <div class="collection-thumbnail">
+              <i class="mdi mdi-image-outline"></i>
+            </div>
+            <div class="collection-details">
+              <span class="collection-name">{{ collection.name }}</span>
+              <span class="collection-privacy">Riêng tư</span>
+            </div>
+          </div>
+          <button class="btn-add" (click)="addToCollection(collection.id)">
+            <i class="mdi mdi-plus"></i>
+          </button>
+        </div>
+      </div>
+      <button class="btn-new-collection" (click)="openNewCollectionModal()">
+        <i class="mdi mdi-plus"></i>
+        Bộ sưu tập mới
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- New Collection Modal -->
+<div class="modal-overlay" *ngIf="showNewCollectionModal" (click)="closeNewCollectionModal()">
+  <div class="modal-content new-collection-modal" (click)="$event.stopPropagation()">
+    <h5 class="modal-title">Bộ sưu tập mới</h5>
+    <div class="new-collection-body">
+      <div class="collection-preview" *ngIf="currentPostForSave">
+        <img [src]="getImageUrl(currentPostForSave.anhDaiDien || '')" alt="Preview" *ngIf="currentPostForSave.anhDaiDien">
+        <div class="preview-placeholder" *ngIf="!currentPostForSave.anhDaiDien">
+          <i class="mdi mdi-image-outline"></i>
+        </div>
+      </div>
+      <div class="form-group">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Tên bộ sưu tập"
+          [(ngModel)]="newCollectionName">
+        <button class="btn-clear" *ngIf="newCollectionName" (click)="newCollectionName = ''">
+          <i class="mdi mdi-close-circle"></i>
+        </button>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" (click)="closeNewCollectionModal()">Hủy</button>
+      <button class="btn btn-primary" (click)="createNewCollection()" [disabled]="!newCollectionName.trim()">Tạo</button>
+    </div>
+  </div>
+</div>
