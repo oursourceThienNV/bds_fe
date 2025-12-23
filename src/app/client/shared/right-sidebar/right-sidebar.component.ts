@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-right-sidebar',
@@ -6,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./right-sidebar.component.scss']
 })
 export class RightSidebarComponent implements OnInit {
+  isPostDetailPage: boolean = false;
+
   trendingBrands = [
     { name: 'Chuối Banh Mỳ B', avatar: 'https://ui-avatars.com/api/?name=Chuoi+Banh+My&background=ff6b6b&color=fff' },
     { name: 'Cà phê Xanh', avatar: 'https://ui-avatars.com/api/?name=Ca+phe+Xanh&background=0D8ABC&color=fff' },
@@ -27,9 +31,23 @@ export class RightSidebarComponent implements OnInit {
     { title: 'Gợi ý mặt bằng phù hợp', icon: 'mdi-store' }
   ];
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
+    // Check initial route
+    this.checkRoute(this.router.url);
+
+    // Listen to route changes
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: NavigationEnd) => {
+      this.checkRoute(event.urlAfterRedirects);
+    });
+  }
+
+  checkRoute(url: string): void {
+    // Check if current route is post detail page
+    this.isPostDetailPage = url.includes('/client/post/') && !url.endsWith('/post');
   }
 
 }

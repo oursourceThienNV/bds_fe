@@ -78,6 +78,20 @@ export class HomeComponent implements OnInit {
   // Post options dropdown
   showPostOptions: { [postId: number]: boolean } = {};
 
+  // Modal states
+  showShareModal: boolean = false;
+  showSaveModal: boolean = false;
+  showNewCollectionModal: boolean = false;
+  shareUrl: string = '';
+  currentPostForSave: Post | null = null;
+
+  // Mock collections data
+  savedCollections: any[] = [
+    { id: 1, name: 'Thể dục', isPrivate: true },
+    { id: 2, name: 'Mới', isPrivate: true }
+  ];
+  newCollectionName: string = '';
+
   constructor(
     private postService: PostService,
     private userProfileService: UserProfileService,
@@ -268,14 +282,53 @@ export class HomeComponent implements OnInit {
   }
 
   sharePost(post: Post): void {
-    console.log('Share post:', post.id);
+    this.shareUrl = `${window.location.origin}/client/post/${post.id}`;
+    this.showShareModal = true;
+  }
+
+  closeShareModal(): void {
+    this.showShareModal = false;
+    this.shareUrl = '';
+  }
+
+  copyLink(): void {
+    navigator.clipboard.writeText(this.shareUrl).then(() => {
+      this.toastr.success('Đã sao chép liên kết', 'Thành công');
+      this.closeShareModal();
+    });
   }
 
   savePost(post: Post): void {
     this.showPostOptions[post.id] = false;
-    this.toastr.success('Đã lưu bài viết', 'Thành công');
-    // Reload current page
-    window.location.reload();
+    this.currentPostForSave = post;
+    this.showSaveModal = true;
+  }
+
+  closeSaveModal(): void {
+    this.showSaveModal = false;
+    this.currentPostForSave = null;
+  }
+
+  openNewCollectionModal(): void {
+    this.showNewCollectionModal = true;
+  }
+
+  closeNewCollectionModal(): void {
+    this.showNewCollectionModal = false;
+    this.newCollectionName = '';
+  }
+
+  createNewCollection(): void {
+    if (this.newCollectionName.trim()) {
+      this.toastr.success('Đã tạo bộ sưu tập mới', 'Thành công');
+      this.closeNewCollectionModal();
+      this.closeSaveModal();
+    }
+  }
+
+  addToCollection(collectionId: number): void {
+    this.toastr.success('Đã thêm vào bộ sưu tập', 'Thành công');
+    this.closeSaveModal();
   }
 
   viewPostDetail(post: Post): void {

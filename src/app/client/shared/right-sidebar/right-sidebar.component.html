@@ -1,3 +1,46 @@
+<!-- Contact Card (Only on Post Detail Page) -->
+<div class="card sidebar-card mb-4" *ngIf="isPostDetailPage">
+  <div class="card-body">
+    <div class="contact-section">
+      <!-- User Avatar and Name -->
+      <div class="contact-header">
+        <div class="contact-avatar">
+          <span>C</span>
+        </div>
+        <h6 class="contact-name">Chuỗi Bánh Mỳ A</h6>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="contact-actions">
+        <button class="btn btn-action-primary">
+          <i class="mdi mdi-phone"></i>
+          Gọi
+        </button>
+        <button class="btn btn-action-primary">
+          <i class="mdi mdi-message-text"></i>
+          Nhắn tin
+        </button>
+      </div>
+
+      <!-- Save Contact Button -->
+      <button class="btn btn-save-contact">
+        <i class="mdi mdi-star-outline"></i>
+        Lưu danh bạ
+      </button>
+
+      <!-- Location Dropdown -->
+      <div class="location-dropdown">
+        <select class="form-select">
+          <option selected>Chọn Tỉnh/Thành phố</option>
+          <option value="hanoi">Hà Nội</option>
+          <option value="hcm">TP. Hồ Chí Minh</option>
+          <option value="danang">Đà Nẵng</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Trending Brands -->
 <div class="card sidebar-card mb-4">
   <div class="card-body">
