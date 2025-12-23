@@ -77,6 +77,9 @@ export class MarketplaceComponent implements OnInit {
   postComments: { [postId: number]: any[] } = {};
   loadingComments: { [postId: number]: boolean } = {};
 
+  // Post options dropdown
+  showPostOptions: { [postId: number]: boolean } = {};
+
   // Filters
   selectedNganhNghe: string = '';
   selectedDiaDiem: string = '';
@@ -122,6 +125,16 @@ export class MarketplaceComponent implements OnInit {
     }
     this.loadFilterOptions();
     this.loadPosts();
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (event) => {
+      const target = event.target as HTMLElement;
+      if (!target.closest('.post-options-dropdown') && !target.closest('.btn-icon')) {
+        Object.keys(this.showPostOptions).forEach(key => {
+          this.showPostOptions[+key] = false;
+        });
+      }
+    });
   }
 
   onReady(editor: any): void {
@@ -163,7 +176,7 @@ export class MarketplaceComponent implements OnInit {
 
   loadPosts(): void {
     const body: any = {
-      "status": ["marketplace"],
+      status: ["marketplace","both"],
       pageNumber: this.currentPage,
       pageSize: this.pageSize
     };
@@ -348,10 +361,6 @@ export class MarketplaceComponent implements OnInit {
     console.log('Share post:', post.id);
   }
 
-  savePost(post: Post): void {
-    console.log('Save post:', post.id);
-  }
-
   viewPostDetail(post: Post): void {
     this.router.navigate(['/client/post', post.id]);
   }
@@ -484,5 +493,50 @@ export class MarketplaceComponent implements OnInit {
     }
 
     return pages;
+  }
+
+  // Post options dropdown methods
+  togglePostOptions(postId: number, event: Event): void {
+    event.stopPropagation();
+    // Close all other dropdowns
+    Object.keys(this.showPostOptions).forEach(key => {
+      if (+key !== postId) {
+        this.showPostOptions[+key] = false;
+      }
+    });
+    this.showPostOptions[postId] = !this.showPostOptions[postId];
+  }
+
+  moveToMarketplace(post: Post): void {
+    this.showPostOptions[post.id] = false;
+
+    Swal.fire({
+      title: 'Chuyển sang Marketplace?',
+      text: 'Bài đăng này đã có trong Marketplace',
+      icon: 'info',
+      confirmButtonColor: '#0d6efd',
+      confirmButtonText: 'Đóng'
+    });
+  }
+
+  savePost(post: Post): void {
+    this.showPostOptions[post.id] = false;
+    this.toastr.success('Đã lưu bài viết', 'Thành công');
+    // Reload current page
+    window.location.reload();
+  }
+
+  interestedPost(post: Post): void {
+    this.showPostOptions[post.id] = false;
+    this.toastr.success('Đã đánh dấu quan tâm', 'Thành công');
+    // Reload current page
+    window.location.reload();
+  }
+
+  notInterestedPost(post: Post): void {
+    this.showPostOptions[post.id] = false;
+    this.toastr.info('Đã đánh dấu không quan tâm', 'Thông báo');
+    // Reload current page
+    window.location.reload();
   }
 }

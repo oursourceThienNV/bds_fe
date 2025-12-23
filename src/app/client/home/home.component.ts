@@ -75,6 +75,9 @@ export class HomeComponent implements OnInit {
   postComments: { [postId: number]: any[] } = {};
   loadingComments: { [postId: number]: boolean } = {};
 
+  // Post options dropdown
+  showPostOptions: { [postId: number]: boolean } = {};
+
   constructor(
     private postService: PostService,
     private userProfileService: UserProfileService,
@@ -94,6 +97,16 @@ export class HomeComponent implements OnInit {
       }
     }
     this.loadPosts();
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (event) => {
+      const target = event.target as HTMLElement;
+      if (!target.closest('.post-options-dropdown') && !target.closest('.btn-icon')) {
+        Object.keys(this.showPostOptions).forEach(key => {
+          this.showPostOptions[+key] = false;
+        });
+      }
+    });
   }
 
   onReady(editor: any): void {
@@ -259,7 +272,10 @@ export class HomeComponent implements OnInit {
   }
 
   savePost(post: Post): void {
-    console.log('Save post:', post.id);
+    this.showPostOptions[post.id] = false;
+    this.toastr.success('Đã lưu bài viết', 'Thành công');
+    // Reload current page
+    window.location.reload();
   }
 
   viewPostDetail(post: Post): void {
@@ -378,5 +394,67 @@ export class HomeComponent implements OnInit {
     }
 
     return pages;
+  }
+
+  // Post options dropdown methods
+  togglePostOptions(postId: number, event: Event): void {
+    event.stopPropagation();
+    // Close all other dropdowns
+    Object.keys(this.showPostOptions).forEach(key => {
+      if (+key !== postId) {
+        this.showPostOptions[+key] = false;
+      }
+    });
+    this.showPostOptions[postId] = !this.showPostOptions[postId];
+  }
+
+  moveToMarketplace(post: Post): void {
+    this.showPostOptions[post.id] = false;
+
+    Swal.fire({
+      title: 'Chuyển sang Marketplace?',
+      text: 'Bạn có chắc chắn muốn chuyển bài đăng này sang Marketplace?',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#0d6efd',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Đồng ý',
+      cancelButtonText: 'Hủy'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const body = {
+          id: post.id,
+          status: 'both' // Change status to show in both home and marketplace
+        };
+
+        this.postService.insertOrUpdate(body).subscribe(
+          (response) => {
+            if (response.status === 200) {
+              this.toastr.success('Đã chuyển bài đăng sang Marketplace', 'Thành công');
+              // Reload current page
+              window.location.reload();
+            }
+          },
+          (error) => {
+            console.error('Error moving to marketplace:', error);
+            this.toastr.error('Có lỗi xảy ra khi chuyển bài đăng', 'Lỗi');
+          }
+        );
+      }
+    });
+  }
+
+  interestedPost(post: Post): void {
+    this.showPostOptions[post.id] = false;
+    this.toastr.success('Đã đánh dấu quan tâm', 'Thành công');
+    // Reload current page
+    window.location.reload();
+  }
+
+  notInterestedPost(post: Post): void {
+    this.showPostOptions[post.id] = false;
+    this.toastr.info('Đã đánh dấu không quan tâm', 'Thông báo');
+    // Reload current page
+    window.location.reload();
   }
 }

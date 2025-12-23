@@ -10,22 +10,11 @@
   .logo-container {
     padding: 0 15px;
 
-    .logo-icon {
-      width: 40px;
-      height: 40px;
-      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .logo-image {
+      height: 45px;
+      width: auto;
       cursor: pointer;
       transition: transform 0.2s;
-
-      span {
-        color: white;
-        font-weight: 700;
-        font-size: 20px;
-      }
 
       &:hover {
         transform: scale(1.05);
