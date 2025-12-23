@@ -4,20 +4,6 @@
   padding: 20px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 
-  .sidebar-header {
-    display: flex;
-    align-items: center;
-    padding-bottom: 15px;
-    border-bottom: 1px solid #e9ecef;
-    margin-bottom: 15px;
-    font-size: 1.1rem;
-
-    i {
-      font-size: 1.3rem;
-      color: #6c757d;
-    }
-  }
-
   .sidebar-menu {
     .sidebar-item {
       display: flex;
@@ -27,15 +13,25 @@
       border-radius: 8px;
       color: #495057;
       text-decoration: none;
-      transition: all 0.2s;
+      transition: all 0.2s ease;
 
       i {
         font-size: 1.2rem;
         color: #6c757d;
+        transition: color 0.2s ease;
+      }
+
+      span {
+        transition: color 0.2s ease;
       }
 
       &:hover {
-        background-color: #f8f9fa;
+        background-color: #f1f3f5;
+        color: #0d6efd;
+
+        i {
+          color: #0d6efd;
+        }
       }
 
       &.active {

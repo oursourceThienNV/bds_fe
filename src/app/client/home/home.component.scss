@@ -2,6 +2,78 @@
   background-color: #f5f7fa;
   min-height: calc(100vh - 65px);
   padding: 20px 0;
+
+  .row-custom {
+    display: flex;
+    gap: 16px;
+    max-width: 1252px; // 260 + 16 + 600 + 16 + 360
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+
+  .sidebar-left {
+    width: 260px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 85px;
+    align-self: flex-start;
+    max-height: calc(100vh - 105px);
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #dee2e6;
+      border-radius: 10px;
+    }
+
+    @media (max-width: 991.98px) {
+      display: none;
+    }
+  }
+
+  .main-feed {
+    width: 600px;
+    flex-shrink: 0;
+
+    @media (max-width: 991.98px) {
+      width: 100%;
+      flex-grow: 1;
+    }
+  }
+
+  .sidebar-right {
+    width: 360px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 85px;
+    align-self: flex-start;
+    max-height: calc(100vh - 105px);
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #dee2e6;
+      border-radius: 10px;
+    }
+
+    @media (max-width: 991.98px) {
+      display: none;
+    }
+  }
 }
 
 // Create Post Card
@@ -171,9 +243,58 @@
     color: #6c757d;
     border-radius: 6px;
     transition: all 0.2s;
+    position: relative;
 
     &:hover {
       background-color: #f8f9fa;
+    }
+  }
+
+  .post-options-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    min-width: 250px;
+    z-index: 1000;
+    overflow: hidden;
+    margin-top: 4px;
+
+    .dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      color: #495057;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      width: 100%;
+      text-align: left;
+      font-size: 0.9rem;
+
+      i {
+        font-size: 1.1rem;
+        color: #6c757d;
+        width: 20px;
+        text-align: center;
+      }
+
+      &:hover {
+        background-color: #f8f9fa;
+
+        i {
+          color: #0d6efd;
+        }
+      }
+
+      &:not(:last-child) {
+        border-bottom: 1px solid #f1f3f5;
+      }
     }
   }
 

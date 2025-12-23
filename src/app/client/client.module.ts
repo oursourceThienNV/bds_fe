@@ -14,6 +14,7 @@ import { CompanyProfileComponent } from './company/company-profile/company-profi
 import { FranchiseComponent } from './franchise/franchise.component';
 import { MarketplaceComponent } from './marketplace/marketplace.component';
 import { PostDetailComponent } from './post/post-detail/post-detail.component';
+import { QuestionComponent } from './question/question.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { PostDetailComponent } from './post/post-detail/post-detail.component';
     CreateOrUpdateCompanyComponent,
     CompanyProfileComponent,
     FranchiseComponent,
-    PostDetailComponent
+    PostDetailComponent,
+    QuestionComponent
   ],
   imports: [
     CommonModule,

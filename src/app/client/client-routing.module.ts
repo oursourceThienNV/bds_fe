@@ -8,9 +8,11 @@ import { CompanyProfileComponent } from './company/company-profile/company-profi
 import { FranchiseComponent } from './franchise/franchise.component';
 import { MarketplaceComponent } from './marketplace/marketplace.component';
 import { PostDetailComponent } from './post/post-detail/post-detail.component';
+import { QuestionComponent } from './question/question.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'question', component: QuestionComponent },
   { path: 'home', component: HomeComponent },
   { path: 'marketplace', component: MarketplaceComponent },
   { path: 'update-user', component: UpdateUserComponent },
